@@ -1,21 +1,25 @@
-<div class="w-full h-20 shadow-xl flex items-center justify-between px-8">
+<div class="w-full h-20 shadow-xl flex items-center justify-between px-8 font-light">
 	<div class="text-2xl">Estate DAO</div>
-	<div>About</div>
+	<div class="flex items-center gap-8">
+		<div>About</div>
+		<a class="underline" href="/auth">Login</a>
+	</div>
 </div>
 
-<div class="h-[400px] flex items-center justify-center flex-col space-y-4 bg-emerald-100">
+<div class="h-[300px] flex items-center justify-center flex-col space-y-4 bg-emerald-100">
 	<div class="text-5xl">ESTATE DAO</div>
 	<div class="text-lg">ESTATE DAO</div>
 </div>
 
 <div class="flex items-center justify-between px-8 pt-16">
 	<div class="text-xl">Explore</div>
-	<button class="bg-emerald-300 rounded-md py-3 px-8">Explore</button>
+	<div class="bg-emerald-300 rounded-md py-3 px-8">Explore</div>
 </div>
 
 <div class="flex py-12 items-center gap-8 justify-center p-8 flex-wrap">
 	{#each new Array(10) as _, i}
-		<div
+		<a
+			href="/collection"
 			class="rounded-lg relative shrink-0 shadow-lg flex flex-col overflow-hidden items-center w-72"
 		>
 			<div class="h-72 absolute w-72 z-[1] top-0 bg-black/50 animate-pulse"></div>
@@ -40,6 +44,6 @@
 					<div class="text-sm font-bold">9.87k ICP</div>
 				</div>
 			</div>
-		</div>
+		</a>
 	{/each}
 </div>
