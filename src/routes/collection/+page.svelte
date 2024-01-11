@@ -3,7 +3,7 @@
 </script>
 
 <div class="w-full h-20 shadow-xl flex items-center justify-between px-8 font-light">
-	<div class="text-2xl">Estate DAO</div>
+	<a href="/" class="text-2xl">Estate DAO</a>
 	<div class="flex items-center gap-8">
 		<div>About</div>
 		<a class="underline" href="/auth">Login</a>
