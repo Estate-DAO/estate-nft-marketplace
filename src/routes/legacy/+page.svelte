@@ -2,7 +2,7 @@
 	<a href="/" class="text-2xl">Estate DAO</a>
 	<div class="flex items-center gap-8">
 		<div>About</div>
-		<a class="underline" href="/auth">Login</a>
+		<a class="underline" href="/legacy/auth">Login</a>
 	</div>
 </div>
 
