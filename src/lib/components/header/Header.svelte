@@ -18,8 +18,7 @@
 	<div class="flex items-center gap-8">
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
-			<div>Whitepaper</div>
-			<div>About Us</div>
+			<a href="https://www.estatedao.org/">About Us</a>
 		{/if}
 		<Avatar initalLetter="U" />
 	</div>
