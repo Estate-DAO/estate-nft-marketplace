@@ -4,18 +4,17 @@
 	import Avatar from '../avatar/Avatar.svelte';
 
 	$: onCollectionPage = $page.url.pathname.includes('collection');
-
-	$: console.log({ p: $page.url.pathname });
 </script>
 
 <div
-	class="w-full h-20 shadow-lg flex items-center justify-between px-8 font-light rounded-b-2xl transition-all"
+	class="w-full fixed z-50 h-20 shadow-lg flex items-center justify-between px-8 font-light rounded-b-2xl transition-all bg-white"
 >
 	{#if onCollectionPage}
 		<a href="/market">← All listings</a>
 	{/if}
 	<a href="/"> <img alt="Estate DAO" class="h-10" src={logo} /></a>
 	<div class="flex items-center gap-8">
+		<a href="/new">Create collection</a>
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
 			<a href="https://www.estatedao.org/">About Us</a>
