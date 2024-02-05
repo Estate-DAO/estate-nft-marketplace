@@ -2,6 +2,7 @@
 	import { page } from '$app/stores';
 	import Avatar from '../avatar/Avatar.svelte';
 	import EstateDaoLogo from '../icons/EstateDaoLogo.svelte';
+	import MenuIcon from '../icons/MenuIcon.svelte';
 
 	$: onCollectionPage = $page.url.pathname.includes('collection');
 </script>
@@ -10,13 +11,17 @@
 	class="w-full fixed z-50 h-20 shadow-sm flex items-center justify-between px-8 font-light transition-all bg-white/75 backdrop-blur-xl"
 >
 	{#if onCollectionPage}
-		<a href="/market" class="z-[1]">← All listings</a>
+		<a href="/market" class="z-[1] hidden lg:block">← All listings</a>
+		<a href="/market" class="z-[1] lg:hidden pr-4">←</a>
 	{/if}
 
 	<div class="absolute z-0 inset-x-0 flex justify-center">
 		<EstateDaoLogo class="h-10" />
 	</div>
-	<div class="absolute z-[1] right-8 flex items-center gap-8">
+	<div class="lg:hidden">
+		<MenuIcon class="h-6 w-6" />
+	</div>
+	<div class="absolute z-[1] lg:flex hidden right-8 items-center gap-8">
 		<a href="/collection/new">Create collection</a>
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
