@@ -5,15 +5,21 @@
 	export let value: string = '';
 	export let placeholder: string = '';
 	export let type: 'text' | 'password' | 'number' | 'email' = 'text';
+	export let disabled = false;
 
 	let inputEl: HTMLInputElement;
 
 	onMount(() => (inputEl.type = type));
 </script>
 
-<label class="flex flex-col gap-2">
+<label
+	class="flex flex-col gap-2 transition-opacity {disabled
+		? 'pointer-events-none opacity-50'
+		: 'opacity-100'}"
+>
 	<span class="text-sm font-medium leading-6 text-gray-900">{label}</span>
 	<input
+		{disabled}
 		bind:this={inputEl}
 		{placeholder}
 		bind:value

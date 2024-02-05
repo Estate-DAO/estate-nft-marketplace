@@ -43,6 +43,12 @@
 			identityProvider: IDENTITY_PROVIDER
 		});
 	}
+
+	async function logout() {
+		$authHelper.init = false;
+		await $authHelper?.client?.logout();
+		initializeAuthClient();
+	}
 </script>
 
 <div
@@ -60,7 +66,13 @@
 					Sign in or join
 				</h2>
 
-				<Button disabled={!$authHelper?.init} on:click={handleLogin} secondary class="w-min">
+				<Button
+					disabled={!$authHelper?.init}
+					loading={!$authHelper?.init}
+					on:click={handleLogin}
+					secondary
+					class="w-min"
+				>
 					<div class="flex items-center justify-center gap-2">
 						<DfinityIcon class="h-4" />
 						<span class="text-nowrap">Login using internet identity</span>
@@ -77,6 +89,9 @@
 					You are already logged in!
 				</h2>
 				<Button href="/market" class="w-min">Go to the marketplace</Button>
+				<Button on:click={logout} loading={!$authHelper?.init} secondary class="w-min"
+					>Logout</Button
+				>
 			{/if}
 		</div>
 	</div>

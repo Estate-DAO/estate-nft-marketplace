@@ -17,7 +17,7 @@
 		<EstateDaoLogo class="h-10" />
 	</div>
 	<div class="absolute right-8 flex items-center gap-8">
-		<a href="/new">Create collection</a>
+		<a href="/collection/new">Create collection</a>
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
 			<a href="https://www.estatedao.org/">About Us</a>

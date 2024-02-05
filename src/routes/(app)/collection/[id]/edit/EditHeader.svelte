@@ -7,6 +7,7 @@
 	import Button from '$lib/components/button/Button.svelte';
 	import TabItem from '$lib/components/tab/TabItem.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import { page } from '$app/stores';
 
 	export let selected: SelectedEditTab = 'basic';
 

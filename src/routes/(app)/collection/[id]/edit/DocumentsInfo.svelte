@@ -2,6 +2,7 @@
 	import Button from '$lib/components/button/Button.svelte';
 	import Input from '$lib/components/input/Input.svelte';
 	import { slide } from 'svelte/transition';
+	import { page } from '$app/stores';
 
 	let documents: {
 		url: string;

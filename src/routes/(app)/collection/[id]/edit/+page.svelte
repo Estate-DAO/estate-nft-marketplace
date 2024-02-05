@@ -3,13 +3,11 @@
 	import EditHeader, { type SelectedEditTab } from './EditHeader.svelte';
 	import BasicInfo from './BasicInfo.svelte';
 	import PropertyInfo from './PropertyInfo.svelte';
-	import Documents from '../collection/Documents.svelte';
 	import DocumentsInfo from './DocumentsInfo.svelte';
+	import { page } from '$app/stores';
 
 	async function editData() {
-		const actor = nftMinterCanister({
-			canisterId: 'ctiya-peaaa-aaaaa-qaaja-cai'
-		});
+		const actor = nftMinterCanister($page.params.id);
 		const res = await actor.update_prop_data({
 			area: 500,
 			bath: 2,

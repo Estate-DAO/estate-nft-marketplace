@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
 	import Select from '$lib/components/select/Select.svelte';
@@ -9,9 +10,7 @@
 	let data: any;
 
 	async function fetchCollectionDetails() {
-		const actor = nftMinterCanister({
-			canisterId: 'c5kvi-uuaaa-aaaaa-qaaia-cai'
-		});
+		const actor = nftMinterCanister($page.params.id);
 
 		await actor
 			.get_collection_metadata()

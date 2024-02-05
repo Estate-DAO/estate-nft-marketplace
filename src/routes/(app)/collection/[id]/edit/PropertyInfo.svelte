@@ -2,6 +2,7 @@
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
 	import Select from '$lib/components/select/Select.svelte';
+	import { page } from '$app/stores';
 
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
@@ -9,9 +10,7 @@
 	let data: any;
 
 	async function fetchCollectionDetails() {
-		const actor = nftMinterCanister({
-			canisterId: 'c5kvi-uuaaa-aaaaa-qaaia-cai'
-		});
+		const actor = nftMinterCanister($page.params.id);
 
 		data = await actor
 			.get_market_details()

@@ -2,9 +2,7 @@
 	import { provisionCanister } from '$lib/backend';
 
 	async function fetchCollections() {
-		const actor = provisionCanister({
-			canisterId: 'be2us-64aaa-aaaaa-qaabq-cai'
-		});
+		const actor = provisionCanister();
 
 		const all = await actor.get_all_minter_canisters();
 		if ('Ok' in all) {
