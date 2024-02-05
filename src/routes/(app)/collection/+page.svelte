@@ -3,7 +3,7 @@
 	import PropertyHeader from './PropertyHeader.svelte';
 </script>
 
-<div class="w-full flex flex-col items-center gap-4 p-12">
+<div class="w-full flex flex-col items-center gap-4">
 	<div class="flex gap-2 h-[40rem] overflow-hidden">
 		<img
 			alt="House"
