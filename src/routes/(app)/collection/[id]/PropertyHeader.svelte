@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import Button from '$lib/components/button/Button.svelte';
 	import Actions from './Actions.svelte';
 	import Details from './Details.svelte';
 	import Documents from './Documents.svelte';
@@ -26,6 +28,7 @@
 	</div>
 	<div class="font-thin text-2xl">McAllen, TX (USA)</div>
 	<div class="font-light text-2xl">3 Beds | 2 Baths | 2,112.00 sq. ft.</div>
+	<Button secondary href="/collection/{$page.params.id}/edit">Edit</Button>
 	<PropertyInfoCards />
 	<Tabs {tabs} bind:selected />
 	{#if selected === 'details'}

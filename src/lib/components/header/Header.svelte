@@ -10,13 +10,13 @@
 	class="w-full fixed z-50 h-20 shadow-sm flex items-center justify-between px-8 font-light transition-all bg-white/75 backdrop-blur-xl"
 >
 	{#if onCollectionPage}
-		<a href="/market">← All listings</a>
+		<a href="/market" class="z-[1]">← All listings</a>
 	{/if}
 
-	<div class="absolute inset-x-0 flex justify-center">
+	<div class="absolute z-0 inset-x-0 flex justify-center">
 		<EstateDaoLogo class="h-10" />
 	</div>
-	<div class="absolute right-8 flex items-center gap-8">
+	<div class="absolute z-[1] right-8 flex items-center gap-8">
 		<a href="/collection/new">Create collection</a>
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}

@@ -5,6 +5,7 @@
 	import PropertyInfo from './PropertyInfo.svelte';
 	import DocumentsInfo from './DocumentsInfo.svelte';
 	import { page } from '$app/stores';
+	import FinancialInfo from './FinancialInfo.svelte';
 
 	async function editData() {
 		const actor = nftMinterCanister($page.params.id);
@@ -20,7 +21,7 @@
 </script>
 
 <div class="flex flex-col gap-12">
-	<EditHeader bind:selected={selectedTab} />
+	<EditHeader on:cancel={() => history.back()} bind:selected={selectedTab} />
 
 	{#if selectedTab === 'basic'}
 		<BasicInfo />
@@ -28,5 +29,7 @@
 		<PropertyInfo />
 	{:else if selectedTab === 'documents'}
 		<DocumentsInfo />
+	{:else if selectedTab === 'financials'}
+		<FinancialInfo />
 	{/if}
 </div>

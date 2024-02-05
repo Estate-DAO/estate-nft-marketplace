@@ -36,8 +36,12 @@
 			<Dropdown
 				title="Location"
 				options={[
-					{ value: 'asc', label: 'Ascending' },
-					{ value: 'desc', label: 'Descending' }
+					{ value: 'texas', label: 'Texas' },
+					{ value: 'winnipeg', label: 'Winnipeg' },
+					{ value: 'new york', label: 'New York' },
+					{ value: 'california', label: 'California' },
+					{ value: 'florida', label: 'Florida' },
+					{ value: 'colorado', label: 'Colorado' }
 				]}
 			>
 				<LocationIcon slot="leading" />
@@ -46,8 +50,10 @@
 			<Dropdown
 				title="Sort"
 				options={[
-					{ value: 'asc', label: 'Ascending' },
-					{ value: 'desc', label: 'Descending' }
+					{ value: 'new', label: 'New' },
+					{ value: 'popularity', label: 'Popularity' },
+					{ value: 'price-lth', label: 'Price: Low to High' },
+					{ value: 'price-htl', label: 'Price: High to Low' }
 				]}
 			>
 				<SortIcon slot="leading" />
@@ -61,9 +67,9 @@
 		<PlusIcon class="animate-spin w-10 h-10" />
 	</div>
 {:else}
-	<div class="flex py-12 items-center gap-8 justify-normal px-16 flex-wrap">
+	<div class="flex py-12 items-center gap-8 justify-normal pl-6 flex-wrap">
 		{#each Array(20) as _, i}
-			<Card id={i} />
+			<Card id={i} imgSrc={`https://source.unsplash.com/random/?house,country,${i}`} />
 		{/each}
 	</div>
 {/if}
