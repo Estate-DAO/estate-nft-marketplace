@@ -29,10 +29,10 @@
 
 <div class="py-4 sticky top-20 z-40">
 	<div
-		class="rounded-xl p-4 bg-white/75 flex items-center gap-x-8 z-[2] justify-between shadow-sm backdrop-blur-xl border-[1px] border-gray-50"
+		class="rounded-xl p-4 bg-white/75 flex gap-4 z-[2] justify-between shadow-sm backdrop-blur-xl border-[1px] border-gray-50"
 	>
 		<TabsGroup label="Status" selected="all" />
-		<div class="flex items-center gap-x-4">
+		<div class="flex flex-wrap items-center gap-4">
 			<Dropdown
 				title="Location"
 				options={[

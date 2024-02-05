@@ -1,4 +1,8 @@
 <script lang="ts">
+	import Dropdown from '../dropdown/Dropdown.svelte';
+	import HomeIcon from '../icons/HomeIcon.svelte';
+	import Select from '../select/Select.svelte';
+
 	export let label: string;
 	export let selected = '';
 	export let options: { value: string; label: string }[] = [
@@ -23,18 +27,17 @@
 
 <div>
 	<div class="sm:hidden">
-		<label for="tabs" class="sr-only">{label}</label>
-		<!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
-		<select
-			id="tabs"
-			name="tabs"
-			class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
+		<Dropdown
+			title="Availablity"
+			options={[
+				{ value: 'available', label: 'Available' },
+				{ value: 'sold-out', label: 'Sold out' },
+				{ value: 'upcoming', label: 'Upcoming' },
+				{ value: 'all', label: 'All' }
+			]}
 		>
-			<option>Available</option>
-			<option>Sold out</option>
-			<option>Upcoming</option>
-			<option>All</option>
-		</select>
+			<HomeIcon slot="leading" />
+		</Dropdown>
 	</div>
 	<div class="hidden sm:block">
 		<nav class="flex space-x-4" aria-label="Tabs">

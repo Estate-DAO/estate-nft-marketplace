@@ -18,7 +18,7 @@
 	<div class="absolute z-0 inset-x-0 flex justify-center">
 		<EstateDaoLogo class="h-10" />
 	</div>
-	<div class="lg:hidden">
+	<div class="lg:hidden absolute right-8">
 		<MenuIcon class="h-6 w-6" />
 	</div>
 	<div class="absolute z-[1] lg:flex hidden right-8 items-center gap-8">
