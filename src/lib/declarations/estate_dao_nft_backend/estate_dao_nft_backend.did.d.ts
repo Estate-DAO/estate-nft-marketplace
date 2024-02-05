@@ -49,7 +49,6 @@ export interface Metadata {
   'supply_cap' : number,
   'nft_token_id' : string,
   'desc' : string,
-  'logo' : string,
   'collection_id' : string,
   'collection_name' : string,
   'nft_uri' : string,
@@ -57,6 +56,7 @@ export interface Metadata {
   'nft_symbol' : string,
 }
 export interface MonthlyGrossRents {
+  'total_monthly_cost' : [] | [number],
   'llc_monthly_franchise_tax' : [] | [number],
   'monthly_cash_flow' : [] | [number],
   'property_insurance' : [] | [number],
@@ -67,33 +67,36 @@ export interface MonthlyGrossRents {
   'monthly_utiliiies' : [] | [number],
 }
 export interface PropDetails {
-  'year_built' : [] | [string],
-  'purchase_price' : [] | [string],
-  'yields' : [] | [string],
-  'projected_rent' : [] | [string],
-  'min_investment' : [] | [string],
+  'year_built' : [] | [number],
+  'purchase_price' : [] | [number],
+  'yields' : [] | [number],
+  'projected_rent' : [] | [number],
+  'min_investment' : [] | [number],
 }
 export interface PropertyData {
-  'bed' : number,
-  'area' : number,
-  'bath' : number,
+  'bed' : [] | [number],
+  'State' : [] | [string],
+  'area' : [] | [number],
+  'bath' : [] | [number],
+  'Country' : [] | [string],
 }
 export type Result = { 'Ok' : CollectionMetadata } |
   { 'Err' : string };
-export type Result_1 = { 'Ok' : MarketDetails } |
+export type Result_1 = { 'Ok' : Status } |
   { 'Err' : string };
-export type Result_2 = { 'Ok' : Metadata } |
+export type Result_2 = { 'Ok' : MarketDetails } |
   { 'Err' : string };
-export type Result_3 = { 'Ok' : string } |
+export type Result_3 = { 'Ok' : Metadata } |
   { 'Err' : string };
-export type Result_4 = { 'Ok' : Status } |
+export type Result_4 = { 'Ok' : Principal } |
   { 'Err' : string };
 export type Result_5 = { 'Ok' : PropertyData } |
   { 'Err' : string };
-export type Result_6 = { 'Ok' : Principal } |
+export type Result_6 = { 'Ok' : string } |
   { 'Err' : string };
 export type Status = { 'Ended' : null } |
   { 'Live' : null } |
+  { 'Draft' : null } |
   { 'Upcoming' : null };
 export interface TotalInvestmentValue {
   'homebase_closing_fee' : [] | [string],
@@ -108,19 +111,22 @@ export interface TotalReturns {
 export interface _SERVICE {
   'collection_image' : ActorMethod<[], Array<string>>,
   'get_collection_metadata' : ActorMethod<[], Result>,
-  'get_collection_status' : ActorMethod<[], Result_4>,
-  'get_market_details' : ActorMethod<[], Result_1>,
-  'get_metadata' : ActorMethod<[string], Result_2>,
+  'get_collection_status' : ActorMethod<[], Result_1>,
+  'get_market_details' : ActorMethod<[], Result_2>,
+  'get_metadata' : ActorMethod<[string], Result_3>,
+  'get_owner_of_NFT' : ActorMethod<[string], Result_4>,
   'get_prop_data' : ActorMethod<[], Result_5>,
-  'init_collection' : ActorMethod<[string, string, Principal], Result_3>,
-  'mint' : ActorMethod<[string, string, Principal], Result_3>,
-  'update_additional_details' : ActorMethod<[AdditionalDetails], Result_3>,
+  'init_collection' : ActorMethod<[string, string, Principal], Result_6>,
+  'mint' : ActorMethod<[string, string, Principal], Result_6>,
+  'update_additional_details' : ActorMethod<[AdditionalDetails], Result_6>,
   'update_doc_details' : ActorMethod<
     [Array<Array<[string, string]>>],
-    Result_3
+    Result_6
   >,
-  'update_financial_details' : ActorMethod<[FinancialDetails], Result_3>,
-  'update_market_details' : ActorMethod<[MarketDetails], Result_3>,
-  'update_prop_data' : ActorMethod<[PropertyData], Result_3>,
-  'update_prop_det' : ActorMethod<[PropDetails], Result_3>,
+  'update_financial_details' : ActorMethod<[FinancialDetails], Result_6>,
+  'update_market_details' : ActorMethod<[MarketDetails], Result_6>,
+  'update_name_desc' : ActorMethod<[[] | [string], [] | [string]], Result_6>,
+  'update_prop_data' : ActorMethod<[PropertyData], Result_6>,
+  'update_prop_det' : ActorMethod<[PropDetails], Result_6>,
+  'update_status' : ActorMethod<[Status], Result_6>,
 }

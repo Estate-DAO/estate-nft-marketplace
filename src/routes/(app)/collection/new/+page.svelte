@@ -18,6 +18,7 @@
 			const actor = provisionCanister();
 			res = await actor.all_canister_create(name, location);
 		} catch (e) {
+			console.error(e);
 			error = 'Something went wrong. Please try again later.';
 		} finally {
 			loading = false;
@@ -34,7 +35,7 @@
 <div class="flex flex-col gap-12">
 	<div class="relative border-b border-gray-200 pb-5 sm:pb-0">
 		<div class="flex items-end justify-between py-4">
-			<div class="text-4xl">Create new Collection</div>
+			<div class="text-4xl">Create new collection</div>
 			<div class="mt-3 flex gap-3">
 				<Button disabled={loading} on:click={() => history.back()} secondary>Cancel</Button>
 				<Button {loading} disabled={loading} on:click={() => createCollection()}>Create</Button>
