@@ -10,7 +10,7 @@ export default defineConfig({
 		'process.env.CANISTER_ID_PROVISION_CANISTER_BACKEND': JSON.stringify(
 			'br5f7-7uaaa-aaaaa-qaaca-cai'
 		),
-		'process.env.INTERNET_IDENTITY_CANISTER_ID': JSON.stringify('qhbym-qaaaa-aaaaa-aaafq-cai'),
+		'process.env.INTERNET_IDENTITY_CANISTER_ID': JSON.stringify('ajuq4-ruaaa-aaaaa-qaaga-cai'),
 		'process.env.DFX_NETWORK': JSON.stringify('local')
 	},
 	server: {
