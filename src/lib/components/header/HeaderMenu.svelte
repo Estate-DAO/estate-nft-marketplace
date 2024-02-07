@@ -48,7 +48,7 @@
 	</div>
 	<div class="py-1" role="none">
 		<svelte:element
-			this={$authState.isLoggedIn ? 'a' : 'button'}
+			this={$authState.isLoggedIn ? 'button' : 'a'}
 			href={$authState.isLoggedIn ? undefined : '/login'}
 			on:click={() => {
 				if ($authState.isLoggedIn) {
@@ -56,7 +56,7 @@
 				}
 				dispatch('selected');
 			}}
-			class="text-gray-700 cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
+			class="text-gray-700 w-full text-start cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
 			role="menuitem"
 			tabindex="-1"
 			id="menu-item-4"

@@ -7,9 +7,9 @@
 	import UserIcon from '../icons/UserIcon.svelte';
 	import HeaderMenu from './HeaderMenu.svelte';
 
-	$: onCollectionPage = $page.url.pathname.includes('collection');
-	$: console.log({ menuOpen });
 	let menuOpen = false;
+
+	$: onCollectionPage = $page.url.pathname.includes('collection');
 </script>
 
 <div
