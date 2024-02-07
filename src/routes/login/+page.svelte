@@ -79,7 +79,7 @@
 				</Button>
 				<p class="text-center text-sm text-gray-500 max-w-xs">
 					By creating an account you agree to our
-					<a href="#t&c" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+					<a href="/tc" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
 						Terms and conditions
 					</a>
 				</p>
@@ -88,9 +88,9 @@
 					You are already logged in!
 				</h2>
 				<Button href="/market" class="w-min">Go to the marketplace</Button>
-				<Button on:click={logout} loading={!$authHelper?.init} secondary class="w-min"
-					>Logout</Button
-				>
+				<Button on:click={logout} loading={!$authHelper?.init} secondary class="w-min">
+					Logout
+				</Button>
 			{/if}
 		</div>
 	</div>
