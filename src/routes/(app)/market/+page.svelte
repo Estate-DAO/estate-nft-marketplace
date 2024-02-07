@@ -23,6 +23,7 @@
 					assetCanId: o.asset_canister.toText(),
 					minterCanId: o.minter_canister.toText()
 				}));
+				console.log(collections);
 			}
 		} catch (error) {
 			console.error(error);
@@ -77,7 +78,7 @@
 	<div class="flex py-12 items-center gap-8 justify-normal pl-6 flex-wrap">
 		{#each collections as { assetCanId, minterCanId }, i}
 			<Card
-				id={`${assetCanId}@${minterCanId}`}
+				id={`${minterCanId}@${assetCanId}`}
 				imgSrc={`https://source.unsplash.com/random/?house,country,${i}`}
 			/>
 		{/each}

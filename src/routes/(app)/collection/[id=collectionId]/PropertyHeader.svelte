@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import Button from '$lib/components/button/Button.svelte';
 	import Actions from './Actions.svelte';
 	import Details from './Details.svelte';

@@ -1,8 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { nftMinterCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
+	import { getCollectionId } from '../collectionId.context';
 	import DocumentUpload from './DocumentUpload.svelte';
+
+	const { minterCanId } = getCollectionId();
 
 	let documents: {
 		url: string;
@@ -18,7 +20,7 @@
 	}
 
 	function uploadDocAndUpdate() {
-		const actor = nftMinterCanister($page.params.id);
+		const actor = nftMinterCanister(minterCanId);
 	}
 </script>
 

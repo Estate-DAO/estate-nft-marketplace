@@ -29,6 +29,7 @@
 	async function fetchDetails() {
 		loading = true;
 		try {
+			console.log('fetching data for', minterCanId);
 			const actor = nftMinterCanister(minterCanId);
 
 			const res = await actor.get_collection_metadata();
