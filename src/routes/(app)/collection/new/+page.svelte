@@ -2,6 +2,8 @@
 	import { provisionCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 	import Input from '$lib/components/input/Input.svelte';
+	import { authState } from '$lib/stores/auth';
+	import { Principal } from '@dfinity/principal';
 	import { slide } from 'svelte/transition';
 
 	let name = '';
@@ -9,14 +11,23 @@
 	let loading = false;
 	let error = '';
 
-	let res: any;
+	let data: any;
 
 	async function createCollection() {
 		try {
 			if (loading) return;
 			loading = true;
 			const actor = provisionCanister();
-			res = await actor.all_canister_create(name, location);
+			const res = await actor.all_canister_create(name, location);
+			data = { created: res };
+			if ('Ok' in res) {
+				if ($authState.isLoggedIn) {
+					data.authorized = await actor.grant_commit_permission(
+						res.Ok.asset_canister,
+						Principal.from($authState.idString)
+					);
+				} else console.error('Not logged in');
+			}
 		} catch (e) {
 			console.error(e);
 			error = 'Something went wrong. Please try again later.';
@@ -26,9 +37,9 @@
 	}
 </script>
 
-{#if res}
+{#if data}
 	<pre transition:slide class="text-sm p-4 bg-gray-100 rounded-xl">
-    {JSON.stringify(res, null, 4)}
+    {JSON.stringify(data, null, 4)}
   </pre>
 {/if}
 

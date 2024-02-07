@@ -14,12 +14,13 @@
 
 	function handleUpload(files: FileList | null) {
 		if (files && files[0]) {
-			console.log('selected file', files[0]);
+			dispatch('file', files[0]);
 		}
 	}
 
 	const dispatch = createEventDispatcher<{
 		delete: void;
+		file: File;
 	}>();
 </script>
 
