@@ -1,8 +1,7 @@
 <script lang="ts">
 	import ImageIcon from '$lib/components/icons/ImageIcon.svelte';
-	import Button from '../button/Button.svelte';
 
-	export let id: number;
+	export let id: string;
 	export let imgSrc = ''; //https://source.unsplash.com/random/?house,country,{id}
 </script>
 

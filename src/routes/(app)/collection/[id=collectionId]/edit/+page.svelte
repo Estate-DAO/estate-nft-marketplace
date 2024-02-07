@@ -4,13 +4,15 @@
 	import BasicInfo from './BasicInfo.svelte';
 	import PropertyInfo from './PropertyInfo.svelte';
 	import DocumentsInfo from './DocumentsInfo.svelte';
-	import { page } from '$app/stores';
 	import MarketInfo from './MarketInfo.svelte';
 	import AdditionalInfo from './AdditionalInfo.svelte';
 	import FinancialInfo from './FinancialInfo.svelte';
+	import { getCollectionId } from '../collectionId.context';
+
+	const { minterCanId } = getCollectionId();
 
 	async function editData() {
-		const actor = nftMinterCanister($page.params.id);
+		const actor = nftMinterCanister(minterCanId);
 		const res = await actor.update_name_desc(['new name'], ['new desc']);
 		console.log({ res });
 	}

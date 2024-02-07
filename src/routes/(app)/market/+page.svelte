@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Card from '$lib/components/card/Card.svelte';
 	import Dropdown from '$lib/components/dropdown/Dropdown.svelte';
 	import LocationIcon from '$lib/components/icons/LocationIcon.svelte';
@@ -9,13 +9,20 @@
 	import { onMount } from 'svelte';
 
 	let loading = true;
+	let collections: {
+		assetCanId: string;
+		minterCanId: string;
+	}[] = [];
 
 	async function fetchCollections() {
 		try {
 			const actor = provisionCanister();
-			const all = await actor.get_all_minter_canisters();
+			const all = await actor.get_all_canisters();
 			if ('Ok' in all) {
-				console.log({ all: all.Ok.map((o) => o.toText()) });
+				collections = all.Ok.map((o) => ({
+					assetCanId: o.asset_canister.toText(),
+					minterCanId: o.minter_canister.toText()
+				}));
 			}
 		} catch (error) {
 			console.error(error);
@@ -31,7 +38,7 @@
 	<div
 		class="rounded-xl p-4 bg-white/75 flex gap-4 z-[2] justify-between shadow-sm backdrop-blur-xl border-[1px] border-gray-50"
 	>
-		<TabsGroup label="Status" selected="all" />
+		<TabsGroup defaultValue="Status" selected="all" />
 		<div class="flex flex-wrap items-center gap-4">
 			<Dropdown
 				title="Location"
@@ -68,8 +75,11 @@
 	</div>
 {:else}
 	<div class="flex py-12 items-center gap-8 justify-normal pl-6 flex-wrap">
-		{#each Array(20) as _, i}
-			<Card id={i} imgSrc={`https://source.unsplash.com/random/?house,country,${i}`} />
+		{#each collections as { assetCanId, minterCanId }, i}
+			<Card
+				id={`${assetCanId}@${minterCanId}`}
+				imgSrc={`https://source.unsplash.com/random/?house,country,${i}`}
+			/>
 		{/each}
 	</div>
 {/if}

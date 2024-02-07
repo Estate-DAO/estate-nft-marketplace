@@ -8,10 +8,13 @@
 	import Market from './Market.svelte';
 	import PropertyInfoCards from './PropertyInfoCards.svelte';
 	import Tabs from './Tabs.svelte';
+	import { getCollectionId } from './collectionId.context';
 
 	const tabs = ['details', 'financials', 'documents', 'the market'] as TABTYPE[];
 	type TABTYPE = 'details' | 'financials' | 'documents' | 'the market';
 	let selected: TABTYPE = 'details';
+
+	const { id } = getCollectionId();
 </script>
 
 <div class="flex flex-col grow gap-4">
@@ -28,7 +31,7 @@
 	</div>
 	<div class="font-thin text-2xl">McAllen, TX (USA)</div>
 	<div class="font-light text-2xl">3 Beds | 2 Baths | 2,112.00 sq. ft.</div>
-	<Button secondary href="/collection/{$page.params.id}/edit">Edit</Button>
+	<Button secondary href="/collection/{id}/edit">Edit</Button>
 	<PropertyInfoCards />
 	<Tabs {tabs} bind:selected />
 	{#if selected === 'details'}

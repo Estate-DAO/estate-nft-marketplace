@@ -1,9 +1,8 @@
 <script lang="ts">
 	import Dropdown from '../dropdown/Dropdown.svelte';
 	import HomeIcon from '../icons/HomeIcon.svelte';
-	import Select from '../select/Select.svelte';
 
-	export let label: string;
+	export let defaultValue: string;
 	export let selected = '';
 	export let options: { value: string; label: string }[] = [
 		{
@@ -48,7 +47,7 @@
 						? 'bg-white border-[1px] border-gray-100 shadow-md text-black'
 						: 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'}"
 				>
-					{label}
+					{defaultValue}
 				</button>
 			{/each}
 		</nav>

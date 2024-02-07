@@ -1,18 +1,19 @@
 <script lang="ts">
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
-	import { page } from '$app/stores';
-
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import Select from '$lib/components/select/Select.svelte';
+	import { getCollectionId } from '../collectionId.context';
 
 	export let loading = true;
+
+	const { minterCanId } = getCollectionId();
 
 	export const saveData = async () => {
 		loading = true;
 		try {
-			const actor = nftMinterCanister($page.params.id);
+			const actor = nftMinterCanister(minterCanId);
 			const res = await actor.update_additional_details({
 				year_built: [yearBuilt],
 				occupied: [occupied],
@@ -52,7 +53,7 @@
 	async function fetchDetails() {
 		loading = true;
 		try {
-			const actor = nftMinterCanister($page.params.id);
+			const actor = nftMinterCanister(minterCanId);
 
 			const res = await actor.get_collection_metadata();
 			allData = res;
