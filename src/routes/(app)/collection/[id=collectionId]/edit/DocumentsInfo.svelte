@@ -9,21 +9,18 @@
 	let documents: {
 		url: string;
 		name: string;
-	}[] = [
-		{ url: '/', name: 'Registration certificate' },
-		{ url: '/', name: 'Return on Investment Prediction' }
-	];
+	}[] = [];
 
 	function removeDoc(idx: number) {
 		documents.splice(idx, 1);
 		documents = [...documents];
 	}
 
-	async function uploadDocAndUpdate(file: File) {
+	async function uploadDocAndUpdate({ name, file }: { name: string; file: File }) {
 		console.log('uploading', file);
 		const manager = assetManager(assetCanId);
-		console.log('created asset manager');
 		const actor = nftMinterCanister(minterCanId);
+		console.log('created asset manager & actor');
 
 		const assetRes = await manager.store(file);
 

@@ -6,6 +6,8 @@
 	export let placeholder: string = '';
 	export let type: 'text' | 'password' | 'number' | 'email' = 'text';
 	export let disabled = false;
+	let classes = '';
+	export { classes as class };
 
 	let inputEl: HTMLInputElement;
 
@@ -13,7 +15,7 @@
 </script>
 
 <label
-	class="flex flex-col gap-2 transition-opacity {disabled
+	class="flex flex-col gap-2 transition-opacity {classes} {disabled
 		? 'pointer-events-none opacity-50'
 		: 'opacity-100'}"
 >

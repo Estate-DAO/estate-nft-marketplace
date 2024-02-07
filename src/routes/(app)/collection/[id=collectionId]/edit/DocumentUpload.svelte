@@ -9,26 +9,42 @@
 
 	export let name = '';
 	export let type: 'document' | 'image';
-
-	let inputEl: HTMLInputElement;
-
-	function handleUpload(files: FileList | null) {
-		if (files && files[0]) {
-			dispatch('file', files[0]);
-		}
-	}
+	export let loading = false;
 
 	const dispatch = createEventDispatcher<{
 		delete: void;
-		file: File;
+		file: {
+			name: string;
+			file: File;
+		};
 	}>();
+
+	let inputEl: HTMLInputElement;
+	let selectedFile: File | null;
+	let _name = name;
+
+	function dispatchUpload() {
+		if (!selectedFile) return;
+		dispatch('file', {
+			name: _name,
+			file: selectedFile
+		});
+	}
+	function handleUpload(files: FileList | null) {
+		if (files && files[0]) {
+			selectedFile = files[0];
+		}
+	}
 </script>
 
 <div
 	transition:slide
 	class="bg-gray-50 border border-gray-100 relative p-4 rounded-lg flex flex-col mt-8 overflow-hidden"
 >
-	<Input label="Document's name" type="text" value={name} />
+	<div class="flex items-end gap-2">
+		<Input label="Document's name" type="text" bind:value={_name} class="flex-1" />
+		<Button disabled={!_name || !selectedFile} {loading} on:click={dispatchUpload}>Upload</Button>
+	</div>
 	<div class="absolute top-2 right-4">
 		<Button on:click={() => dispatch('delete')} iconOnly secondary>
 			<PlusIcon class="h-6 w-6 rotate-45" />
@@ -45,7 +61,14 @@
 				<ImageIcon class="h-12 w-12 text-gray-300" />
 			{/if}
 			<div class="relative font-semibold text-sm leading-6 text-black">
-				<span>Upload a {type}</span>
+				<span>
+					{#if selectedFile}
+						Change selection
+					{:else}
+						Upload a {type}
+					{/if}
+				</span>
+
 				<input
 					bind:this={inputEl}
 					on:change={(e) => handleUpload(e.currentTarget.files)}
@@ -57,7 +80,11 @@
 				/>
 			</div>
 			<p class="text-xs leading-5 text-gray-600">
-				{type === 'document' ? 'PDF, PPT, DOC(X) or XLSX' : 'PNG, JPG or JPEG'} up to 10MB
+				{#if selectedFile}
+					File selected: {selectedFile.name}
+				{:else}
+					{type === 'document' ? 'PDF, PPT, DOC(X) or XLSX' : 'PNG, JPG or JPEG'} up to 10MB
+				{/if}
 			</p>
 		</label>
 	</div>
