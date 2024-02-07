@@ -7,9 +7,9 @@
 	import Button from '$lib/components/button/Button.svelte';
 	import TabItem from '$lib/components/tab/TabItem.svelte';
 	import { createEventDispatcher } from 'svelte';
-	import { page } from '$app/stores';
 
 	export let selected: SelectedEditTab = 'basic';
+	export let loading = false;
 
 	const dispatch = createEventDispatcher<{
 		cancel: void;
@@ -22,7 +22,7 @@
 		<div class="text-4xl">Edit Collection</div>
 		<div class="mt-3 flex gap-3">
 			<Button on:click={() => dispatch('cancel')} secondary>Cancel</Button>
-			<Button on:click={() => dispatch('save')}>Save</Button>
+			<Button {loading} on:click={() => dispatch('save')}>Save</Button>
 		</div>
 	</div>
 	<div class="mt-4">
@@ -50,3 +50,4 @@
 		</div>
 	</div>
 </div>
+<slot />

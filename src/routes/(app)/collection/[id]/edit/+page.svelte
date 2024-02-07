@@ -9,27 +9,26 @@
 
 	async function editData() {
 		const actor = nftMinterCanister($page.params.id);
-		const res = await actor.update_prop_data({
-			area: 500,
-			bath: 2,
-			bed: 3
-		});
+		const res = await actor.update_name_desc(['new name'], ['new desc']);
 		console.log({ res });
 	}
 
 	let selectedTab: SelectedEditTab = 'basic';
+	let loading = false;
 </script>
 
 <div class="flex flex-col gap-12">
-	<EditHeader on:cancel={() => history.back()} bind:selected={selectedTab} />
-
-	{#if selectedTab === 'basic'}
-		<BasicInfo />
-	{:else if selectedTab === 'property'}
-		<PropertyInfo />
-	{:else if selectedTab === 'documents'}
-		<DocumentsInfo />
-	{:else if selectedTab === 'financials'}
-		<FinancialInfo />
-	{/if}
+	<EditHeader bind:loading on:cancel={() => history.back()} bind:selected={selectedTab}>
+		<svelte:fragment>
+			{#if selectedTab === 'basic'}
+				<BasicInfo bind:loading />
+			{:else if selectedTab === 'property'}
+				<PropertyInfo />
+			{:else if selectedTab === 'documents'}
+				<DocumentsInfo />
+			{:else if selectedTab === 'financials'}
+				<FinancialInfo />
+			{/if}
+		</svelte:fragment>
+	</EditHeader>
 </div>
