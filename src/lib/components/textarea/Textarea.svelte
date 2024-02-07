@@ -2,6 +2,7 @@
 	export let label: string;
 	export let value = '';
 	export let placeholder = '';
+	export let disabled = false;
 	export let rows: number = 3;
 	export let hint = '';
 </script>
@@ -9,6 +10,7 @@
 <label class="flex flex-col gap-2">
 	<span class="text-sm font-medium leading-6 text-gray-900">{label}</span>
 	<textarea
+		{disabled}
 		{placeholder}
 		bind:value
 		{rows}

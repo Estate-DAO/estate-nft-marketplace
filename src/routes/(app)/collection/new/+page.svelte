@@ -2,12 +2,13 @@
 	import { provisionCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 	import Input from '$lib/components/input/Input.svelte';
+	import Textarea from '$lib/components/textarea/Textarea.svelte';
 	import { authState } from '$lib/stores/auth';
 	import { Principal } from '@dfinity/principal';
 	import { slide } from 'svelte/transition';
 
 	let name = '';
-	let location = '';
+	let description = '';
 	let loading = false;
 	let error = '';
 
@@ -18,7 +19,7 @@
 			if (loading) return;
 			loading = true;
 			const actor = provisionCanister();
-			const res = await actor.all_canister_create(name, location);
+			const res = await actor.all_canister_create(name, description);
 			data = { created: res };
 			if ('Ok' in res) {
 				if ($authState.isLoggedIn) {
@@ -55,11 +56,11 @@
 	</div>
 	<div class="flex flex-col gap-4">
 		<Input disabled={loading} bind:value={name} label="Title" placeholder="Enter a title" />
-		<Input
+		<Textarea
 			disabled={loading}
-			bind:value={location}
-			label="Location"
-			placeholder="Enter the property location"
+			bind:value={description}
+			label="Description"
+			placeholder="Enter a brief description of the property"
 		/>
 		{#if error}
 			<span class="text-red-500 text-xs font-medium">Error: {error}</span>
