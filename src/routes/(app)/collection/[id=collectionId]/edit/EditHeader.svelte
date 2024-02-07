@@ -5,7 +5,6 @@
 		'additional',
 		'market',
 		'financials',
-		'documents',
 		'images'
 	];
 	export type SelectedEditTab =

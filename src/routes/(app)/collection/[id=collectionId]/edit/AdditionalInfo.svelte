@@ -2,7 +2,6 @@
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
 	import { onMount } from 'svelte';
-	import { slide } from 'svelte/transition';
 	import Select from '$lib/components/select/Select.svelte';
 	import { getCollectionId } from '../collectionId.context';
 
@@ -48,15 +47,12 @@
 	let occupied: string;
 	let floodZone: string;
 
-	let allData: any;
-
 	async function fetchDetails() {
 		loading = true;
 		try {
 			const actor = nftMinterCanister(minterCanId);
 
 			const res = await actor.get_collection_metadata();
-			allData = res;
 			if ('Ok' in res) {
 				if (res.Ok.additional_metadata[0] && res.Ok.additional_metadata[0].additional_details[0]) {
 					const details = res.Ok.additional_metadata[0].additional_details[0];
@@ -112,9 +108,3 @@
 	<Input label="School score" type="number" bind:value={schoolScore} />
 	<Input label="Crime score" type="number" bind:value={crimeScore} />
 </div>
-
-{#if allData}
-	<pre transition:slide class="text-sm p-4 bg-gray-100 rounded-xl">
-    {JSON.stringify(allData, null, 4)}
-  </pre>
-{/if}

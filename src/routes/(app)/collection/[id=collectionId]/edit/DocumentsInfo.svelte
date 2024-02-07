@@ -4,6 +4,8 @@
 	import { getCollectionId } from '../collectionId.context';
 	import DocumentUpload from './DocumentUpload.svelte';
 
+	export let loading = false;
+
 	const { minterCanId, assetCanId } = getCollectionId();
 
 	let documents: {
@@ -33,6 +35,7 @@
 <div class="flex flex-col -mt-8">
 	{#each documents as { name }, i}
 		<DocumentUpload
+			bind:loading
 			{name}
 			type="document"
 			on:delete={() => removeDoc(i)}

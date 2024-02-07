@@ -2,10 +2,11 @@
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
 	import { onMount } from 'svelte';
-	import { slide } from 'svelte/transition';
 	import { getCollectionId } from '../collectionId.context';
+	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 
 	export let loading = true;
+	export let collectionMetadata: CollectionMetadata;
 
 	const { minterCanId } = getCollectionId();
 
@@ -20,6 +21,7 @@
 				Country: [country],
 				State: [state]
 			});
+			console.log({ res });
 		} catch (_) {
 			console.error('Error fetching get_collection_metadata data');
 		} finally {
@@ -27,12 +29,11 @@
 		}
 	};
 
-	let area: number;
-	let bed: number;
-	let bath: number;
-	let country = '';
-	let state = '';
-	let allData: any;
+	let area: number = collectionMetadata.prop_data[0]?.area[0] || 0;
+	let bed: number = collectionMetadata.prop_data[0]?.bed[0] || 0;
+	let bath: number = collectionMetadata.prop_data[0]?.bath[0] || 0;
+	let country: string = collectionMetadata.prop_data[0]?.Country[0] || '';
+	let state: string = collectionMetadata.prop_data[0]?.State[0] || '';
 
 	async function fetchDetails() {
 		loading = true;
@@ -40,7 +41,7 @@
 			const actor = nftMinterCanister(minterCanId);
 
 			const res = await actor.get_collection_metadata();
-			allData = res;
+
 			if ('Ok' in res) {
 				if (res.Ok.prop_data[0]) {
 					res.Ok.prop_data[0].area[0] && (area = res.Ok.prop_data[0].area[0]);
@@ -67,9 +68,3 @@
 	<Input label="Country" bind:value={country} placeholder="Enter the country" />
 	<Input label="State" bind:value={state} placeholder="Enter the state" />
 </div>
-
-{#if allData}
-	<pre transition:slide class="text-sm p-4 bg-gray-100 rounded-xl">
-    {JSON.stringify(allData, null, 4)}
-  </pre>
-{/if}

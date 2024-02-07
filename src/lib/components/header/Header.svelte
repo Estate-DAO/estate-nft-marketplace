@@ -20,9 +20,9 @@
 		<a href="/market" class="z-[1] lg:hidden pr-4">←</a>
 	{/if}
 
-	<div class="absolute z-0 inset-x-0 flex justify-center">
+	<a href="/" class="absolute z-0 inset-x-0 flex justify-center">
 		<EstateDaoLogo class="h-10" />
-	</div>
+	</a>
 	<div class="lg:hidden absolute right-8">
 		<button on:click={() => (menuOpen = !menuOpen)}>
 			<MenuIcon class="h-6 w-6" />
@@ -44,17 +44,5 @@
 				<UserIcon class="h-4 w-4" />
 			{/if}
 		</Avatar>
-	</div>
-	<div class="relative inline-block text-left">
-		<!--
-			Dropdown menu, show/hide based on menu state.
-	
-			Entering: "transition ease-out duration-100"
-				From: "transform opacity-0 scale-95"
-				To: "transform opacity-100 scale-100"
-			Leaving: "transition ease-in duration-75"
-				From: "transform opacity-100 scale-100"
-				To: "transform opacity-0 scale-95"
-		-->
 	</div>
 </div>
