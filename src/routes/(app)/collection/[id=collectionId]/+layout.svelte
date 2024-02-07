@@ -4,7 +4,7 @@
 
 	export let data: LayoutData;
 
-	$: console.log('haha', setCollectionId(data.assetCanId, data.minterCanId));
+	$: setCollectionId(data.assetCanId, data.minterCanId);
 </script>
 
 <slot />
