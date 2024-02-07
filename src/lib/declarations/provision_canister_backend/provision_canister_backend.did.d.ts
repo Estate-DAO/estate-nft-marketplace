@@ -35,6 +35,8 @@ export type Result_4 = { 'Ok' : NFT_Metadata } |
   { 'Err' : string };
 export type Result_5 = { 'Ok' : string } |
   { 'Err' : string };
+export type Result_6 = { 'Ok' : Array<CanisterIds> } |
+  { 'Err' : string };
 export type Status = { 'Ended' : null } |
   { 'Live' : null } |
   { 'Draft' : null } |
@@ -44,6 +46,7 @@ export interface _SERVICE {
   'call_update_prop' : ActorMethod<[Principal, PropDetails], Result_3>,
   'create_new_canister' : ActorMethod<[], Result_1>,
   'filter_status' : ActorMethod<[Status], Result_2>,
+  'get_all_canisters' : ActorMethod<[], Result_6>,
   'get_all_minter_canisters' : ActorMethod<[], Result_2>,
   'grant_commit_permission' : ActorMethod<[Principal, Principal], string>,
   'revoke_commit_permission' : ActorMethod<[Principal, Principal], string>,
