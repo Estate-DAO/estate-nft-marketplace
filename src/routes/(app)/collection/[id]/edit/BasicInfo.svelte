@@ -2,7 +2,6 @@
 	import { page } from '$app/stores';
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
-	import Select from '$lib/components/select/Select.svelte';
 	import Textarea from '$lib/components/textarea/Textarea.svelte';
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
@@ -25,7 +24,7 @@
 	let description: string = '';
 	let allData: any;
 
-	async function fetchCollectionDetails() {
+	async function fetchDetails() {
 		loading = true;
 		try {
 			const actor = nftMinterCanister($page.params.id);
@@ -43,31 +42,16 @@
 		}
 	}
 
-	onMount(fetchCollectionDetails);
+	onMount(fetchDetails);
 </script>
 
 <div class="flex flex-col gap-4">
 	<Input label="Title" bind:value={name} placeholder="Enter a title" />
-	<Input label="Location" placeholder="Enter the property location" />
-	<Input
-		label="Total Supply Cap (in ICP)"
-		type="number"
-		value="1000"
-		placeholder="Enter the total supply in ICP"
-	/>
-	<Select
-		label="Set listing status"
-		value="draft"
-		options={[
-			{ value: 'draft', label: 'Draft' },
-			{ value: 'published', label: 'Published' }
-		]}
-	/>
 	<Textarea
 		bind:value={description}
 		label="Description"
 		placeholder="Enter a description"
-		rows={10}
+		rows={5}
 	/>
 </div>
 

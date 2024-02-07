@@ -5,6 +5,8 @@
 	import PropertyInfo from './PropertyInfo.svelte';
 	import DocumentsInfo from './DocumentsInfo.svelte';
 	import { page } from '$app/stores';
+	import MarketInfo from './MarketInfo.svelte';
+	import AdditionalInfo from './AdditionalInfo.svelte';
 	import FinancialInfo from './FinancialInfo.svelte';
 
 	async function editData() {
@@ -24,8 +26,12 @@
 				<BasicInfo bind:loading />
 			{:else if selectedTab === 'property'}
 				<PropertyInfo />
+			{:else if selectedTab === 'additional'}
+				<AdditionalInfo />
 			{:else if selectedTab === 'documents'}
 				<DocumentsInfo />
+			{:else if selectedTab === 'market'}
+				<MarketInfo />
 			{:else if selectedTab === 'financials'}
 				<FinancialInfo />
 			{/if}

@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 
 	export let label: string;
-	export let value: string = '';
+	export let value: string | number = '';
 	export let placeholder: string = '';
 	export let type: 'text' | 'password' | 'number' | 'email' = 'text';
 	export let disabled = false;

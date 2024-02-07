@@ -1,57 +1,74 @@
 <script lang="ts">
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
-	import Select from '$lib/components/select/Select.svelte';
 	import { page } from '$app/stores';
 
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 
-	let data: any;
+	export let loading = true;
 
-	async function fetchCollectionDetails() {
-		const actor = nftMinterCanister($page.params.id);
+	export const saveData = async () => {
+		loading = true;
+		try {
+			const actor = nftMinterCanister($page.params.id);
+			const res = await actor.update_prop_data({
+				area: [area],
+				bed: [bed],
+				bath: [bath],
+				Country: [country],
+				State: [state]
+			});
+		} catch (_) {
+			console.error('Error fetching get_collection_metadata data');
+		} finally {
+			loading = false;
+		}
+	};
 
-		data = await actor
-			.get_market_details()
-			.then((d) => (data = d))
-			.catch((e) => console.error('Error fetching get_market_details data', e));
+	let area: number;
+	let bed: number;
+	let bath: number;
+	let country = '';
+	let state = '';
+	let allData: any;
+
+	async function fetchDetails() {
+		loading = true;
+		try {
+			const actor = nftMinterCanister($page.params.id);
+
+			const res = await actor.get_collection_metadata();
+			allData = res;
+			if ('Ok' in res) {
+				if (res.Ok.prop_data[0]) {
+					res.Ok.prop_data[0].area[0] && (area = res.Ok.prop_data[0].area[0]);
+					res.Ok.prop_data[0].bed[0] && (bed = res.Ok.prop_data[0].bed[0]);
+					res.Ok.prop_data[0].bath[0] && (bath = res.Ok.prop_data[0].bath[0]);
+					country = res.Ok.prop_data[0].Country[0] || '';
+					state = res.Ok.prop_data[0].State[0] || '';
+				}
+			}
+		} catch (_) {
+			console.error('Error fetching get_collection_metadata data');
+		} finally {
+			loading = false;
+		}
 	}
 
-	onMount(fetchCollectionDetails);
+	onMount(fetchDetails);
 </script>
 
-{#if data}
+<div class="flex flex-col gap-4">
+	<Input bind:value={bed} label="Number of Bedrooms" type="number" />
+	<Input bind:value={bath} label="Number of Bathrooms" type="number" />
+	<Input bind:value={area} label="Area (in square ft.)" type="number" />
+	<Input label="Country" bind:value={country} placeholder="Enter the country" />
+	<Input label="State" bind:value={state} placeholder="Enter the state" />
+</div>
+
+{#if allData}
 	<pre transition:slide class="text-sm p-4 bg-gray-100 rounded-xl">
-    {JSON.stringify(data, null, 4)}
+    {JSON.stringify(allData, null, 4)}
   </pre>
 {/if}
-
-<div class="flex flex-col gap-4">
-	<Input label="Number of Bedrooms" type="number" value="3" />
-	<Input label="Number of Bathrooms" type="number" value="4" />
-	<Input label="Square footage" type="number" value="5000" />
-	<Input label="Price per square feet" type="number" value="1250" />
-	<Input label="Monthly rent" type="number" value="8000" />
-	<Input label="Affordibility score" type="number" value="8" />
-	<Select
-		label="Occupied"
-		value="yes"
-		options={[
-			{ value: 'Yes', label: 'Yes' },
-			{ value: 'no', label: 'No' }
-		]}
-	/>
-	<Input label="Year Built" type="number" value="2008" />
-	<Input label="Last renovated" type="number" value="2018" />
-	<Select
-		label="Flood zone"
-		value="no"
-		options={[
-			{ value: 'Yes', label: 'Yes' },
-			{ value: 'no', label: 'No' }
-		]}
-	/>
-	<Input label="School score" type="number" value="8" />
-	<Input label="Crime score" type="number" value="2" />
-</div>
