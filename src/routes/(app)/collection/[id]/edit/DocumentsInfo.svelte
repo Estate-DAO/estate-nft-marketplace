@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import { nftMinterCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 	import DocumentUpload from './DocumentUpload.svelte';
 
@@ -13,6 +15,10 @@
 	function removeDoc(idx: number) {
 		documents.splice(idx, 1);
 		documents = [...documents];
+	}
+
+	function uploadDocAndUpdate() {
+		const actor = nftMinterCanister($page.params.id);
 	}
 </script>
 
