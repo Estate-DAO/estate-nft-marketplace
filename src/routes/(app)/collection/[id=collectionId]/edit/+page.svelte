@@ -58,8 +58,6 @@
 	}
 
 	onMount(fetchDetails);
-
-	$: console.log({ collectionMetadata });
 </script>
 
 <div class="flex flex-col gap-12">
@@ -75,16 +73,28 @@
 					<BasicInfo {collectionMetadata} bind:loading bind:this={basicInfo} />
 				{:else if selectedTab === 'property'}
 					<PropertyInfo
-						propertyDetails={collectionMetadata?.additional_metadata?.[0]?.additional_details?.[0]}
+						propertyDetails={collectionMetadata?.additional_metadata?.[0]?.property_details?.[0]}
 						bind:loading
 						bind:this={propertyInfo}
 					/>
 				{:else if selectedTab === 'financials'}
-					<FinancialInfo bind:loading bind:this={financialInfo} />
-				{:else if selectedTab === 'documents'}
-					<DocumentsInfo bind:loading bind:this={documentsInfo} />
+					<FinancialInfo
+						financialDetails={collectionMetadata?.additional_metadata?.[0]?.financial_details?.[0]}
+						bind:loading
+						bind:this={financialInfo}
+					/>
 				{:else if selectedTab === 'market'}
-					<MarketInfo bind:loading bind:this={marketInfo} />
+					<MarketInfo
+						marketDetails={collectionMetadata?.additional_metadata?.[0]?.market_details?.[0]}
+						bind:loading
+						bind:this={marketInfo}
+					/>
+				{:else if selectedTab === 'documents'}
+					<DocumentsInfo
+						documents={collectionMetadata?.additional_metadata?.[0]?.documents}
+						bind:loading
+						bind:this={documentsInfo}
+					/>
 				{/if}
 			{/if}
 		</svelte:fragment>

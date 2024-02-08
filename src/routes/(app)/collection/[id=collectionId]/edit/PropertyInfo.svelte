@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	const init = (propertyDetails?: AdditionalDetails) => ({
+	const init = (propertyDetails?: PropertyDetails) => ({
 		areaSqFoot: propertyDetails?.square_footage?.[0] || 0,
 		beds: propertyDetails?.beds?.[0] || 0,
 		baths: propertyDetails?.baths?.[0] || 0,
@@ -8,7 +8,7 @@
 		crimeScore: propertyDetails?.crime_score?.[0] || 0,
 		monthlyRent: propertyDetails?.monthly_rent?.[0] || 0,
 		affordability: propertyDetails?.affordability?.[0] || 0,
-		lastRenovated: propertyDetails?.last_renovation?.[0] || '',
+		lastRenovated: propertyDetails?.last_renovated?.[0] || 0,
 		floodZone: propertyDetails?.flood_zone?.[0] || false,
 		priceSqFt: propertyDetails?.price_per_sq_foot?.[0] || 0,
 		schoolScore: propertyDetails?.school_score?.[0] || 0
@@ -19,11 +19,11 @@
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
 	import { getCollectionId } from '../collectionId.context';
-	import type { AdditionalDetails } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import type { PropertyDetails } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import Select from '$lib/components/select/Select.svelte';
 
 	export let loading = true;
-	export let propertyDetails: AdditionalDetails | undefined = undefined;
+	export let propertyDetails: PropertyDetails | undefined = undefined;
 
 	const { minterCanId } = getCollectionId();
 
@@ -46,14 +46,14 @@
 		loading = true;
 		try {
 			const actor = nftMinterCanister(minterCanId);
-			const res = await actor.update_additional_details({
+			const res = await actor.update_property_details({
 				year_built: [yearBuilt],
 				occupied: [occupied],
 				crime_score: [crimeScore],
 				monthly_rent: [monthlyRent],
 				beds: [beds],
 				affordability: [affordability],
-				last_renovation: [lastRenovated],
+				last_renovated: [lastRenovated],
 				square_footage: [areaSqFoot],
 				flood_zone: [floodZone],
 				price_per_sq_foot: [priceSqFt],
@@ -86,7 +86,7 @@
 		]}
 	/>
 	<Input label="Year Built" type="number" bind:value={yearBuilt} />
-	<Input label="Last renovated" type="text" bind:value={lastRenovated} />
+	<Input label="Last renovated" type="number" bind:value={lastRenovated} />
 	<Select
 		label="Flood zone"
 		on:change={({ detail }) => (floodZone = detail === 'yes')}

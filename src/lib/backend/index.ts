@@ -15,6 +15,7 @@ export const host = 'http://localhost:8080';
 
 export type EstateDaoActor = ActorSubclass<NFT_SERVICE>;
 export type ProvisionActor = ActorSubclass<PROVISION_SERVICE>;
+export type UnionKeyOf<U> = U extends U ? keyof U : never;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const agentOptions = (fetch?: any): HttpAgentOptions => {

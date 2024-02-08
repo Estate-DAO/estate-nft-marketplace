@@ -1,3 +1,11 @@
+<script lang="ts" context="module">
+	type Documents = [string, string][];
+	type DocumentsMap = {
+		url: string;
+		name: string;
+	};
+</script>
+
 <script lang="ts">
 	import { assetManager, nftMinterCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
@@ -5,17 +13,30 @@
 	import DocumentUpload from './DocumentUpload.svelte';
 
 	export let loading = false;
+	export let documents: Documents[] | undefined = [];
 
 	const { minterCanId, assetCanId } = getCollectionId();
 
-	let documents: {
-		url: string;
-		name: string;
-	}[] = [];
+	let documentsMap: DocumentsMap[] = [];
+
+	$: mapDocuments(documents);
+
+	function mapDocuments(documents?: Documents[]) {
+		//@ts-ignore
+		documentsMap = documents ? documents.map(([name, url]) => ({ name, url })) : [];
+	}
+
+	function addDoc() {
+		documentsMap.push({
+			url: '',
+			name: ''
+		});
+		documentsMap = [...documentsMap];
+	}
 
 	function removeDoc(idx: number) {
-		documents.splice(idx, 1);
-		documents = [...documents];
+		documentsMap.splice(idx, 1);
+		documentsMap = [...documentsMap];
 	}
 
 	async function uploadDocAndUpdate({ name, file }: { name: string; file: File }) {
@@ -33,7 +54,7 @@
 </script>
 
 <div class="flex flex-col -mt-8">
-	{#each documents as { name }, i}
+	{#each documentsMap as { name }, i}
 		<DocumentUpload
 			bind:loading
 			{name}
@@ -43,14 +64,6 @@
 		/>
 	{/each}
 	<div class="mt-8">
-		<Button
-			on:click={() => {
-				documents.push({
-					url: '',
-					name: ''
-				});
-				documents = [...documents];
-			}}>Add new</Button
-		>
+		<Button on:click={addDoc}>Add new</Button>
 	</div>
 </div>

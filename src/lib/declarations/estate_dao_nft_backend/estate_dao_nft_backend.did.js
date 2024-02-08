@@ -1,25 +1,24 @@
 export const idlFactory = ({ IDL }) => {
   const Result = IDL.Variant({ 'Ok' : IDL.Text, 'Err' : IDL.Text });
-  const AdditionalDetails = IDL.Record({
+  const Status = IDL.Variant({
+    'Ended' : IDL.Null,
+    'Live' : IDL.Null,
+    'Draft' : IDL.Null,
+    'Upcoming' : IDL.Null,
+  });
+  const PropertyDetails = IDL.Record({
     'year_built' : IDL.Opt(IDL.Nat32),
     'occupied' : IDL.Opt(IDL.Bool),
     'crime_score' : IDL.Opt(IDL.Nat32),
     'monthly_rent' : IDL.Opt(IDL.Float32),
     'beds' : IDL.Opt(IDL.Nat32),
     'affordability' : IDL.Opt(IDL.Float32),
-    'last_renovation' : IDL.Opt(IDL.Text),
     'square_footage' : IDL.Opt(IDL.Float32),
     'flood_zone' : IDL.Opt(IDL.Bool),
     'price_per_sq_foot' : IDL.Opt(IDL.Float32),
     'baths' : IDL.Opt(IDL.Nat32),
     'school_score' : IDL.Opt(IDL.Nat32),
-  });
-  const Result_1 = IDL.Variant({ 'Ok' : AdditionalDetails, 'Err' : IDL.Text });
-  const Status = IDL.Variant({
-    'Ended' : IDL.Null,
-    'Live' : IDL.Null,
-    'Draft' : IDL.Null,
-    'Upcoming' : IDL.Null,
+    'last_renovated' : IDL.Opt(IDL.Float32),
   });
   const InvestmentFinancials = IDL.Record({
     'initial_mainatance_reserve' : IDL.Opt(IDL.Float32),
@@ -63,7 +62,7 @@ export const idlFactory = ({ IDL }) => {
   });
   const AdditionalMetadata = IDL.Record({
     'documents' : IDL.Vec(IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text))),
-    'additional_details' : IDL.Opt(AdditionalDetails),
+    'property_details' : IDL.Opt(PropertyDetails),
     'financial_details' : IDL.Opt(FinancialDetails),
     'market_details' : IDL.Opt(MarketDetails),
   });
@@ -78,10 +77,10 @@ export const idlFactory = ({ IDL }) => {
     'property_images' : IDL.Vec(IDL.Text),
     'total_supply' : IDL.Nat16,
   });
-  const Result_2 = IDL.Variant({ 'Ok' : CollectionMetadata, 'Err' : IDL.Text });
-  const Result_3 = IDL.Variant({ 'Ok' : Status, 'Err' : IDL.Text });
-  const Result_4 = IDL.Variant({ 'Ok' : MarketDetails, 'Err' : IDL.Text });
-  const Result_5 = IDL.Variant({ 'Ok' : FinancialDetails, 'Err' : IDL.Text });
+  const Result_1 = IDL.Variant({ 'Ok' : CollectionMetadata, 'Err' : IDL.Text });
+  const Result_2 = IDL.Variant({ 'Ok' : Status, 'Err' : IDL.Text });
+  const Result_3 = IDL.Variant({ 'Ok' : MarketDetails, 'Err' : IDL.Text });
+  const Result_4 = IDL.Variant({ 'Ok' : FinancialDetails, 'Err' : IDL.Text });
   const Metadata = IDL.Record({
     'supply_cap' : IDL.Nat16,
     'nft_token_id' : IDL.Text,
@@ -92,25 +91,30 @@ export const idlFactory = ({ IDL }) => {
     'total_supply' : IDL.Nat16,
     'nft_symbol' : IDL.Text,
   });
-  const Result_6 = IDL.Variant({ 'Ok' : Metadata, 'Err' : IDL.Text });
-  const Result_7 = IDL.Variant({ 'Ok' : IDL.Principal, 'Err' : IDL.Text });
+  const Result_5 = IDL.Variant({ 'Ok' : Metadata, 'Err' : IDL.Text });
+  const Result_6 = IDL.Variant({ 'Ok' : IDL.Principal, 'Err' : IDL.Text });
+  const Result_7 = IDL.Variant({ 'Ok' : PropertyDetails, 'Err' : IDL.Text });
   return IDL.Service({
     'add_collection_image' : IDL.Func([IDL.Text], [Result], []),
     'collection_image' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
-    'get_additional_details' : IDL.Func([], [Result_1], ['query']),
-    'get_collection_metadata' : IDL.Func([], [Result_2], ['query']),
-    'get_collection_status' : IDL.Func([], [Result_3], ['query']),
-    'get_financial_details' : IDL.Func([], [Result_4], ['query']),
-    'get_market_details' : IDL.Func([], [Result_5], ['query']),
-    'get_metadata' : IDL.Func([IDL.Text], [Result_6], ['query']),
-    'get_owner_of_NFT' : IDL.Func([IDL.Text], [Result_7], []),
+    'get_collection_metadata' : IDL.Func([], [Result_1], ['query']),
+    'get_collection_status' : IDL.Func([], [Result_2], ['query']),
+    'get_financial_details' : IDL.Func([], [Result_3], ['query']),
+    'get_market_details' : IDL.Func([], [Result_4], ['query']),
+    'get_metadata' : IDL.Func([IDL.Text], [Result_5], ['query']),
+    'get_owner_of_NFT' : IDL.Func([IDL.Text], [Result_6], []),
+    'get_property_details' : IDL.Func([], [Result_7], ['query']),
     'init_collection' : IDL.Func(
         [IDL.Text, IDL.Text, IDL.Principal],
         [Result],
         [],
       ),
     'mint' : IDL.Func([IDL.Text, IDL.Text, IDL.Principal], [Result], []),
-    'update_additional_details' : IDL.Func([AdditionalDetails], [Result], []),
+    'update_basic_details' : IDL.Func(
+        [IDL.Opt(IDL.Text), IDL.Opt(IDL.Text), IDL.Opt(Status)],
+        [Result],
+        [],
+      ),
     'update_doc_details' : IDL.Func(
         [IDL.Vec(IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text)))],
         [Result],
@@ -118,12 +122,7 @@ export const idlFactory = ({ IDL }) => {
       ),
     'update_financial_details' : IDL.Func([FinancialDetails], [Result], []),
     'update_market_details' : IDL.Func([MarketDetails], [Result], []),
-    'update_name_desc' : IDL.Func(
-        [IDL.Opt(IDL.Text), IDL.Opt(IDL.Text)],
-        [Result],
-        [],
-      ),
-    'update_status' : IDL.Func([Status], [Result], []),
+    'update_property_details' : IDL.Func([PropertyDetails], [Result], []),
   });
 };
 export const init = ({ IDL }) => { return []; };
