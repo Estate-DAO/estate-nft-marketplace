@@ -1,5 +1,6 @@
 import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
+import type { IDL } from '@dfinity/candid';
 
 export interface CanisterIds {
   'minter_canister' : Principal,
@@ -43,12 +44,12 @@ export type Status = { 'Ended' : null } |
   { 'Upcoming' : null };
 export interface _SERVICE {
   'all_canister_create' : ActorMethod<[string, string], Result>,
-  'call_update_prop' : ActorMethod<[Principal, PropDetails], Result_3>,
-  'create_new_canister' : ActorMethod<[], Result_1>,
   'filter_status' : ActorMethod<[Status], Result_2>,
   'get_all_canisters' : ActorMethod<[], Result_6>,
   'get_all_minter_canisters' : ActorMethod<[], Result_2>,
-  'grant_commit_permission' : ActorMethod<[Principal, Principal], string>,
-  'revoke_commit_permission' : ActorMethod<[Principal, Principal], string>,
+  'grant_commit_permission' : ActorMethod<[Principal, Principal], Result_5>,
+  'revoke_commit_permission' : ActorMethod<[Principal, Principal], Result_5>,
   'test_auth_user' : ActorMethod<[], Result_2>,
 }
+export declare const idlFactory: IDL.InterfaceFactory;
+export declare const init: ({ IDL }: { IDL: IDL }) => IDL.Type[];

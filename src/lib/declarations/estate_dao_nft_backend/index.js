@@ -40,4 +40,4 @@ export const createActor = (canisterId, options = {}) => {
   });
 };
 
-export const estate_dao_nft_backend = createActor(canisterId);
+export const estate_dao_nft_backend = canisterId ? createActor(canisterId) : undefined;
