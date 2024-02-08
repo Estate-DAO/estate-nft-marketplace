@@ -29,7 +29,7 @@ export interface FinancialDetails {
   'returns' : [] | [ReturnsFinancials],
 }
 export interface InvestmentFinancials {
-  'initial_mainatance_reserve' : [] | [number],
+  'initial_maintenance_reserve' : [] | [number],
   'underlying_asset_price' : [] | [number],
   'platform_closing_fee' : [] | [number],
   'min_investment' : [] | [number],

@@ -21,7 +21,7 @@ export const idlFactory = ({ IDL }) => {
     'last_renovated' : IDL.Opt(IDL.Float32),
   });
   const InvestmentFinancials = IDL.Record({
-    'initial_mainatance_reserve' : IDL.Opt(IDL.Float32),
+    'initial_maintenance_reserve' : IDL.Opt(IDL.Float32),
     'underlying_asset_price' : IDL.Opt(IDL.Float32),
     'platform_closing_fee' : IDL.Opt(IDL.Float32),
     'min_investment' : IDL.Opt(IDL.Float32),

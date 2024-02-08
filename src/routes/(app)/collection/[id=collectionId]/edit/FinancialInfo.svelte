@@ -8,7 +8,7 @@
 		},
 		investment: {
 			initialMaintenanceReserve:
-				financialDetails?.investment?.[0]?.initial_mainatance_reserve?.[0] || 0,
+				financialDetails?.investment?.[0]?.initial_maintenance_reserve?.[0] || 0,
 			underlyingAssetPrice: financialDetails?.investment?.[0]?.underlying_asset_price?.[0] || 0,
 			platformClosingFee: financialDetails?.investment?.[0]?.platform_closing_fee?.[0] || 0,
 			mininumInvestment: financialDetails?.investment?.[0]?.min_investment?.[0] || 0
@@ -56,7 +56,7 @@
 				investment: [
 					{
 						platform_closing_fee: [investment.platformClosingFee],
-						initial_mainatance_reserve: [investment.initialMaintenanceReserve],
+						initial_maintenance_reserve: [investment.initialMaintenanceReserve],
 						underlying_asset_price: [investment.underlyingAssetPrice],
 						min_investment: [investment.mininumInvestment]
 					}
