@@ -4,7 +4,6 @@
 	import PropertyInfo from './PropertyInfo.svelte';
 	import DocumentsInfo from './DocumentsInfo.svelte';
 	import MarketInfo from './MarketInfo.svelte';
-	import AdditionalInfo from './AdditionalInfo.svelte';
 	import FinancialInfo from './FinancialInfo.svelte';
 	import { nftMinterCanister } from '$lib/backend';
 	import { getCollectionId } from '../collectionId.context';
@@ -22,7 +21,6 @@
 	let propertyInfo: PropertyInfo;
 	let documentsInfo: DocumentsInfo;
 	let marketInfo: MarketInfo;
-	let additionalInfo: AdditionalInfo;
 	let financialInfo: FinancialInfo;
 
 	async function editData() {
@@ -35,9 +33,6 @@
 				break;
 			case 'market':
 				await marketInfo.saveData();
-				break;
-			case 'additional':
-				await additionalInfo.saveData();
 				break;
 			case 'financials':
 				await financialInfo.saveData();
@@ -79,15 +74,17 @@
 				{#if selectedTab === 'basic'}
 					<BasicInfo {collectionMetadata} bind:loading bind:this={basicInfo} />
 				{:else if selectedTab === 'property'}
-					<PropertyInfo {collectionMetadata} bind:loading bind:this={propertyInfo} />
-				{:else if selectedTab === 'additional'}
-					<AdditionalInfo bind:loading bind:this={additionalInfo} />
+					<PropertyInfo
+						propertyDetails={collectionMetadata?.additional_metadata?.[0]?.additional_details?.[0]}
+						bind:loading
+						bind:this={propertyInfo}
+					/>
+				{:else if selectedTab === 'financials'}
+					<FinancialInfo bind:loading bind:this={financialInfo} />
 				{:else if selectedTab === 'documents'}
 					<DocumentsInfo bind:loading bind:this={documentsInfo} />
 				{:else if selectedTab === 'market'}
 					<MarketInfo bind:loading bind:this={marketInfo} />
-				{:else if selectedTab === 'financials'}
-					<FinancialInfo bind:loading bind:this={financialInfo} />
 				{/if}
 			{/if}
 		</svelte:fragment>
