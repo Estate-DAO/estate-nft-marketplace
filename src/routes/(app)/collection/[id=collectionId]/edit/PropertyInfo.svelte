@@ -47,22 +47,22 @@
 		try {
 			const actor = nftMinterCanister(minterCanId);
 			const res = await actor.update_property_details({
-				year_built: [yearBuilt],
+				year_built: [Number(yearBuilt)],
 				occupied: [occupied],
-				crime_score: [crimeScore],
-				monthly_rent: [monthlyRent],
-				beds: [beds],
-				affordability: [affordability],
-				last_renovated: [lastRenovated],
-				square_footage: [areaSqFoot],
+				crime_score: [Number(crimeScore)],
+				monthly_rent: [Number(monthlyRent)],
+				beds: [Number(beds)],
+				affordability: [Number(affordability)],
+				last_renovated: [Number(lastRenovated)],
+				square_footage: [Number(areaSqFoot)],
 				flood_zone: [floodZone],
-				price_per_sq_foot: [priceSqFt],
-				baths: [baths],
-				school_score: [schoolScore]
+				price_per_sq_foot: [Number(priceSqFt)],
+				baths: [Number(baths)],
+				school_score: [Number(schoolScore)]
 			});
 			console.log('updated', { res });
-		} catch (_) {
-			console.error('Error fetching get_collection_metadata data');
+		} catch (e) {
+			console.error('Error update_property_details', e);
 		} finally {
 			loading = false;
 		}

@@ -39,9 +39,9 @@
 		try {
 			const actor = nftMinterCanister(minterCanId);
 			const res = await actor.update_market_details({
-				annual_popullation_growth: [annualPopulationGrowth],
-				average_rent: [averageRent],
-				median_home_sale_price: [medianHomeSalePrice],
+				annual_popullation_growth: [Number(annualPopulationGrowth)],
+				average_rent: [Number(averageRent)],
+				median_home_sale_price: [Number(medianHomeSalePrice)],
 				country: [country],
 				city: [city],
 				state: [state],
@@ -49,8 +49,8 @@
 				coordinates: [coordinates]
 			});
 			console.log('updated', { res });
-		} catch (_) {
-			console.error('Error fetching get_collection_metadata data');
+		} catch (e) {
+			console.error('Error update_market_details', e);
 		} finally {
 			loading = false;
 		}

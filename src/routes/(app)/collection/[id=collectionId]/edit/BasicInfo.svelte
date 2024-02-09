@@ -36,7 +36,7 @@
 			);
 			console.log('updated', { res });
 		} catch (e) {
-			console.error('Error saving update_basic_details data', e);
+			console.error('Error update_basic_details data', e);
 		} finally {
 			loading = false;
 		}

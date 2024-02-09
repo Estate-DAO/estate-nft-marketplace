@@ -49,41 +49,41 @@
 		try {
 			const actor = nftMinterCanister(minterCanId);
 			const res = await actor.update_financial_details({
-				expense_to_income_ratio: [overall.expenseToIncomeRatio],
-				total_monthly_cost: [overall.totalMonthlyCost],
-				monthly_cash_flow: [overall.montlyCashFlow],
-				property_insurance: [overall.propertyInsurance],
+				expense_to_income_ratio: [Number(overall.expenseToIncomeRatio)],
+				total_monthly_cost: [Number(overall.totalMonthlyCost)],
+				monthly_cash_flow: [Number(overall.montlyCashFlow)],
+				property_insurance: [Number(overall.propertyInsurance)],
 				investment: [
 					{
-						platform_closing_fee: [investment.platformClosingFee],
-						initial_maintenance_reserve: [investment.initialMaintenanceReserve],
-						underlying_asset_price: [investment.underlyingAssetPrice],
-						min_investment: [investment.mininumInvestment]
+						platform_closing_fee: [Number(investment.platformClosingFee)],
+						initial_maintenance_reserve: [Number(investment.initialMaintenanceReserve)],
+						underlying_asset_price: [Number(investment.underlyingAssetPrice)],
+						min_investment: [Number(investment.mininumInvestment)]
 					}
 				],
 				rents: [
 					{
-						vacancy_rate: [rents.vacancyRate],
-						property_taxes: [rents.propertyTaxes],
-						property_managment_fee: [rents.propertyManagementFee],
-						monthly_utiliiies: [rents.monthlyUtilities],
-						llc_monthly_franchise_tax: [rents.llcMonthlyFranchiseTax],
-						projected_rent: [rents.projectedRent]
+						vacancy_rate: [Number(rents.vacancyRate)],
+						property_taxes: [Number(rents.propertyTaxes)],
+						property_managment_fee: [Number(rents.propertyManagementFee)],
+						monthly_utiliiies: [Number(rents.monthlyUtilities)],
+						llc_monthly_franchise_tax: [Number(rents.llcMonthlyFranchiseTax)],
+						projected_rent: [Number(rents.projectedRent)]
 					}
 				],
 				returns: [
 					{
-						average_5_year_roi: [returns.average5YearROI],
-						projected_appreciation: [returns.projectedAppreciation],
-						cap_rate: [returns.capRate],
-						total_5_year_irr: [returns.total5YearsIrr],
-						yields: [returns.yields]
+						average_5_year_roi: [Number(returns.average5YearROI)],
+						projected_appreciation: [Number(returns.projectedAppreciation)],
+						cap_rate: [Number(returns.capRate)],
+						total_5_year_irr: [Number(returns.total5YearsIrr)],
+						yields: [Number(returns.yields)]
 					}
 				]
 			});
 			console.log('updated', { res });
-		} catch (_) {
-			console.error('Error fetching get_collection_metadata data');
+		} catch (e) {
+			console.error('Error update_financial_details', e);
 		} finally {
 			loading = false;
 		}
@@ -91,7 +91,7 @@
 </script>
 
 <div class="flex flex-col gap-4">
-	<Input label="EstateDAO closing fees" type="text" bind:value={investment.platformClosingFee} />
+	<Input label="EstateDAO closing fees" type="number" bind:value={investment.platformClosingFee} />
 	<Input
 		label="Initial maintenance reserve"
 		type="number"
