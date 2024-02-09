@@ -3,6 +3,8 @@
 
 	export let id: string;
 	export let imgSrc = ''; //https://source.unsplash.com/random/?house,country,{id}
+	export let title = '';
+	export let desc = '';
 </script>
 
 <a href="/collection/{id}" class="rounded-xl relative overflow-hidden shadow-lg w-[20rem]">
@@ -17,8 +19,12 @@
 		</div>
 	{/if}
 	<div class="flex flex-col gap-y-1 p-5">
-		<div class="font-bold text-sm">Name of the NFT</div>
-		<div class="text-sm">McAllen, TX(USA)</div>
-		<div class="text-sm">3 Beds | 2 Baths | 2,112.00 sq. ft.</div>
+		<div class="font-bold text-sm">{title}</div>
+		{#if desc}
+			<div class="text-sm line-clamp-2">{desc}</div>
+		{:else}
+			<div class="text-sm">McAllen, TX(USA)</div>
+			<div class="text-sm">3 Beds | 2 Baths | 2,112.00 sq. ft.</div>
+		{/if}
 	</div>
 </a>

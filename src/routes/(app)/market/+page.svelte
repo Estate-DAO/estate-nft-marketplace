@@ -4,26 +4,54 @@
 	import LocationIcon from '$lib/components/icons/LocationIcon.svelte';
 	import SortIcon from '$lib/components/icons/SortIcon.svelte';
 	import TabsGroup from '$lib/components/tabs-group/TabsGroup.svelte';
-	import { provisionCanister } from '$lib/backend';
+	import { nftMinterCanister, provisionCanister } from '$lib/backend';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
+	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 
-	let loading = true;
-	let collections: {
+	type CollectionId = {
 		assetCanId: string;
 		minterCanId: string;
-	}[] = [];
+	};
+
+	type CollectionDetails = CollectionMetadata & {
+		id: CollectionId;
+	};
+
+	let loading = true;
+	let nfts: CollectionDetails[] = [];
+
+	async function fetchNftDetail(id: CollectionId): Promise<CollectionDetails | undefined> {
+		try {
+			const r = await nftMinterCanister(id.minterCanId).get_collection_metadata();
+			if ('Ok' in r)
+				return {
+					...r.Ok,
+					id
+				} as CollectionDetails;
+		} catch (e) {
+			return undefined;
+		}
+	}
+
+	async function populatePosts(colls: CollectionId[]) {
+		return (await Promise.all(colls.map((id) => fetchNftDetail(id)))).filter(
+			Boolean
+		) as CollectionDetails[];
+	}
 
 	async function fetchCollections() {
 		try {
 			const actor = provisionCanister();
 			const all = await actor.get_all_canisters();
 			if ('Ok' in all) {
-				collections = all.Ok.map((o) => ({
-					assetCanId: o.asset_canister.toText(),
-					minterCanId: o.minter_canister.toText()
-				}));
-				console.log(collections);
+				nfts = await populatePosts(
+					all.Ok.map((o) => ({
+						assetCanId: o.asset_canister.toText(),
+						minterCanId: o.minter_canister.toText()
+					}))
+				);
+				console.log({ nfts });
 			}
 		} catch (error) {
 			console.error(error);
@@ -76,9 +104,11 @@
 	</div>
 {:else}
 	<div class="flex py-12 items-center gap-8 justify-normal pl-6 flex-wrap">
-		{#each collections as { assetCanId, minterCanId }, i}
+		{#each nfts as nft, i}
 			<Card
-				id={`${minterCanId}@${assetCanId}`}
+				title={nft.name}
+				desc={nft.desc}
+				id={`${nft.id.minterCanId}@${nft.id.assetCanId}`}
 				imgSrc={`https://source.unsplash.com/random/?house,country,${i}`}
 			/>
 		{/each}

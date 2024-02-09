@@ -7,7 +7,7 @@
 	export let hint = '';
 </script>
 
-<label class="flex flex-col gap-2">
+<label class="flex flex-col gap-2 {disabled ? 'pointer-events-none opacity-50' : 'opacity-100'}">
 	<span class="text-sm font-medium leading-6 text-gray-900">{label}</span>
 	<textarea
 		{disabled}

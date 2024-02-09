@@ -1,6 +1,11 @@
 <script lang="ts">
+	import type { PageData } from './$types';
 	import InvestInfo from './InvestInfo.svelte';
 	import PropertyHeader from './PropertyHeader.svelte';
+
+	export let data: PageData;
+
+	$: metadata = data.metadata;
 </script>
 
 <div class="w-full flex flex-col items-center gap-4">
@@ -24,7 +29,7 @@
 		</div>
 	</div>
 	<div class="flex gap-8 w-full max-w-6xl">
-		<PropertyHeader />
+		<PropertyHeader {metadata} />
 		<InvestInfo />
 	</div>
 </div>

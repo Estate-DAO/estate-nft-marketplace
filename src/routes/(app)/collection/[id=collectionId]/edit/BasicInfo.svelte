@@ -22,6 +22,7 @@
 
 	export const saveData = async () => {
 		loading = true;
+		console.log({ minterCanId });
 		try {
 			const actor = nftMinterCanister(minterCanId);
 			const res = await actor.update_basic_details(
@@ -34,8 +35,8 @@
 				]
 			);
 			console.log('updated', { res });
-		} catch (_) {
-			console.error('Error fetching get_collection_metadata data');
+		} catch (e) {
+			console.error('Error saving update_basic_details data', e);
 		} finally {
 			loading = false;
 		}
