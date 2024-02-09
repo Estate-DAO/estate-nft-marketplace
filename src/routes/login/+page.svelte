@@ -7,10 +7,10 @@
 	import { initializeAuthClient } from '$lib/auth/init';
 	import { tick } from 'svelte';
 
-	const APPLICATION_NAME = encodeURI('Hot or Not');
-	// const IDENTITY_PROVIDER = 'https://identity.ic0.app/#authorize';
-	const IDENTITY_PROVIDER = `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:8080`;
-
+	const IDENTITY_PROVIDER =
+		import.meta.env.NODE_ENV === 'dev'
+			? `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:8080`
+			: 'https://identity.ic0.app/#authorize';
 	let error = '';
 
 	async function handleSuccessfulLogin() {

@@ -10,8 +10,8 @@ import { authHelper } from '$lib/stores/auth';
 import { get } from 'svelte/store';
 import { AssetManager } from '@dfinity/assets';
 
-// export const host = import.meta.env.NODE_ENV === 'dev' ? 'http://localhost:8080' : 'https://ic0.app';
-export const host = 'http://localhost:8080';
+export const host =
+	import.meta.env.NODE_ENV === 'dev' ? 'http://localhost:8080' : 'https://ic0.app';
 
 export type EstateDaoActor = ActorSubclass<NFT_SERVICE>;
 export type ProvisionActor = ActorSubclass<PROVISION_SERVICE>;
