@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EditHeader, { type SelectedEditTab } from './EditHeader.svelte';
+	import FormHeader, { type SelectedTab } from './FormHeader.svelte';
 	import BasicInfo, { type BasicInfoData } from './BasicInfo.svelte';
 	import PropertyInfo, { type PropertyInfoData } from './PropertyInfo.svelte';
 	import DocumentsInfo from './DocumentsInfo.svelte';
@@ -8,7 +8,7 @@
 	import { provisionCanister } from '$lib/backend';
 	import { slide } from 'svelte/transition';
 
-	let selectedTab: SelectedEditTab = 'basic';
+	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
 	let res: any;
 
@@ -103,7 +103,7 @@
 </script>
 
 <div class="flex flex-col gap-12">
-	<EditHeader
+	<FormHeader
 		bind:selected={selectedTab}
 		on:cancel={() => history.back()}
 		on:save={() => submitForm()}
@@ -128,5 +128,5 @@
 				<DocumentsInfo {loading} />
 			{/if}
 		</svelte:fragment>
-	</EditHeader>
+	</FormHeader>
 </div>

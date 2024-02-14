@@ -26,15 +26,7 @@
 
 <div>
 	<div class="sm:hidden">
-		<Dropdown
-			title="Availablity"
-			options={[
-				{ value: 'available', label: 'Available' },
-				{ value: 'sold-out', label: 'Sold out' },
-				{ value: 'upcoming', label: 'Upcoming' },
-				{ value: 'all', label: 'All' }
-			]}
-		>
+		<Dropdown title="Availablity" {options} value={selected || defaultValue}>
 			<HomeIcon slot="leading" />
 		</Dropdown>
 	</div>
@@ -47,7 +39,7 @@
 						? 'bg-white border-[1px] border-gray-100 shadow-md text-black'
 						: 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'}"
 				>
-					{defaultValue}
+					{label}
 				</button>
 			{/each}
 		</nav>

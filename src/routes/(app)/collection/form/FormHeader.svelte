@@ -1,12 +1,6 @@
 <script lang="ts" context="module">
-	const tabs: SelectedEditTab[] = ['basic', 'property', 'market', 'financials', 'images'];
-	export type SelectedEditTab =
-		| 'basic'
-		| 'property'
-		| 'market'
-		| 'financials'
-		| 'documents'
-		| 'images';
+	const tabs: SelectedTab[] = ['basic', 'property', 'market', 'financials', 'images'];
+	export type SelectedTab = 'basic' | 'property' | 'market' | 'financials' | 'documents' | 'images';
 </script>
 
 <script lang="ts">
@@ -14,7 +8,7 @@
 	import TabItem from '$lib/components/tab/TabItem.svelte';
 	import { createEventDispatcher } from 'svelte';
 
-	export let selected: SelectedEditTab = 'basic';
+	export let selected: SelectedTab = 'basic';
 	export let loading = false;
 
 	const dispatch = createEventDispatcher<{
@@ -24,11 +18,17 @@
 </script>
 
 <div class="relative border-b border-gray-200 pb-5 sm:pb-0">
-	<div class="flex items-end justify-between py-4">
-		<div class="text-4xl">Edit Collection</div>
+	<div class="flex items-start justify-between py-4 gap-4">
+		<div class="flex flex-col gap-1">
+			<div class="text-4xl">Submit Collection</div>
+			<div class="text-sm text-gray-500">Submit data to create a new collection.</div>
+			<div class="text-sm text-gray-400">
+				Submitted form will be approved by an admin for listing.
+			</div>
+		</div>
 		<div class="mt-3 flex gap-3">
 			<Button on:click={() => dispatch('cancel')} secondary>Cancel</Button>
-			<Button {loading} on:click={() => dispatch('save')}>Save</Button>
+			<Button {loading} on:click={() => dispatch('save')}>Submit</Button>
 		</div>
 	</div>
 	<div class="mt-4">

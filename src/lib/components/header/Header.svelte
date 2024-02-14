@@ -20,9 +20,11 @@
 		<a href="/market" class="z-[1] lg:hidden pr-4">←</a>
 	{/if}
 
-	<a href="/" class="absolute z-0 inset-x-0 flex justify-center">
-		<EstateDaoLogo class="h-10" />
-	</a>
+	<div class="absolute z-0 inset-x-0 flex justify-center">
+		<a href="/">
+			<EstateDaoLogo class="h-10" />
+		</a>
+	</div>
 	<div class="lg:hidden absolute right-8">
 		<button on:click={() => (menuOpen = !menuOpen)}>
 			<MenuIcon class="h-6 w-6" />
