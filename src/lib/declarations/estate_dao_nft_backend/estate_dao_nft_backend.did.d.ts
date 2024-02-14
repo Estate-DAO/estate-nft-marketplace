@@ -15,8 +15,8 @@ export interface CollectionMetadata {
   'desc' : string,
   'additional_metadata' : [] | [AdditionalMetadata],
   'name' : string,
-  'collection_id' : string,
   'property_images' : Array<string>,
+  'is_initialised' : boolean,
   'total_supply' : number,
 }
 export interface FinancialDetails {
@@ -28,11 +28,19 @@ export interface FinancialDetails {
   'rents' : [] | [RentFinancials],
   'returns' : [] | [ReturnsFinancials],
 }
+export interface FormMetadata {
+  'supply_cap' : number,
+  'owner' : string,
+  'desc' : string,
+  'additional_metadata' : [] | [AdditionalMetadata],
+  'name' : string,
+  'property_images' : Array<string>,
+}
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],
   'underlying_asset_price' : [] | [number],
   'platform_closing_fee' : [] | [number],
-  'min_investment' : [] | [number],
+  'min_investment' : [] | [bigint],
 }
 export interface MarketDetails {
   'country' : [] | [string],
@@ -48,7 +56,6 @@ export interface Metadata {
   'supply_cap' : number,
   'nft_token_id' : string,
   'desc' : string,
-  'collection_id' : string,
   'collection_name' : string,
   'nft_uri' : string,
   'total_supply' : number,
@@ -78,19 +85,25 @@ export interface RentFinancials {
 }
 export type Result = { 'Ok' : string } |
   { 'Err' : string };
-export type Result_1 = { 'Ok' : CollectionMetadata } |
+export type Result_1 = { 'Ok' : Uint8Array | number[] } |
   { 'Err' : string };
-export type Result_2 = { 'Ok' : Status } |
+export type Result_10 = { 'Ok' : SaleData } |
   { 'Err' : string };
-export type Result_3 = { 'Ok' : MarketDetails } |
+export type Result_2 = { 'Ok' : bigint } |
   { 'Err' : string };
-export type Result_4 = { 'Ok' : FinancialDetails } |
+export type Result_3 = { 'Ok' : CollectionMetadata } |
   { 'Err' : string };
-export type Result_5 = { 'Ok' : Metadata } |
+export type Result_4 = { 'Ok' : Status } |
   { 'Err' : string };
-export type Result_6 = { 'Ok' : Principal } |
+export type Result_5 = { 'Ok' : MarketDetails } |
   { 'Err' : string };
-export type Result_7 = { 'Ok' : PropertyDetails } |
+export type Result_6 = { 'Ok' : FinancialDetails } |
+  { 'Err' : string };
+export type Result_7 = { 'Ok' : Metadata } |
+  { 'Err' : string };
+export type Result_8 = { 'Ok' : Principal } |
+  { 'Err' : string };
+export type Result_9 = { 'Ok' : PropertyDetails } |
   { 'Err' : string };
 export interface ReturnsFinancials {
   'average_5_year_roi' : [] | [number],
@@ -99,22 +112,39 @@ export interface ReturnsFinancials {
   'projected_appreciation' : [] | [number],
   'cap_rate' : [] | [number],
 }
+export interface SaleData {
+  'status' : SaleStatus,
+  'nft_token_id' : string,
+  'time' : Timestamp,
+  'buyer' : Principal,
+  'amount' : bigint,
+}
+export type SaleStatus = { 'Init' : null } |
+  { 'Complete' : null } |
+  { 'Incomplete' : null };
 export type Status = { 'Ended' : null } |
   { 'Live' : null } |
   { 'Draft' : null } |
   { 'Upcoming' : null };
+export interface Timestamp { 'timestamp_nanos' : bigint }
 export interface _SERVICE {
   'add_collection_image' : ActorMethod<[string], Result>,
   'collection_image' : ActorMethod<[], Array<string>>,
-  'get_collection_metadata' : ActorMethod<[], Result_1>,
-  'get_collection_status' : ActorMethod<[], Result_2>,
-  'get_financial_details' : ActorMethod<[], Result_3>,
-  'get_market_details' : ActorMethod<[], Result_4>,
-  'get_metadata' : ActorMethod<[string], Result_5>,
-  'get_owner_of_NFT' : ActorMethod<[string], Result_6>,
-  'get_property_details' : ActorMethod<[], Result_7>,
-  'init_collection' : ActorMethod<[string, string, Principal], Result>,
-  'mint' : ActorMethod<[string, string, Principal], Result>,
+  'create_accountid' : ActorMethod<[Principal], Result_1>,
+  'delegate_transfer' : ActorMethod<[Principal, Principal], Result_2>,
+  'get_collection_metadata' : ActorMethod<[], Result_3>,
+  'get_collection_status' : ActorMethod<[], Result_4>,
+  'get_financial_details' : ActorMethod<[], Result_5>,
+  'get_market_details' : ActorMethod<[], Result_6>,
+  'get_metadata' : ActorMethod<[string], Result_7>,
+  'get_owner_of_NFT' : ActorMethod<[string], Result_8>,
+  'get_property_details' : ActorMethod<[], Result_9>,
+  'get_sale_data' : ActorMethod<[string], Result_10>,
+  'get_total_invested' : ActorMethod<[], bigint>,
+  'init_collection' : ActorMethod<[FormMetadata], Result>,
+  'mint' : ActorMethod<[string, string, string, Principal], Result>,
+  'primary_sale' : ActorMethod<[Principal, Principal], Result>,
+  'primary_sale_mint' : ActorMethod<[string], Result>,
   'update_basic_details' : ActorMethod<
     [[] | [string], [] | [string], [] | [Status]],
     Result
