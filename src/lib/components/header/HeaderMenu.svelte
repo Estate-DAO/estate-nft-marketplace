@@ -21,11 +21,11 @@
 		<!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700 hover:bg-gray-100" -->
 		<a
 			on:click={() => dispatch('selected')}
-			href="/collection/new"
+			href="/collection/form"
 			class="text-gray-700 cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
 			role="menuitem"
 			tabindex="-1"
-			id="menu-item-0">Create collection</a
+			id="menu-item-0">Submit collection</a
 		>
 		<a
 			on:click={() => dispatch('selected')}

@@ -32,7 +32,7 @@
 		{/if}
 	</div>
 	<div class="absolute z-[1] lg:flex hidden right-8 items-center gap-8">
-		<a href="/collection/new">Create collection</a>
+		<a href="/collection/form">Submit collection</a>
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
 			<a href="https://www.estatedao.org/">About Us</a>
