@@ -11,7 +11,7 @@
 				financialDetails?.investment?.[0]?.initial_maintenance_reserve?.[0] || 0,
 			underlyingAssetPrice: financialDetails?.investment?.[0]?.underlying_asset_price?.[0] || 0,
 			platformClosingFee: financialDetails?.investment?.[0]?.platform_closing_fee?.[0] || 0,
-			mininumInvestment: financialDetails?.investment?.[0]?.min_investment?.[0] || 0
+			mininumInvestment: Number(financialDetails?.investment?.[0]?.min_investment?.[0]) || 0
 		},
 		returns: {
 			average5YearROI: financialDetails?.returns?.[0]?.average_5_year_roi?.[0] || 0,
@@ -58,7 +58,7 @@
 						platform_closing_fee: [Number(investment.platformClosingFee)],
 						initial_maintenance_reserve: [Number(investment.initialMaintenanceReserve)],
 						underlying_asset_price: [Number(investment.underlyingAssetPrice)],
-						min_investment: [Number(investment.mininumInvestment)]
+						min_investment: [BigInt(investment.mininumInvestment)]
 					}
 				],
 				rents: [

@@ -19,14 +19,14 @@
 			if (loading) return;
 			loading = true;
 			const actor = provisionCanister();
-			const res = await actor.all_canister_create(name, description);
+			const res = await actor.init_form_metadata();
 			data = { created: res };
 			if ('Ok' in res) {
 				if ($authState.isLoggedIn) {
-					data.authorized = await actor.grant_commit_permission(
-						res.Ok.asset_canister,
-						Principal.from($authState.idString)
-					);
+					// data.authorized = await actor.grant_commit_permission(
+					// 	res.Ok.asset_canister,
+					// 	Principal.from($authState.idString)
+					// );
 				} else console.error('Not logged in');
 			}
 		} catch (e) {
