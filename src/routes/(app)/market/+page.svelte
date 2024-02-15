@@ -8,6 +8,7 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import { data } from './data';
 
 	type CollectionId = {
 		assetCanId: string;
@@ -44,15 +45,16 @@
 		try {
 			const actor = provisionCanister();
 			const all = await actor.get_all_canisters();
-			if ('Ok' in all) {
-				nfts = await populatePosts(
-					all.Ok.map((o) => ({
-						assetCanId: o.asset_canister.toText(),
-						minterCanId: o.minter_canister.toText()
-					}))
-				);
-				console.log({ nfts });
-			}
+			nfts = data;
+			// if ('Ok' in all) {
+			// 	nfts = await populatePosts(
+			// 		all.Ok.map((o) => ({
+			// 			assetCanId: o.asset_canister.toText(),
+			// 			minterCanId: o.minter_canister.toText()
+			// 		}))
+			// 	);
+			// console.log({ nfts });
+			// }
 		} catch (error) {
 			console.error(error);
 		} finally {

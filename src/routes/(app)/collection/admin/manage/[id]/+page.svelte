@@ -30,6 +30,7 @@
 		loading = true;
 		const actor = provisionCanister();
 		const res = await actor.approve_collection(Number(id), approve);
+		console.log(res);
 		if (approve) {
 			// actor.grant_commit_permission()
 		} else {
