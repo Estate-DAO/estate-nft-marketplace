@@ -16,8 +16,8 @@
 	class="w-full fixed z-50 h-20 shadow-sm flex items-center justify-between px-8 font-light transition-all bg-white/75 backdrop-blur-xl"
 >
 	{#if onCollectionPage}
-		<a href="/market" class="z-[1] hidden lg:block">← All listings</a>
-		<a href="/market" class="z-[1] lg:hidden pr-4">←</a>
+		<button on:click={() => history.back()} class="z-[1] hidden lg:block">← Go back</button>
+		<button on:click={() => history.back()} class="z-[1] lg:hidden pr-4">←</button>
 	{/if}
 
 	<div class="absolute z-0 inset-x-0 flex justify-center">
@@ -34,7 +34,7 @@
 		{/if}
 	</div>
 	<div class="absolute z-[1] lg:flex hidden right-8 items-center gap-8">
-		<a href="/collection/form">Submit collection</a>
+		<a href="/collection/admin">Admin</a>
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
 			<a href="https://www.estatedao.org/">About Us</a>

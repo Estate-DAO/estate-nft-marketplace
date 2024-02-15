@@ -21,20 +21,22 @@
 		<!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700 hover:bg-gray-100" -->
 		<a
 			on:click={() => dispatch('selected')}
-			href="/collection/form"
+			href="/collection/admin"
 			class="text-gray-700 cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
 			role="menuitem"
 			tabindex="-1"
-			id="menu-item-0">Submit collection</a
 		>
+			Admin
+		</a>
 		<a
 			on:click={() => dispatch('selected')}
 			href="/market"
 			class="text-gray-700 cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
 			role="menuitem"
 			tabindex="-1"
-			id="menu-item-2">Marketplace</a
 		>
+			Marketplace
+		</a>
 	</div>
 	<div class="py-1" role="none">
 		<a
@@ -43,8 +45,9 @@
 			class="text-gray-700 cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
 			role="menuitem"
 			tabindex="-1"
-			id="menu-item-3">About Us</a
 		>
+			About Us
+		</a>
 	</div>
 	<div class="py-1" role="none">
 		<svelte:element
@@ -59,7 +62,6 @@
 			class="text-gray-700 w-full text-start cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
 			role="menuitem"
 			tabindex="-1"
-			id="menu-item-4"
 		>
 			{#if $authState.isLoggedIn}
 				Logout

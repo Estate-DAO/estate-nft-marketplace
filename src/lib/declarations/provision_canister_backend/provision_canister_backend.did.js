@@ -95,6 +95,11 @@ export const idlFactory = ({ IDL }) => {
     'get_all_canisters' : IDL.Func([], [Result_2], ['query']),
     'get_all_minter_canisters' : IDL.Func([], [Result_1], []),
     'get_asset_wasm' : IDL.Func([], [Result_3], ['query']),
+    'get_form_list' : IDL.Func(
+        [],
+        [IDL.Vec(IDL.Tuple(IDL.Nat16, FormMetadata))],
+        [],
+      ),
     'get_form_metadata' : IDL.Func([IDL.Nat16], [Result_4], []),
     'get_minter_wasm' : IDL.Func([], [Result_3], ['query']),
     'grant_commit_permission' : IDL.Func(

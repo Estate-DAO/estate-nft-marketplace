@@ -96,6 +96,7 @@ export interface _SERVICE {
   'get_all_canisters' : ActorMethod<[], Result_2>,
   'get_all_minter_canisters' : ActorMethod<[], Result_1>,
   'get_asset_wasm' : ActorMethod<[], Result_3>,
+  'get_form_list' : ActorMethod<[], Array<[number, FormMetadata]>>,
   'get_form_metadata' : ActorMethod<[number], Result_4>,
   'get_minter_wasm' : ActorMethod<[], Result_3>,
   'grant_commit_permission' : ActorMethod<[Principal, Principal], Result_5>,
