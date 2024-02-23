@@ -33,7 +33,7 @@ jobs:
       - name: Install dfx
         uses: dfinity/setup-dfx@main
         with:
-          dfx-version: "0.16.1"
+          dfx-version: "0.14.1"
 
       - name: Confirm successful installation
         run: dfx --version
@@ -50,4 +50,4 @@ jobs:
           dfx identity use actions
 
       - name: Deploy built webclient app on IC
-        run: dfx deploy webclient --network ic --no-wallet -y
+        run: dfx deploy webclient --network ic --no-wallet
