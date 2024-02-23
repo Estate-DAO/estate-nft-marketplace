@@ -50,4 +50,4 @@ jobs:
           dfx identity use actions
 
       - name: Deploy built webclient app on IC
-        run: dfx deploy webclient --network ic --no-wallet
+        run: dfx deploy webclient --network ic --no-wallet -y
