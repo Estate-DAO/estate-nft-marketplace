@@ -13,7 +13,7 @@ export default defineConfig({
 			prod ? PROD_PROVISION_CANISTER_ID : 'be2us-64aaa-aaaaa-qaabq-cai'
 		),
 		'process.env.INTERNET_IDENTITY_CANISTER_ID': JSON.stringify('bw4dl-smaaa-aaaaa-qaacq-cai'),
-		'import.meta.env.NODE_ENV': JSON.stringify(prod ? 'prod' : 'dev'),
+		'import.meta.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'dev'),
 		'process.env.DFX_NETWORK': JSON.stringify(prod ? 'ic' : 'local')
 	},
 	server: {
