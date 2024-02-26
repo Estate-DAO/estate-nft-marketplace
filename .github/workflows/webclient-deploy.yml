@@ -6,9 +6,6 @@ on:
     paths:
       - "src/**"
       - ".github/workflows/webclient-deploy.yml"
-  pull_request:
-    branches:
-      - main
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
