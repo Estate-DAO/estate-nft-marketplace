@@ -1,0 +1,30 @@
+name: Deploy Web-Client
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  web-client-deploy-dapp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: "true"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+
+      - name: Install dependencies
+        shell: bash
+        run: npm install
+
+      - name: Run svelte-check
+        run: |
+          npm run sync
+          npm run check
