@@ -116,6 +116,8 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     'test_auth_user' : IDL.Func([], [Result_1], []),
+    'update_key' : IDL.Func([IDL.Text], [Result_5], []),
+    'verify_key' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
   });
 };
 export const init = ({ IDL }) => { return []; };

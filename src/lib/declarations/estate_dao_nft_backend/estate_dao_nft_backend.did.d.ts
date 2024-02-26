@@ -2,6 +2,10 @@ import type { Principal } from '@dfinity/principal';
 import type { ActorMethod } from '@dfinity/agent';
 import type { IDL } from '@dfinity/candid';
 
+export interface Account {
+  'owner' : Principal,
+  'subaccount' : [] | [Uint8Array | number[]],
+}
 export interface AdditionalMetadata {
   'documents' : Array<Array<[string, string]>>,
   'property_details' : [] | [PropertyDetails],
@@ -16,6 +20,7 @@ export interface CollectionMetadata {
   'additional_metadata' : [] | [AdditionalMetadata],
   'name' : string,
   'property_images' : Array<string>,
+  'image' : [] | [string],
   'is_initialised' : boolean,
   'total_supply' : number,
 }
@@ -85,25 +90,21 @@ export interface RentFinancials {
 }
 export type Result = { 'Ok' : string } |
   { 'Err' : string };
-export type Result_1 = { 'Ok' : Uint8Array | number[] } |
+export type Result_1 = { 'Ok' : CollectionMetadata } |
   { 'Err' : string };
-export type Result_10 = { 'Ok' : SaleData } |
+export type Result_2 = { 'Ok' : Status } |
   { 'Err' : string };
-export type Result_2 = { 'Ok' : bigint } |
+export type Result_3 = { 'Ok' : MarketDetails } |
   { 'Err' : string };
-export type Result_3 = { 'Ok' : CollectionMetadata } |
+export type Result_4 = { 'Ok' : FinancialDetails } |
   { 'Err' : string };
-export type Result_4 = { 'Ok' : Status } |
+export type Result_5 = { 'Ok' : Metadata } |
   { 'Err' : string };
-export type Result_5 = { 'Ok' : MarketDetails } |
+export type Result_6 = { 'Ok' : PropertyDetails } |
   { 'Err' : string };
-export type Result_6 = { 'Ok' : FinancialDetails } |
+export type Result_7 = { 'Ok' : SaleData } |
   { 'Err' : string };
-export type Result_7 = { 'Ok' : Metadata } |
-  { 'Err' : string };
-export type Result_8 = { 'Ok' : Principal } |
-  { 'Err' : string };
-export type Result_9 = { 'Ok' : PropertyDetails } |
+export type Result_8 = { 'Ok' : Account } |
   { 'Err' : string };
 export interface ReturnsFinancials {
   'average_5_year_roi' : [] | [number],
@@ -116,7 +117,7 @@ export interface SaleData {
   'status' : SaleStatus,
   'nft_token_id' : string,
   'time' : Timestamp,
-  'buyer' : Principal,
+  'buyer' : Account,
   'amount' : bigint,
 }
 export type SaleStatus = { 'Init' : null } |
@@ -130,20 +131,22 @@ export interface Timestamp { 'timestamp_nanos' : bigint }
 export interface _SERVICE {
   'add_collection_image' : ActorMethod<[string], Result>,
   'collection_image' : ActorMethod<[], Array<string>>,
-  'create_accountid' : ActorMethod<[Principal], Result_1>,
-  'delegate_transfer' : ActorMethod<[Principal, Principal], Result_2>,
-  'get_collection_metadata' : ActorMethod<[], Result_3>,
-  'get_collection_status' : ActorMethod<[], Result_4>,
-  'get_financial_details' : ActorMethod<[], Result_5>,
-  'get_market_details' : ActorMethod<[], Result_6>,
-  'get_metadata' : ActorMethod<[string], Result_7>,
-  'get_owner_of_NFT' : ActorMethod<[string], Result_8>,
-  'get_property_details' : ActorMethod<[], Result_9>,
-  'get_sale_data' : ActorMethod<[string], Result_10>,
+  'get_collection_metadata' : ActorMethod<[], Result_1>,
+  'get_collection_status' : ActorMethod<[], Result_2>,
+  'get_financial_details' : ActorMethod<[], Result_3>,
+  'get_market_details' : ActorMethod<[], Result_4>,
+  'get_metadata' : ActorMethod<[string], Result_5>,
+  'get_property_details' : ActorMethod<[], Result_6>,
+  'get_sale_data' : ActorMethod<[string], Result_7>,
   'get_total_invested' : ActorMethod<[], bigint>,
+  'icrc7_description' : ActorMethod<[], string>,
+  'icrc7_image' : ActorMethod<[], [] | [string]>,
+  'icrc7_name' : ActorMethod<[], string>,
+  'icrc7_owner_of' : ActorMethod<[string], Result_8>,
+  'icrc7_total_supply' : ActorMethod<[], number>,
   'init_collection' : ActorMethod<[FormMetadata], Result>,
-  'mint' : ActorMethod<[string, string, string, Principal], Result>,
-  'primary_sale' : ActorMethod<[Principal, Principal], Result>,
+  'mint' : ActorMethod<[string, string, string, Principal, number], Result>,
+  'primary_sale' : ActorMethod<[], Result>,
   'primary_sale_mint' : ActorMethod<[string], Result>,
   'update_basic_details' : ActorMethod<
     [[] | [string], [] | [string], [] | [Status]],

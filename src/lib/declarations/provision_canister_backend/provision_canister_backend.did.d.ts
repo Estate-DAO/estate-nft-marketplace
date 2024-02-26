@@ -105,6 +105,8 @@ export interface _SERVICE {
   'init_minter_wasm' : ActorMethod<[Uint8Array | number[]], Result_5>,
   'revoke_commit_permission' : ActorMethod<[Principal, Principal], Result_5>,
   'test_auth_user' : ActorMethod<[], Result_1>,
+  'update_key' : ActorMethod<[string], Result_5>,
+  'verify_key' : ActorMethod<[string], boolean>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
 export declare const init: ({ IDL }: { IDL: IDL }) => IDL.Type[];
