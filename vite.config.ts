@@ -22,7 +22,8 @@ export default defineConfig({
 			'/api': {
 				target: `http://0.0.0.0:${DFX_PORT}`
 			}
-		}
+		},
+		port: 5180
 	},
 	plugins: [
 		sveltekit(),

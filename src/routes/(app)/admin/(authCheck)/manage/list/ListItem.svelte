@@ -10,7 +10,7 @@
 	export let formData: FormMetadataWithId;
 </script>
 
-<a href="/collection/admin/manage/{formData.id}" class="flex justify-between gap-x-6 py-5">
+<a href="/admin/manage/{formData.id}" class="flex justify-between gap-x-6 py-5">
 	<div class="flex min-w-0 gap-x-4">
 		<!-- <img
       class="h-12 w-12 flex-none rounded-full bg-gray-50"

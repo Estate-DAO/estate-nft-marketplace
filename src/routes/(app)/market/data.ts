@@ -14,6 +14,7 @@ export const data = [
 		status: { Draft: null },
 		supply_cap: 5000,
 		owner: 'owner',
+		image: [''],
 		desc: 'Situated in the heart of the city, this property is a great investment!',
 		additional_metadata: [
 			{
@@ -93,6 +94,7 @@ export const data = [
 		status: { Draft: null },
 		supply_cap: 5000,
 		owner: 'owner',
+		image: [''],
 		desc: 'Situated in the heart of the city, this property is a great investment!',
 		additional_metadata: [
 			{
