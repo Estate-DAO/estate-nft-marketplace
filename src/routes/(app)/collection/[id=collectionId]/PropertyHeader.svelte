@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import { adminStore } from '$lib/stores/admin';
 	import Actions from './Actions.svelte';
 	import Details from './Details.svelte';
 	import Documents from './Documents.svelte';
@@ -34,13 +35,16 @@
 				Upcoming
 			</div>
 		</div>
-		<Actions />
+		{#if $adminStore.isLoggedIn}
+			<Button secondary href="/auth/edit-collection/{id}">Edit</Button>
+		{:else}
+			<Actions />
+		{/if}
 	</div>
 	<div class="font-thin text-2xl">
 		Location: {country}
 	</div>
 	<div class="font-light text-2xl">{beds} Beds | {baths} Baths | {squareFootage} sq. ft.</div>
-	<Button secondary href="/auth/edit-collection/{id}">Edit</Button>
 	<PropertyInfoCards {metadata} />
 	<Tabs {tabs} bind:selected />
 	{#if selected === 'details'}
