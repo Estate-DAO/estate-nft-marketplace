@@ -9,6 +9,10 @@
 	let loading = true;
 	let error = '';
 
+	$: if (!$adminStore.isLoggedIn) {
+		gotoAuthPage();
+	}
+
 	async function checkPassword() {
 		error = '';
 		if (!$adminStore.isLoggedIn) gotoAuthPage();
@@ -36,10 +40,14 @@
 </script>
 
 {#if error}
-	<div class="text-sm font-medium">{error}</div>
-	<Button on:click={checkPassword}>Try again</Button>
+	<div class="flex w-full items-center justify-center pt-8">
+		<div class="text-sm font-medium">{error}</div>
+		<Button on:click={checkPassword}>Try again</Button>
+	</div>
 {:else if loading}
-	<PlusIcon class="w-5 h-5 animate-spin" />
+	<div class="flex w-full items-center justify-center pt-8">
+		<PlusIcon class="w-5 h-5 animate-spin" />
+	</div>
 {:else}
 	<slot />
 {/if}

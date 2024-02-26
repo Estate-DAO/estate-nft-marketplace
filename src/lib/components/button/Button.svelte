@@ -3,6 +3,7 @@
 
 	export let secondary = false;
 	export let disabled = false;
+	export let submit = false;
 	export let href: string | undefined = undefined;
 	export let loading = false;
 	export let iconOnly = false;
@@ -15,6 +16,7 @@
 	role="presentation"
 	{href}
 	on:click
+	type={submit && !href ? 'submit' : 'button'}
 	{disabled}
 	class="{secondary
 		? 'bg-white text-gray-900 ring-1 ring-inset ring-gray-100 hover:bg-gray-50 outline-none active:bg-gray-200'

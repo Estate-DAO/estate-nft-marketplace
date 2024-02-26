@@ -15,16 +15,21 @@
 
 	async function checkPassword() {
 		if (!value) return;
+		loading = true;
 		error = '';
-		const actor = provisionCanister();
-		const res = await actor.verify_key(value);
-		if (res) {
-			adminStore.set({
-				isLoggedIn: true,
-				key: value
-			});
-		} else {
-			error = 'Invalid password!';
+		try {
+			const actor = provisionCanister();
+			const res = await actor.verify_key(value);
+			if (res) {
+				adminStore.set({
+					isLoggedIn: true,
+					key: value
+				});
+			} else {
+				error = 'Invalid password!';
+			}
+		} finally {
+			loading = false;
 		}
 	}
 </script>
@@ -36,9 +41,17 @@
 	<Button href="/market">Go back</Button>
 
 	<div>or</div>
-	<Input disabled={loading} label="Password" type="text" bind:value placeholder="Enter password" />
-	{#if error}
-		<div class="text-sm text-red-500">{error}</div>
-	{/if}
-	<Button {loading} secondary on:click={checkPassword}>Submit</Button>
+	<form class="flex flex-col gap-4 items-center">
+		<Input
+			disabled={loading}
+			label="Password"
+			type="password"
+			bind:value
+			placeholder="Enter password"
+		/>
+		{#if error}
+			<div class="text-sm text-red-500">{error}</div>
+		{/if}
+		<Button {loading} submit secondary on:click={checkPassword}>Submit</Button>
+	</form>
 </div>
