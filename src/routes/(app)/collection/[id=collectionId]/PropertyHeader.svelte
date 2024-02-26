@@ -40,7 +40,7 @@
 		Location: {country}
 	</div>
 	<div class="font-light text-2xl">{beds} Beds | {baths} Baths | {squareFootage} sq. ft.</div>
-	<Button secondary href="/collection/{id}/edit">Edit</Button>
+	<Button secondary href="/auth/edit-collection/{id}">Edit</Button>
 	<PropertyInfoCards {metadata} />
 	<Tabs {tabs} bind:selected />
 	{#if selected === 'details'}

@@ -6,7 +6,7 @@
 	import MarketInfo from './MarketInfo.svelte';
 	import FinancialInfo from './FinancialInfo.svelte';
 	import { nftMinterCanister } from '$lib/backend';
-	import { getCollectionId, setCollectionId } from './collectionId.context';
+	import { setCollectionId } from './collectionId.context';
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
