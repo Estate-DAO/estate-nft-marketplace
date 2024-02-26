@@ -9,7 +9,7 @@
 <script lang="ts">
 	import { assetManager, nftMinterCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
-	import { getCollectionId } from '../collectionId.context';
+	import { getCollectionId } from './collectionId.context';
 	import DocumentUpload from './DocumentUpload.svelte';
 
 	export let loading = false;

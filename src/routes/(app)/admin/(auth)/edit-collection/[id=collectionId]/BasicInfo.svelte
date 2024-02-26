@@ -2,7 +2,7 @@
 	import { nftMinterCanister, type UnionKeyOf } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
 	import Textarea from '$lib/components/textarea/Textarea.svelte';
-	import { getCollectionId } from '../collectionId.context';
+	import { getCollectionId } from './collectionId.context';
 	import type {
 		CollectionMetadata,
 		Status

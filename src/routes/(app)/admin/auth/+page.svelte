@@ -33,7 +33,7 @@
 	<div class="font-bold text-xl">Admin</div>
 
 	<div>You're need password to continue</div>
-	<Button href="/marketplace">Go back</Button>
+	<Button href="/market">Go back</Button>
 
 	<div>or</div>
 	<Input disabled={loading} label="Password" type="text" bind:value placeholder="Enter password" />

@@ -34,7 +34,7 @@
 <script lang="ts">
 	import { nftMinterCanister } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
-	import { getCollectionId } from '../collectionId.context';
+	import { getCollectionId } from './collectionId.context';
 	import type { FinancialDetails } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 
 	export let loading = true;
