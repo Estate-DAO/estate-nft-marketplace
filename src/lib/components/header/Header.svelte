@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { adminStore } from '$lib/stores/admin';
 	import { authState } from '$lib/stores/auth';
 	import Avatar from '../avatar/Avatar.svelte';
 	import EstateDaoLogo from '../icons/EstateDaoLogo.svelte';
@@ -34,7 +35,9 @@
 		{/if}
 	</div>
 	<div class="absolute z-[1] lg:flex hidden right-8 items-center gap-8">
-		<a href="/collection/admin">Admin</a>
+		{#if $adminStore.isLoggedIn}
+			<a href="/admin">Admin</a>
+		{/if}
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
 			<a href="https://www.estatedao.org/">About Us</a>

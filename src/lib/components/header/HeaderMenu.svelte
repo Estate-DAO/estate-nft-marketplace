@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { logout } from '$lib/auth/init';
+	import { adminStore } from '$lib/stores/admin';
 	import { authState } from '$lib/stores/auth';
 	import { createEventDispatcher } from 'svelte';
 	import { fade } from 'svelte/transition';
@@ -19,15 +20,17 @@
 >
 	<div class="py-1" role="none">
 		<!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700 hover:bg-gray-100" -->
-		<a
-			on:click={() => dispatch('selected')}
-			href="/collection/admin"
-			class="text-gray-700 cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
-			role="menuitem"
-			tabindex="-1"
-		>
-			Admin
-		</a>
+		{#if $adminStore.isLoggedIn}
+			<a
+				on:click={() => dispatch('selected')}
+				href="/admin"
+				class="text-gray-700 cursor-pointer hover:bg-gray-100 block px-4 py-2 text-sm"
+				role="menuitem"
+				tabindex="-1"
+			>
+				Admin
+			</a>
+		{/if}
 		<a
 			on:click={() => dispatch('selected')}
 			href="/market"
