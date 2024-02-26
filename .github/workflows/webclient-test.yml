@@ -1,4 +1,4 @@
-name: Deploy Web-Client
+name: Test web-client
 on:
   pull_request:
     branches:
@@ -25,6 +25,4 @@ jobs:
         run: npm install
 
       - name: Run svelte-check
-        run: |
-          npm run sync
-          npm run check
+        run: npm run check
