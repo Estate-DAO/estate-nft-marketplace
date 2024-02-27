@@ -5,11 +5,12 @@
 	export let imgSrc = ''; //https://source.unsplash.com/random/?house,country,{id}
 	export let title = '';
 	export let desc = '';
+	export let sample = false;
 </script>
 
 <a href="/collection/{id}" class="rounded-xl relative overflow-hidden shadow-lg w-[20rem]">
 	<div class="absolute top-2 left-2 rounded-lg bg-white/90 p-1 px-3 text-black text-xs">
-		Upcoming
+		{sample ? 'Sample' : 'Upcoming'}
 	</div>
 	{#if imgSrc}
 		<img alt="thumba" src={imgSrc} class="w-full h-64 z-[2] object-cover" />
