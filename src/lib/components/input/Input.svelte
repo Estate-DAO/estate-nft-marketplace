@@ -6,6 +6,7 @@
 	export let placeholder: string = '';
 	export let type: 'text' | 'password' | 'number' | 'email' = 'text';
 	export let disabled = false;
+	export let required = false;
 	let classes = '';
 	export { classes as class };
 
@@ -21,6 +22,7 @@
 >
 	<span class="text-sm font-medium leading-6 text-gray-900">{label}</span>
 	<input
+		{required}
 		{disabled}
 		bind:this={inputEl}
 		{placeholder}

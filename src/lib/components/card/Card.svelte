@@ -9,11 +9,13 @@
 </script>
 
 <a href="/collection/{id}" class="rounded-xl relative overflow-hidden shadow-lg w-[20rem]">
-	<div class="absolute top-2 left-2 rounded-lg bg-white/90 p-1 px-3 text-black text-xs">
+	<div
+		class="absolute top-2 left-2 rounded-lg bg-white/70 backdrop-blur p-1 px-3 text-black text-xs"
+	>
 		{sample ? 'Sample' : 'Upcoming'}
 	</div>
 	{#if imgSrc}
-		<img alt="thumba" src={imgSrc} class="w-full h-64 z-[2] object-cover" />
+		<img alt="Property preview" src={imgSrc} class="w-full h-64 z-[2] object-cover" />
 	{:else}
 		<div class="flex items-center justify-center w-full h-64 bg-gray-50 animate">
 			<ImageIcon class="h-6 w-6" />

@@ -1,9 +1,12 @@
 <script lang="ts">
+	import WaitlistPopup from '$lib/components/popup/WaitlistPopup.svelte';
 	import type { PageData } from './$types';
 	import InvestInfo from './InvestInfo.svelte';
 	import PropertyHeader from './PropertyHeader.svelte';
 
 	export let data: PageData;
+
+	let showWaitlistPopup = true;
 
 	$: metadata = data.metadata;
 </script>
@@ -30,6 +33,10 @@
 	</div>
 	<div class="flex gap-8 w-full max-w-6xl">
 		<PropertyHeader {metadata} />
-		<InvestInfo />
+		<InvestInfo on:click={() => (showWaitlistPopup = true)} />
 	</div>
 </div>
+
+{#if showWaitlistPopup}
+	<WaitlistPopup bind:show={showWaitlistPopup} />
+{/if}
