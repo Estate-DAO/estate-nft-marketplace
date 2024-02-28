@@ -1,5 +1,6 @@
 export const idlFactory = ({ IDL }) => {
   const Result = IDL.Variant({ 'Ok' : IDL.Text, 'Err' : IDL.Text });
+  const Result_1 = IDL.Variant({ 'Ok' : IDL.Nat64, 'Err' : IDL.Text });
   const Status = IDL.Variant({
     'Ended' : IDL.Null,
     'Live' : IDL.Null,
@@ -74,14 +75,13 @@ export const idlFactory = ({ IDL }) => {
     'additional_metadata' : IDL.Opt(AdditionalMetadata),
     'name' : IDL.Text,
     'property_images' : IDL.Vec(IDL.Text),
-    'image' : IDL.Opt(IDL.Text),
     'is_initialised' : IDL.Bool,
     'total_supply' : IDL.Nat16,
   });
-  const Result_1 = IDL.Variant({ 'Ok' : CollectionMetadata, 'Err' : IDL.Text });
-  const Result_2 = IDL.Variant({ 'Ok' : Status, 'Err' : IDL.Text });
-  const Result_3 = IDL.Variant({ 'Ok' : MarketDetails, 'Err' : IDL.Text });
-  const Result_4 = IDL.Variant({ 'Ok' : FinancialDetails, 'Err' : IDL.Text });
+  const Result_2 = IDL.Variant({ 'Ok' : CollectionMetadata, 'Err' : IDL.Text });
+  const Result_3 = IDL.Variant({ 'Ok' : Status, 'Err' : IDL.Text });
+  const Result_4 = IDL.Variant({ 'Ok' : MarketDetails, 'Err' : IDL.Text });
+  const Result_5 = IDL.Variant({ 'Ok' : FinancialDetails, 'Err' : IDL.Text });
   const Metadata = IDL.Record({
     'supply_cap' : IDL.Nat16,
     'nft_token_id' : IDL.Text,
@@ -91,8 +91,12 @@ export const idlFactory = ({ IDL }) => {
     'total_supply' : IDL.Nat16,
     'nft_symbol' : IDL.Text,
   });
-  const Result_5 = IDL.Variant({ 'Ok' : Metadata, 'Err' : IDL.Text });
-  const Result_6 = IDL.Variant({ 'Ok' : PropertyDetails, 'Err' : IDL.Text });
+  const Result_6 = IDL.Variant({ 'Ok' : Metadata, 'Err' : IDL.Text });
+  const Result_7 = IDL.Variant({
+    'Ok' : IDL.Tuple(IDL.Text, IDL.Nat64, IDL.Nat64),
+    'Err' : IDL.Text,
+  });
+  const Result_8 = IDL.Variant({ 'Ok' : PropertyDetails, 'Err' : IDL.Text });
   const SaleStatus = IDL.Variant({
     'Init' : IDL.Null,
     'Complete' : IDL.Null,
@@ -110,8 +114,8 @@ export const idlFactory = ({ IDL }) => {
     'buyer' : Account,
     'amount' : IDL.Nat64,
   });
-  const Result_7 = IDL.Variant({ 'Ok' : SaleData, 'Err' : IDL.Text });
-  const Result_8 = IDL.Variant({ 'Ok' : Account, 'Err' : IDL.Text });
+  const Result_9 = IDL.Variant({ 'Ok' : SaleData, 'Err' : IDL.Text });
+  const Result_10 = IDL.Variant({ 'Ok' : Account, 'Err' : IDL.Text });
   const FormMetadata = IDL.Record({
     'supply_cap' : IDL.Nat16,
     'owner' : IDL.Text,
@@ -123,27 +127,39 @@ export const idlFactory = ({ IDL }) => {
   return IDL.Service({
     'add_collection_image' : IDL.Func([IDL.Text], [Result], []),
     'collection_image' : IDL.Func([], [IDL.Vec(IDL.Text)], ['query']),
-    'get_collection_metadata' : IDL.Func([], [Result_1], ['query']),
-    'get_collection_status' : IDL.Func([], [Result_2], ['query']),
-    'get_financial_details' : IDL.Func([], [Result_3], ['query']),
-    'get_market_details' : IDL.Func([], [Result_4], ['query']),
-    'get_metadata' : IDL.Func([IDL.Text], [Result_5], ['query']),
-    'get_property_details' : IDL.Func([], [Result_6], ['query']),
-    'get_sale_data' : IDL.Func([IDL.Text], [Result_7], ['query']),
+    'create_accountid' : IDL.Func(
+        [IDL.Principal],
+        [Result],
+        ['composite_query'],
+      ),
+    'get_balance' : IDL.Func([IDL.Principal], [Result_1], ['composite_query']),
+    'get_collection_metadata' : IDL.Func([], [Result_2], ['query']),
+    'get_collection_status' : IDL.Func([], [Result_3], ['query']),
+    'get_financial_details' : IDL.Func([], [Result_4], ['query']),
+    'get_market_details' : IDL.Func([], [Result_5], ['query']),
+    'get_metadata' : IDL.Func([IDL.Text], [Result_6], ['query']),
+    'get_payment_details' : IDL.Func(
+        [IDL.Principal],
+        [Result_7],
+        ['composite_query'],
+      ),
+    'get_property_details' : IDL.Func([], [Result_8], ['query']),
+    'get_sale_data' : IDL.Func([IDL.Text], [Result_9], ['query']),
     'get_total_invested' : IDL.Func([], [IDL.Nat64], ['query']),
     'icrc7_description' : IDL.Func([], [IDL.Text], ['query']),
-    'icrc7_image' : IDL.Func([], [IDL.Opt(IDL.Text)], ['query']),
     'icrc7_name' : IDL.Func([], [IDL.Text], ['query']),
-    'icrc7_owner_of' : IDL.Func([IDL.Text], [Result_8], []),
+    'icrc7_owner_of' : IDL.Func([IDL.Text], [Result_10], []),
     'icrc7_total_supply' : IDL.Func([], [IDL.Nat16], ['query']),
     'init_collection' : IDL.Func([FormMetadata], [Result], []),
     'mint' : IDL.Func(
-        [IDL.Text, IDL.Text, IDL.Text, IDL.Principal, IDL.Nat16],
+        [IDL.Text, IDL.Text, IDL.Text, IDL.Principal],
         [Result],
         [],
       ),
-    'primary_sale' : IDL.Func([], [Result], []),
+    'mint_approved_nfts' : IDL.Func([IDL.Principal], [Result], []),
+    'primary_sale' : IDL.Func([IDL.Principal], [Result], []),
     'primary_sale_mint' : IDL.Func([IDL.Text], [Result], []),
+    'refund_user_tokens' : IDL.Func([IDL.Principal], [Result], []),
     'update_basic_details' : IDL.Func(
         [IDL.Opt(IDL.Text), IDL.Opt(IDL.Text), IDL.Opt(Status)],
         [Result],
