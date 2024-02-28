@@ -6,7 +6,7 @@
 
 	export let data: PageData;
 
-	let showWaitlistPopup = true;
+	let showWaitlistPopup = false;
 
 	$: metadata = data.metadata;
 </script>

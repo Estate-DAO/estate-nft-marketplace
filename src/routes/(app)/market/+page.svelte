@@ -9,6 +9,7 @@
 	import { onMount } from 'svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import { data } from './data';
+	import { sampleData } from './sampleData';
 
 	type CollectionId = {
 		assetCanId: string;
@@ -45,7 +46,7 @@
 		try {
 			const actor = provisionCanister();
 			const all = await actor.get_all_canisters();
-			nfts = data;
+			nfts = [...data, ...sampleData];
 			// if ('Ok' in all) {
 			// 	nfts = await populatePosts(
 			// 		all.Ok.map((o) => ({
@@ -110,6 +111,7 @@
 			<Card
 				title={nft.name}
 				desc={nft.desc}
+				sample={i > 1}
 				id={`${nft.id.minterCanId}@${nft.id.assetCanId}`}
 				imgSrc={`https://source.unsplash.com/random/?house,country,${i}`}
 			/>

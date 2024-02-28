@@ -1,4 +1,5 @@
 import { data } from '../../market/data';
+import { sampleData } from '../../market/sampleData';
 import type { PageData } from './$types';
 
 export const load: PageData = async ({ params: { id } }) => {
@@ -13,6 +14,6 @@ export const load: PageData = async ({ params: { id } }) => {
 	// }
 
 	return {
-		metadata: minterCanId === 'by6od-j4aaa-aaaaa-qaadq-cai' ? data[0] : data[1]
+		metadata: [...data, ...sampleData].find((d) => d.id.minterCanId === minterCanId)
 	};
 };
