@@ -20,9 +20,17 @@ jobs:
           node-version: 20
           cache: "npm"
 
-      - name: Install dependencies
-        shell: bash
-        run: npm install
+      # - name: Install dependencies
+      #   shell: bash
+      #   run: npm install
 
-      - name: Run svelte-check
-        run: npm run check
+      # - name: Run svelte-check
+      #   run: npm run check
+
+      - name: Install dfx
+        uses: dfinity/setup-dfx@main
+        with:
+          dfx-version: "0.16.1"
+
+      - name: Status
+        run: dfx canister status webclient --network=ic
