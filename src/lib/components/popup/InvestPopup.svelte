@@ -7,27 +7,38 @@
 	import { nftMinterCanister } from '$lib/backend';
 	import { authState } from '$lib/stores/auth';
 	import { Principal } from '@dfinity/principal';
+	import { isPrincipal } from '$lib/utils/isPrincipal';
 
 	export let show = false;
 	export let minterCanId: string;
 
 	let nftToBuy = 1;
+	let nnsAccountId = '';
 	let paymentInfo = {
-		paymentAccountId: '',
 		nftPrice: 0,
 		currentInvestment: 0
 	};
 
 	let pollInterval: ReturnType<typeof setInterval>;
 
-	let loading = true;
+	let principalError = '';
 	let step: 1 | 2 = 1;
 	let paymentStatus = 'pending';
 	let escrowAccount: Uint8Array | number[] = [];
 
+	function checkForm(e: SubmitEvent) {
+		principalError = '';
+		if (!isPrincipal(nnsAccountId.trim())) {
+			principalError = 'Invalid principal Id';
+			e.preventDefault();
+			return false;
+		}
+		step = 2;
+	}
+
 	async function checkPaymentStatus() {
 		const actor = nftMinterCanister(minterCanId);
-		const res = await actor.primary_sale(loggedInUser);
+		const res = await actor.primary_sale(Principal.from(nnsAccountId));
 		console.log({ paymentRes: res });
 		if ('Ok' in res) {
 			paymentStatus = 'completed';
@@ -36,7 +47,7 @@
 
 	async function startPoll() {
 		const actor = nftMinterCanister(minterCanId);
-		const res = await actor.create_escrow_accountid(loggedInUser);
+		const res = await actor.create_escrow_accountid(Principal.from(nnsAccountId));
 		if ('Ok' in res) {
 			escrowAccount = res.Ok;
 		}
@@ -48,7 +59,6 @@
 		const details = await actor.get_payment_details(loggedInUser);
 		if ('Ok' in details) {
 			paymentInfo = {
-				paymentAccountId: details.Ok[0],
 				nftPrice: Number(details.Ok[1]),
 				currentInvestment: Number(details.Ok[2])
 			};
@@ -72,7 +82,7 @@
 	<div class="absolute inset-0 bg-black/50 z-[1]"></div>
 	<div
 		in:scale={{ start: 0.9, delay: 100, duration: 100 }}
-		class="bg-white z-[2] max-w-2xl px-16 py-12 flex flex-col items-center gap-12 relative shadow-xl rounded-lg"
+		class="bg-white z-[2] max-w-2xl w-full px-16 py-12 flex flex-col items-center gap-12 relative shadow-xl rounded-lg"
 	>
 		<button on:click={() => (show = false)} class="absolute top-4 right-4 z-[2]">
 			<PlusIcon class="h-5 w-5 rotate-45" />
@@ -80,18 +90,11 @@
 		<div class="text-3xl">{step === 1 ? 'Invest' : 'Pay'}</div>
 
 		{#if step == 1}
-			<form on:submit={() => (step = 2)} class="flex w-full flex-col items-center gap-12">
+			<form on:submit={checkForm} class="flex w-full flex-col items-center gap-12">
 				<div class="w-full gap-8 flex flex-col">
 					<div class="flex w-full items-center justify-between text-sm gap-4">
 						<div>NFT Price:</div>
 						<div class="font-bold">{paymentInfo.nftPrice} ICP</div>
-					</div>
-					<div class="flex w-full items-start justify-between text-sm gap-4">
-						<div>Account ID:</div>
-
-						<div class="font-bold text-xs w-1/2 break-all text-right">
-							{paymentInfo.paymentAccountId}
-						</div>
 					</div>
 					<div class="flex w-full items-center justify-between text-sm gap-4">
 						<div>Current investment:</div>
@@ -106,6 +109,17 @@
 						type="number"
 						placeholder="(in USD)"
 					/>
+					<div>
+						<Input
+							bind:value={nnsAccountId}
+							required
+							label="NNS Account Principal ID"
+							placeholder="Enter your account Principal ID from which funds will be transferred"
+						/>
+						{#if principalError}
+							<div class="text-red-500 text-xs pt-1">{principalError}</div>
+						{/if}
+					</div>
 					<hr />
 					<div class="flex w-full items-center justify-between text-sm gap-4">
 						<div>Amount to pay:</div>
@@ -125,7 +139,7 @@
 				<div class="flex w-full items-start justify-between text-sm gap-4">
 					<div>Transfer to this account:</div>
 					<div class="font-bold text-xs w-1/2 break-all text-right">
-						{paymentInfo.paymentAccountId}
+						{nnsAccountId}
 					</div>
 				</div>
 
