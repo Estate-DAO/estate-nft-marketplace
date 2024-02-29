@@ -15,14 +15,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: "true"
-      # - uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20
-      #     cache: "npm"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
 
-      # - name: Install dependencies
-      #   shell: bash
-      #   run: npm install
+      - name: Install dependencies
+        shell: bash
+        run: npm install
 
       # - name: Run svelte-check
       #   run: npm run check
@@ -40,5 +40,14 @@ jobs:
           rm actions_identity.pem
           dfx identity use actions
 
-      - name: Status
-        run: dfx canister status webclient --network=ic
+      - name: Stop
+        run: dfx canister stop webclient --network ic
+
+      - name: Un
+        run: dfx canister uninstall-code webclient --network ic
+
+      - name: Build webclient app
+        run: npm run build
+
+      - name: Deploy built webclient app on IC
+        run: dfx deploy webclient --network ic
