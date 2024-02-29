@@ -9,9 +9,7 @@
 
 	export let data: PageData;
 
-	const { minterCanId, id } = getCollectionId();
-
-	$: console.log(metadata);
+	const { minterCanId } = getCollectionId();
 
 	let showWaitlistPopup = false;
 	let showInvestPopup = false;
@@ -45,7 +43,7 @@
 		<InvestInfo
 			{waitlist}
 			on:click={() => {
-				if (false) {
+				if (waitlist) {
 					showWaitlistPopup = true;
 				} else {
 					showInvestPopup = true;
