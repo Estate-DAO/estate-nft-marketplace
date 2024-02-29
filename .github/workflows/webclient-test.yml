@@ -15,10 +15,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: "true"
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: "npm"
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      #     cache: "npm"
 
       # - name: Install dependencies
       #   shell: bash
@@ -31,6 +31,14 @@ jobs:
         uses: dfinity/setup-dfx@main
         with:
           dfx-version: "0.16.1"
+
+      - name: Setup env to deploy
+        run: |
+          touch actions_identity.pem
+          echo "${{ secrets.ESTATE_DAO_CANISTER_CONTROLLER_PRIVATE_KEY }}" > actions_identity.pem
+          dfx identity import --storage-mode plaintext actions actions_identity.pem
+          rm actions_identity.pem
+          dfx identity use actions
 
       - name: Status
         run: dfx canister status webclient --network=ic
