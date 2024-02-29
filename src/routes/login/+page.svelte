@@ -9,7 +9,7 @@
 
 	const IDENTITY_PROVIDER =
 		import.meta.env.NODE_ENV === 'dev'
-			? `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:8080`
+			? `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:${import.meta.env.DFX_PORT}`
 			: 'https://identity.ic0.app/#authorize';
 	let error = '';
 

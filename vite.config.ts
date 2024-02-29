@@ -14,6 +14,7 @@ export default defineConfig({
 		),
 		'process.env.INTERNET_IDENTITY_CANISTER_ID': JSON.stringify('bw4dl-smaaa-aaaaa-qaacq-cai'),
 		'import.meta.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'dev'),
+		'import.meta.env.DFX_PORT': JSON.stringify(DFX_PORT),
 		'process.env.DFX_NETWORK': JSON.stringify(prod ? 'ic' : 'local')
 	},
 	server: {
