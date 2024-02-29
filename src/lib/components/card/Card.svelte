@@ -1,14 +1,14 @@
 <script lang="ts">
 	import ImageIcon from '$lib/components/icons/ImageIcon.svelte';
 
-	export let id: string;
 	export let imgSrc = ''; //https://source.unsplash.com/random/?house,country,{id}
 	export let title = '';
 	export let desc = '';
 	export let sample = false;
+	export let href: string;
 </script>
 
-<a href="/collection/{id}" class="rounded-xl relative overflow-hidden shadow-lg w-[20rem]">
+<a {href} class="rounded-xl relative overflow-hidden shadow-lg w-[20rem]">
 	<div
 		class="absolute top-2 left-2 rounded-lg bg-white/70 backdrop-blur p-1 px-3 text-black text-xs"
 	>

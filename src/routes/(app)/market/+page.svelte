@@ -18,6 +18,7 @@
 
 	type CollectionDetails = CollectionMetadata & {
 		id: CollectionId;
+		sample: boolean;
 	};
 
 	let loading = true;
@@ -29,7 +30,8 @@
 			if ('Ok' in r)
 				return {
 					...r.Ok,
-					id
+					id,
+					sample: false
 				} as CollectionDetails;
 		} catch (e) {
 			return undefined;
@@ -46,16 +48,16 @@
 		try {
 			const actor = provisionCanister();
 			const all = await actor.get_all_canisters();
-			nfts = [...data, ...sampleData];
-			// if ('Ok' in all) {
-			// 	nfts = await populatePosts(
-			// 		all.Ok.map((o) => ({
-			// 			assetCanId: o.asset_canister.toText(),
-			// 			minterCanId: o.minter_canister.toText()
-			// 		}))
-			// 	);
-			// console.log({ nfts });
-			// }
+
+			if ('Ok' in all) {
+				const res = await populatePosts(
+					all.Ok.map((o) => ({
+						assetCanId: o.asset_canister.toText(),
+						minterCanId: o.minter_canister.toText()
+					}))
+				);
+				nfts = [...res, ...sampleData];
+			}
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -109,10 +111,10 @@
 	<div class="flex py-12 items-center gap-8 justify-normal pl-6 flex-wrap">
 		{#each nfts as nft, i}
 			<Card
+				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
 				title={nft.name}
 				desc={nft.desc}
-				sample={i > 1}
-				id={`${nft.id.minterCanId}@${nft.id.assetCanId}`}
+				sample={nft.sample}
 				imgSrc={`https://source.unsplash.com/random/?house,country,${i}`}
 			/>
 		{/each}

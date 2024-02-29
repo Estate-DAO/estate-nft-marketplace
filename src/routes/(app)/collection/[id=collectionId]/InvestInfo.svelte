@@ -1,4 +1,5 @@
 <script lang="ts">
+	export let waitlist = false;
 </script>
 
 <div class="shrink-0 bg-black rounded-xl flex flex-col text-white gap-3 p-6 shadow-xl h-fit">
@@ -9,10 +10,15 @@
 		<div class="absolute bg-white left-0 h-full w-1/3" />
 	</div>
 	<div class="text-md font-thin">30% funded</div>
+
 	<button
 		on:click
 		class="bg-white font-bold text-lg text-nowrap text-black rounded-xl w-min py-1 px-8"
 	>
-		Register for waitlist
+		{#if waitlist}
+			Register for waitlist
+		{:else}
+			Invest
+		{/if}
 	</button>
 </div>

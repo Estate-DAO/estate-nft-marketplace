@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { page } from '$app/stores';
+	import InvestPopup from '$lib/components/popup/InvestPopup.svelte';
 	import WaitlistPopup from '$lib/components/popup/WaitlistPopup.svelte';
 	import type { PageData } from './$types';
 	import InvestInfo from './InvestInfo.svelte';
@@ -7,8 +9,10 @@
 	export let data: PageData;
 
 	let showWaitlistPopup = false;
+	let showInvestPopup = false;
 
 	$: metadata = data.metadata;
+	$: waitlist = $page.url.searchParams.has('sample');
 </script>
 
 <div class="w-full flex flex-col items-center gap-4">
@@ -33,10 +37,23 @@
 	</div>
 	<div class="flex gap-8 w-full max-w-6xl">
 		<PropertyHeader {metadata} />
-		<InvestInfo on:click={() => (showWaitlistPopup = true)} />
+		<InvestInfo
+			{waitlist}
+			on:click={() => {
+				if (false) {
+					showWaitlistPopup = true;
+				} else {
+					showInvestPopup = true;
+				}
+			}}
+		/>
 	</div>
 </div>
 
 {#if showWaitlistPopup}
 	<WaitlistPopup bind:show={showWaitlistPopup} />
+{/if}
+
+{#if showInvestPopup}
+	<InvestPopup bind:show={showInvestPopup} />
 {/if}

@@ -28,7 +28,7 @@
 			property_images: [],
 			supply_cap: BigInt(50),
 			image_uri: '',
-			primary_sale_price: BigInt(10),
+			price: BigInt(10),
 			additional_metadata: [
 				{
 					documents: [],

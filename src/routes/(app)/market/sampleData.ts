@@ -8,37 +8,44 @@ type CollectionId = {
 
 type CollectionDetails = CollectionMetadata & {
 	id: CollectionId;
+	sample: boolean;
 };
 
 export const sampleData = [
 	{
 		...staticData,
 		name: 'New York, 1900',
-		id: { assetCanId: 'b77iv-eeaaa-aaaaa-qaada-cai', minterCanId: 'by6oe-j4aaa-aaaaa-qaadq-cai' }
+		id: { assetCanId: 'b77iv-eeaaa-aaaaa-qaada-cai', minterCanId: 'by6oe-j4aaa-aaaaa-qaadq-cai' },
+		sample: true
 	},
 	{
 		...staticData,
 		name: 'Vancouver, 2042',
-		id: { assetCanId: 'avqkm-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrma-lmaaa-aaaaa-qaaeq-cai' }
+		id: { assetCanId: 'avqkm-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrma-lmaaa-aaaaa-qaaeq-cai' },
+		sample: true
 	},
 	{
 		...staticData,
 		name: 'Georgia, 1800',
-		id: { assetCanId: 'avqko-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrmb-lmaaa-aaaaa-qaaeq-cai' }
+		id: { assetCanId: 'avqko-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrmb-lmaaa-aaaaa-qaaeq-cai' },
+		sample: true
 	},
 	{
 		...staticData,
 		name: 'Fairbanks, Road St.',
-		id: { assetCanId: 'avqkp-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrmc-lmaaa-aaaaa-qaaeq-cai' }
+		id: { assetCanId: 'avqkp-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrmc-lmaaa-aaaaa-qaaeq-cai' },
+		sample: true
 	},
 	{
 		...staticData,
 		name: 'California, Mount View',
-		id: { assetCanId: 'avqkq-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrmd-lmaaa-aaaaa-qaaeq-cai' }
+		id: { assetCanId: 'avqkq-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrmd-lmaaa-aaaaa-qaaeq-cai' },
+		sample: true
 	},
 	{
 		...staticData,
 		name: 'Rhode Island, Bark St.',
-		id: { assetCanId: 'avqkr-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrme-lmaaa-aaaaa-qaaeq-cai' }
+		id: { assetCanId: 'avqkr-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrme-lmaaa-aaaaa-qaaeq-cai' },
+		sample: true
 	}
 ] as CollectionDetails[];
