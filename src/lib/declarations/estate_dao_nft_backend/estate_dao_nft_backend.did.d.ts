@@ -93,25 +93,29 @@ export interface RentFinancials {
 }
 export type Result = { 'Ok' : string } |
   { 'Err' : string };
-export type Result_1 = { 'Ok' : bigint } |
+export type Result_1 = { 'Ok' : Uint8Array | number[] } |
   { 'Err' : string };
-export type Result_10 = { 'Ok' : Account } |
+export type Result_10 = { 'Ok' : SaleData } |
   { 'Err' : string };
-export type Result_2 = { 'Ok' : CollectionMetadata } |
+export type Result_11 = { 'Ok' : [bigint, bigint] } |
   { 'Err' : string };
-export type Result_3 = { 'Ok' : Status } |
+export type Result_12 = { 'Ok' : Account } |
   { 'Err' : string };
-export type Result_4 = { 'Ok' : MarketDetails } |
+export type Result_2 = { 'Ok' : bigint } |
   { 'Err' : string };
-export type Result_5 = { 'Ok' : FinancialDetails } |
+export type Result_3 = { 'Ok' : CollectionMetadata } |
   { 'Err' : string };
-export type Result_6 = { 'Ok' : Metadata } |
+export type Result_4 = { 'Ok' : Status } |
   { 'Err' : string };
-export type Result_7 = { 'Ok' : [string, bigint, bigint] } |
+export type Result_5 = { 'Ok' : MarketDetails } |
   { 'Err' : string };
-export type Result_8 = { 'Ok' : PropertyDetails } |
+export type Result_6 = { 'Ok' : FinancialDetails } |
   { 'Err' : string };
-export type Result_9 = { 'Ok' : SaleData } |
+export type Result_7 = { 'Ok' : Metadata } |
+  { 'Err' : string };
+export type Result_8 = { 'Ok' : [string, bigint, bigint] } |
+  { 'Err' : string };
+export type Result_9 = { 'Ok' : PropertyDetails } |
   { 'Err' : string };
 export interface ReturnsFinancials {
   'average_5_year_roi' : [] | [number],
@@ -138,21 +142,23 @@ export interface Timestamp { 'timestamp_nanos' : bigint }
 export interface _SERVICE {
   'add_collection_image' : ActorMethod<[string], Result>,
   'collection_image' : ActorMethod<[], Array<string>>,
-  'create_accountid' : ActorMethod<[Principal], Result>,
-  'get_balance' : ActorMethod<[Principal], Result_1>,
-  'get_collection_metadata' : ActorMethod<[], Result_2>,
-  'get_collection_status' : ActorMethod<[], Result_3>,
-  'get_financial_details' : ActorMethod<[], Result_4>,
-  'get_market_details' : ActorMethod<[], Result_5>,
-  'get_metadata' : ActorMethod<[string], Result_6>,
-  'get_payment_details' : ActorMethod<[Principal], Result_7>,
-  'get_property_details' : ActorMethod<[], Result_8>,
-  'get_sale_data' : ActorMethod<[string], Result_9>,
+  'create_accountid' : ActorMethod<[Principal], Result_1>,
+  'create_escrow_accountid' : ActorMethod<[Principal], Result_1>,
+  'get_balance' : ActorMethod<[Principal], Result_2>,
+  'get_collection_metadata' : ActorMethod<[], Result_3>,
+  'get_collection_status' : ActorMethod<[], Result_4>,
+  'get_financial_details' : ActorMethod<[], Result_5>,
+  'get_market_details' : ActorMethod<[], Result_6>,
+  'get_metadata' : ActorMethod<[string], Result_7>,
+  'get_payment_details' : ActorMethod<[Principal], Result_8>,
+  'get_property_details' : ActorMethod<[], Result_9>,
+  'get_sale_data' : ActorMethod<[string], Result_10>,
   'get_total_invested' : ActorMethod<[], bigint>,
+  'get_user_sale_balance' : ActorMethod<[Principal], Result_11>,
   'icrc7_description' : ActorMethod<[], string>,
   'icrc7_image' : ActorMethod<[], string>,
   'icrc7_name' : ActorMethod<[], string>,
-  'icrc7_owner_of' : ActorMethod<[string], Result_10>,
+  'icrc7_owner_of' : ActorMethod<[string], Result_12>,
   'icrc7_total_supply' : ActorMethod<[], bigint>,
   'init_collection' : ActorMethod<[FormMetadata], Result>,
   'mint' : ActorMethod<[string, string, string, Principal], Result>,
