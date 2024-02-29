@@ -5,6 +5,9 @@
 		name: string;
 		description: string;
 		status: StatusKey;
+		supplyCap: number;
+		price: number;
+		coverImage: string;
 	};
 </script>
 
@@ -19,7 +22,10 @@
 	export let data: BasicInfoData = {
 		name: '',
 		description: '',
-		status: 'Draft'
+		status: 'Draft',
+		supplyCap: 1000,
+		price: 10,
+		coverImage: ''
 	};
 
 	const handleStatusChange = ({ detail }: { detail: string }) =>
@@ -38,6 +44,20 @@
 			{ value: 'Draft', label: 'Draft' },
 			{ value: 'Upcoming', label: 'Upcoming' }
 		]}
+	/>
+	<Input
+		disabled={loading}
+		type="number"
+		label="Price"
+		bind:value={data.price}
+		placeholder="Price (in ICP)"
+	/>
+	<Input
+		disabled={loading}
+		type="number"
+		label="Supply cap"
+		bind:value={data.supplyCap}
+		placeholder="Supply cap (in ICP)"
 	/>
 	<Textarea
 		disabled={loading}

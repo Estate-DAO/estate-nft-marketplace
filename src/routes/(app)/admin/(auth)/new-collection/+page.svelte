@@ -7,6 +7,7 @@
 	import FinancialInfo, { type FinancialInfoData } from './FinancialInfo.svelte';
 	import { provisionCanister } from '$lib/backend';
 	import { slide } from 'svelte/transition';
+	import { authState } from '$lib/stores/auth';
 
 	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
@@ -24,11 +25,11 @@
 		res = await actor.init_form_metadata({
 			name: basicInfoData.name,
 			desc: basicInfoData.description,
-			owner: 'owner',
+			owner: $authState.idString || 'owner',
 			property_images: [],
-			supply_cap: BigInt(50),
-			image_uri: '',
-			price: BigInt(10),
+			supply_cap: BigInt(basicInfoData.supplyCap),
+			image_uri: basicInfoData.coverImage,
+			price: BigInt(basicInfoData.price),
 			additional_metadata: [
 				{
 					documents: [],

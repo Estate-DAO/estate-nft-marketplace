@@ -7,6 +7,8 @@
 	export let type: 'text' | 'password' | 'number' | 'email' = 'text';
 	export let disabled = false;
 	export let required = false;
+	export let min: number | undefined = undefined;
+	export let max: number | undefined = undefined;
 	let classes = '';
 	export { classes as class };
 
@@ -22,6 +24,8 @@
 >
 	<span class="text-sm font-medium leading-6 text-gray-900">{label}</span>
 	<input
+		{min}
+		{max}
 		{required}
 		{disabled}
 		bind:this={inputEl}

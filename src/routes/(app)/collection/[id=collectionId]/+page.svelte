@@ -5,8 +5,13 @@
 	import type { PageData } from './$types';
 	import InvestInfo from './InvestInfo.svelte';
 	import PropertyHeader from './PropertyHeader.svelte';
+	import { getCollectionId } from './collectionId.context';
 
 	export let data: PageData;
+
+	const { minterCanId, id } = getCollectionId();
+
+	$: console.log(metadata);
 
 	let showWaitlistPopup = false;
 	let showInvestPopup = false;
@@ -55,5 +60,5 @@
 {/if}
 
 {#if showInvestPopup}
-	<InvestPopup bind:show={showInvestPopup} />
+	<InvestPopup bind:show={showInvestPopup} {minterCanId} />
 {/if}

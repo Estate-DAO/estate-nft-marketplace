@@ -6,12 +6,12 @@
 	import { provisionCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 
-	let loading = true;
+	let loading = false;
 	let error = '';
 
-	$: if (!$adminStore.isLoggedIn) {
-		gotoAuthPage();
-	}
+	// $: if (!$adminStore.isLoggedIn) {
+	// 	gotoAuthPage();
+	// }
 
 	async function checkPassword() {
 		error = '';
@@ -36,7 +36,7 @@
 		goto('/admin/auth');
 	}
 
-	onMount(checkPassword);
+	// onMount(checkPassword);
 </script>
 
 {#if error}
