@@ -87,7 +87,7 @@ export const idlFactory = ({ IDL }) => {
     'additional_metadata' : IDL.Opt(AdditionalMetadata),
     'name' : IDL.Text,
     'property_images' : IDL.Vec(IDL.Text),
-    'primary_sale_price' : IDL.Nat64,
+    'price' : IDL.Nat64,
   });
   const Result_4 = IDL.Variant({ 'Ok' : FormMetadata, 'Err' : IDL.Text });
   const Result_5 = IDL.Variant({ 'Ok' : IDL.Text, 'Err' : IDL.Text });

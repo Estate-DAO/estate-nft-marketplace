@@ -29,7 +29,7 @@ export interface FormMetadata {
   'additional_metadata' : [] | [AdditionalMetadata],
   'name' : string,
   'property_images' : Array<string>,
-  'primary_sale_price' : bigint,
+  'price' : bigint,
 }
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],

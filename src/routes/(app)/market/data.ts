@@ -79,14 +79,15 @@ export const staticData = {
 		}
 	],
 	status: { Draft: null },
-	supply_cap: 5000,
+	total_supply: BigInt(100),
+	supply_cap: BigInt(50),
+	price: BigInt(10),
 	owner: 'owner',
-	image: [''],
+	image_uri: '',
 	desc: 'Situated in the heart of the city, this property is a great investment!',
 	property_images: [],
-	is_initialised: true,
-	total_supply: 0
-} as Omit<CollectionMetadata, 'name'>;
+	is_initialised: true
+} satisfies Omit<CollectionMetadata, 'name'>;
 
 export const data = [
 	{

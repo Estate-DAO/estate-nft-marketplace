@@ -5,7 +5,7 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { page } from '$app/stores';
 	import ItemInfo from './ItemInfo.svelte';
-	import Attachements from './Attachements.svelte';
+	import Attachments from './Attachments.svelte';
 	import FormHeader from './FormHeader.svelte';
 	import InfoSection from './InfoSection.svelte';
 	import Button from '$lib/components/button/Button.svelte';
@@ -250,7 +250,7 @@
 		<InfoSection>
 			<FormHeader slot="header" title="Documents" />
 			{#if formData.additional_metadata?.[0]?.documents?.[0]?.length}
-				<Attachements docs={formData.additional_metadata[0].documents[0]} />
+				<Attachments docs={formData.additional_metadata[0].documents[0]} />
 			{:else}
 				<ItemInfo title="Attachments" value="No documents uploaded" />
 			{/if}
