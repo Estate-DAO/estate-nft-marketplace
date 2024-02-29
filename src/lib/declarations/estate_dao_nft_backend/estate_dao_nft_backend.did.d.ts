@@ -14,14 +14,16 @@ export interface AdditionalMetadata {
 }
 export interface CollectionMetadata {
   'status' : Status,
-  'supply_cap' : number,
+  'supply_cap' : bigint,
+  'image_uri' : string,
   'owner' : string,
   'desc' : string,
   'additional_metadata' : [] | [AdditionalMetadata],
   'name' : string,
   'property_images' : Array<string>,
+  'price' : bigint,
   'is_initialised' : boolean,
-  'total_supply' : number,
+  'total_supply' : bigint,
 }
 export interface FinancialDetails {
   'total_monthly_cost' : [] | [number],
@@ -33,12 +35,14 @@ export interface FinancialDetails {
   'returns' : [] | [ReturnsFinancials],
 }
 export interface FormMetadata {
-  'supply_cap' : number,
+  'supply_cap' : bigint,
+  'image_uri' : string,
   'owner' : string,
   'desc' : string,
   'additional_metadata' : [] | [AdditionalMetadata],
   'name' : string,
   'property_images' : Array<string>,
+  'price' : bigint,
 }
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],
@@ -57,12 +61,12 @@ export interface MarketDetails {
   'annual_popullation_growth' : [] | [number],
 }
 export interface Metadata {
-  'supply_cap' : number,
+  'supply_cap' : bigint,
   'nft_token_id' : string,
   'desc' : string,
   'collection_name' : string,
   'nft_uri' : string,
-  'total_supply' : number,
+  'total_supply' : bigint,
   'nft_symbol' : string,
 }
 export interface PropertyDetails {
@@ -146,15 +150,18 @@ export interface _SERVICE {
   'get_sale_data' : ActorMethod<[string], Result_9>,
   'get_total_invested' : ActorMethod<[], bigint>,
   'icrc7_description' : ActorMethod<[], string>,
+  'icrc7_image' : ActorMethod<[], string>,
   'icrc7_name' : ActorMethod<[], string>,
   'icrc7_owner_of' : ActorMethod<[string], Result_10>,
-  'icrc7_total_supply' : ActorMethod<[], number>,
+  'icrc7_total_supply' : ActorMethod<[], bigint>,
   'init_collection' : ActorMethod<[FormMetadata], Result>,
   'mint' : ActorMethod<[string, string, string, Principal], Result>,
   'mint_approved_nfts' : ActorMethod<[Principal], Result>,
   'primary_sale' : ActorMethod<[Principal], Result>,
   'primary_sale_mint' : ActorMethod<[string], Result>,
   'refund_user_tokens' : ActorMethod<[Principal], Result>,
+  'sale_confirmed_mint' : ActorMethod<[], Result>,
+  'sale_confirmed_refund' : ActorMethod<[], Result>,
   'update_basic_details' : ActorMethod<
     [[] | [string], [] | [string], [] | [Status]],
     Result

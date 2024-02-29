@@ -80,12 +80,14 @@ export const idlFactory = ({ IDL }) => {
     'market_details' : IDL.Opt(MarketDetails),
   });
   const FormMetadata = IDL.Record({
-    'supply_cap' : IDL.Nat16,
+    'supply_cap' : IDL.Nat64,
+    'image_uri' : IDL.Text,
     'owner' : IDL.Text,
     'desc' : IDL.Text,
     'additional_metadata' : IDL.Opt(AdditionalMetadata),
     'name' : IDL.Text,
     'property_images' : IDL.Vec(IDL.Text),
+    'primary_sale_price' : IDL.Nat64,
   });
   const Result_4 = IDL.Variant({ 'Ok' : FormMetadata, 'Err' : IDL.Text });
   const Result_5 = IDL.Variant({ 'Ok' : IDL.Text, 'Err' : IDL.Text });

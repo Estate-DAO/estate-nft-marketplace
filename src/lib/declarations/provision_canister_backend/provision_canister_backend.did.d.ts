@@ -22,12 +22,14 @@ export interface FinancialDetails {
   'returns' : [] | [ReturnsFinancials],
 }
 export interface FormMetadata {
-  'supply_cap' : number,
+  'supply_cap' : bigint,
+  'image_uri' : string,
   'owner' : string,
   'desc' : string,
   'additional_metadata' : [] | [AdditionalMetadata],
   'name' : string,
   'property_images' : Array<string>,
+  'primary_sale_price' : bigint,
 }
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],
