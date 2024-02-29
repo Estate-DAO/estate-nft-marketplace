@@ -15,6 +15,7 @@
 	let nftToBuy = 1;
 	let nnsAccountId = '';
 	let paymentInfo = {
+		transferTo: '',
 		nftPrice: 0,
 		currentInvestment: 0
 	};
@@ -47,7 +48,15 @@
 
 	async function startPoll() {
 		const actor = nftMinterCanister(minterCanId);
-		const res = await actor.create_escrow_accountid(Principal.from(nnsAccountId));
+		const details = await actor.get_payment_details(Principal.from(nnsAccountId));
+		if ('Ok' in details) {
+			paymentInfo = {
+				transferTo: details.Ok[0],
+				nftPrice: Number(details.Ok[1]),
+				currentInvestment: Number(details.Ok[2])
+			};
+		}
+		const res = await actor.create_escrow_accountid(Principal.from(paymentInfo.transferTo));
 		if ('Ok' in res) {
 			escrowAccount = res.Ok;
 		}
@@ -59,6 +68,7 @@
 		const details = await actor.get_payment_details(loggedInUser);
 		if ('Ok' in details) {
 			paymentInfo = {
+				transferTo: '',
 				nftPrice: Number(details.Ok[1]),
 				currentInvestment: Number(details.Ok[2])
 			};
@@ -137,7 +147,7 @@
 					</div>
 				</div>
 				<div class="flex w-full items-start justify-between text-sm gap-4">
-					<div>Transfer to this account:</div>
+					<div>Transferring from account:</div>
 					<div class="font-bold text-xs w-1/2 break-all text-right">
 						{nnsAccountId}
 					</div>
@@ -153,6 +163,15 @@
 						<div>Transaction successful</div>
 					</div>
 				{:else}
+					<hr />
+
+					<div class="flex w-full items-start justify-between text-sm gap-4">
+						<div>Transferring to:</div>
+						<div class="font-bold text-xs w-1/2 break-all text-right">
+							{paymentInfo.transferTo}
+						</div>
+					</div>
+
 					<hr />
 
 					<div class="flex w-full items-start justify-between text-sm gap-4">
