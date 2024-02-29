@@ -56,7 +56,7 @@
 				currentInvestment: Number(details.Ok[2])
 			};
 		}
-		const res = await actor.create_escrow_accountid(Principal.from(paymentInfo.transferTo));
+		const res = await actor.create_escrow_accountid(Principal.from(nnsAccountId));
 		if ('Ok' in res) {
 			escrowAccount = res.Ok;
 		}
