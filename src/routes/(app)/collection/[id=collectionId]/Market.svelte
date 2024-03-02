@@ -3,13 +3,14 @@
 
 	export let metadata: CollectionMetadata;
 
-	$: location = metadata.additional_metadata[0]?.market_details?.[0]?.country || 'Not set';
-	$: averageRent = metadata.additional_metadata[0]?.market_details?.[0]?.average_rent || '--';
+	$: location = metadata.additional_metadata[0]?.market_details?.[0]?.country?.[0] || 'Not set';
+	$: averageRent = metadata.additional_metadata[0]?.market_details?.[0]?.average_rent?.[0] || '--';
 	$: annualPopulationGrowth =
-		metadata.additional_metadata[0]?.market_details?.[0]?.annual_popullation_growth || '--';
+		metadata.additional_metadata[0]?.market_details?.[0]?.annual_popullation_growth?.[0] || '--';
 	$: medianHomeSalePrice =
-		metadata.additional_metadata[0]?.market_details?.[0]?.median_home_sale_price || '--';
-	$: description = metadata.additional_metadata[0]?.market_details?.[0]?.description || 'Not set';
+		metadata.additional_metadata[0]?.market_details?.[0]?.median_home_sale_price?.[0] || '--';
+	$: description =
+		metadata.additional_metadata[0]?.market_details?.[0]?.description?.[0] || 'Not set';
 </script>
 
 <div class="flex flex-col gap-4 py-4">
@@ -17,9 +18,9 @@
 		title="location"
 		class="w-full rounded-xl overflow-hidden"
 		height="420"
-		src="https://www.openstreetmap.org/export/embed.html?bbox=-98.11958312988283%2C30.115730650183107%2C-97.44667053222656%2C30.49660948755449&amp;layer=mapnik"
+		src="https://www.openstreetmap.org/export/embed.html?bbox=-5.346908569335938%2C36.25424062786422%2C-5.2686309814453125%2C36.30986881308669&amp;layer=mapnik"
 	></iframe><br /><small
-		><a href="https://www.openstreetmap.org/#map=12/30.3064/-97.7831">View Larger Map</a></small
+		><a href="https://www.openstreetmap.org/#map=14/36.2821/-5.3078">View Larger Map</a></small
 	>
 
 	<div class="font-thin text-2xl">Location: {location}</div>

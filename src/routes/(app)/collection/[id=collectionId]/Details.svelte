@@ -4,20 +4,27 @@
 	export let metadata: CollectionMetadata;
 
 	$: lastRenovated =
-		metadata.additional_metadata[0]?.property_details?.[0]?.last_renovated || 'N/A';
-	$: beds = metadata.additional_metadata[0]?.property_details?.[0]?.beds || 'N/A';
-	$: crimeScore = metadata.additional_metadata[0]?.property_details?.[0]?.crime_score || 'N/A';
-	$: yearBuilt = metadata.additional_metadata[0]?.property_details?.[0]?.year_built || 'N/A';
-	$: occupied = metadata.additional_metadata[0]?.property_details?.[0]?.occupied || 'N/A';
-	$: schoolScore = metadata.additional_metadata[0]?.property_details?.[0]?.school_score || 'N/A';
+		metadata.additional_metadata[0]?.property_details?.[0]?.last_renovated?.[0] || 'N/A';
+	$: beds = metadata.additional_metadata[0]?.property_details?.[0]?.beds?.[0] || 'N/A';
+	$: crimeScore = metadata.additional_metadata[0]?.property_details?.[0]?.crime_score?.[0] || 'N/A';
+	$: yearBuilt = metadata.additional_metadata[0]?.property_details?.[0]?.year_built?.[0] || 'N/A';
+	$: occupied = metadata.additional_metadata[0]?.property_details?.[0]?.occupied?.[0]
+		? 'Yes'
+		: 'No';
+	$: schoolScore =
+		metadata.additional_metadata[0]?.property_details?.[0]?.school_score?.[0] || 'N/A';
 	$: squareFootage =
-		metadata.additional_metadata[0]?.property_details?.[0]?.square_footage || 'N/A';
-	$: baths = metadata.additional_metadata[0]?.property_details?.[0]?.baths || 'N/A';
-	$: affordability = metadata.additional_metadata[0]?.property_details?.[0]?.affordability || 'N/A';
-	$: floodZone = metadata.additional_metadata[0]?.property_details?.[0]?.flood_zone || 'N/A';
-	$: monthlyRent = metadata.additional_metadata[0]?.property_details?.[0]?.monthly_rent || 'N/A';
+		metadata.additional_metadata[0]?.property_details?.[0]?.square_footage?.[0] || 'N/A';
+	$: baths = metadata.additional_metadata[0]?.property_details?.[0]?.baths?.[0] || 'N/A';
+	$: affordability =
+		metadata.additional_metadata[0]?.property_details?.[0]?.affordability?.[0] || 'N/A';
+	$: floodZone = metadata.additional_metadata[0]?.property_details?.[0]?.flood_zone?.[0]
+		? 'Yes'
+		: 'No';
+	$: monthlyRent =
+		metadata.additional_metadata[0]?.property_details?.[0]?.monthly_rent?.[0] || 'N/A';
 	$: pricePerSqFoot =
-		metadata.additional_metadata[0]?.property_details?.[0]?.price_per_sq_foot || 'N/A';
+		metadata.additional_metadata[0]?.property_details?.[0]?.price_per_sq_foot?.[0] || 'N/A';
 	$: description = metadata.desc || '';
 </script>
 
@@ -73,7 +80,8 @@
 		</div>
 	</div>
 
-	<div>
-		{description}
+	<div class="flex flex-col">
+		<div class="font-bold">Description</div>
+		<div>{description}</div>
 	</div>
 </div>

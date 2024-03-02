@@ -13,16 +13,17 @@
 
 	export let metadata: CollectionMetadata;
 
-	const tabs = ['details', 'financials', 'documents', 'the market'] as TABTYPE[];
-	type TABTYPE = 'details' | 'financials' | 'documents' | 'the market';
+	const tabs = ['details', 'financials', 'the market'] as TABTYPE[];
+	type TABTYPE = 'details' | 'financials' | 'the market';
 	let selected: TABTYPE = 'details';
 
 	const { id } = getCollectionId();
 
-	$: country = metadata.additional_metadata[0]?.market_details?.[0]?.country || 'Not set';
-	$: beds = metadata.additional_metadata[0]?.property_details?.[0]?.beds || '-';
-	$: baths = metadata.additional_metadata[0]?.property_details?.[0]?.baths || '-';
-	$: squareFootage = metadata.additional_metadata[0]?.property_details?.[0]?.square_footage || '-';
+	$: country = metadata.additional_metadata[0]?.market_details?.[0]?.country?.[0] || 'Not set';
+	$: beds = metadata.additional_metadata[0]?.property_details?.[0]?.beds?.[0] || '-';
+	$: baths = metadata.additional_metadata[0]?.property_details?.[0]?.baths?.[0] || '-';
+	$: squareFootage =
+		metadata.additional_metadata[0]?.property_details?.[0]?.square_footage?.[0] || '-';
 </script>
 
 <div class="flex flex-col grow gap-4">
@@ -51,8 +52,6 @@
 		<Details {metadata} />
 	{:else if selected === 'financials'}
 		<Financials {metadata} />
-	{:else if selected === 'documents'}
-		<Documents />
 	{:else if selected === 'the market'}
 		<Market {metadata} />
 	{/if}

@@ -1,3 +1,13 @@
+<script lang="ts" context="module">
+	function renVal(val: string | number, prepend = '€') {
+		if (val === '--') {
+			return '--';
+		} else {
+			return `${prepend ? prepend + ' ' : ''} ${val}`;
+		}
+	}
+</script>
+
 <script lang="ts">
 	import InfoTitle from './InfoTitle.svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
@@ -6,64 +16,67 @@
 
 	$: assetPrice =
 		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.underlying_asset_price || '--';
+			?.underlying_asset_price?.[0] || '--';
 	$: platformFee =
 		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.platform_closing_fee || 'WAVED';
+			?.platform_closing_fee?.[0] || 'WAVED';
 	$: maintenanceReserve =
 		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.initial_maintenance_reserve || '--';
+			?.initial_maintenance_reserve?.[0] || '--';
 
 	$: fiveYearIRR =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.total_5_year_irr || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.total_5_year_irr?.[0] ||
+		'--';
 	$: projectedAppreciation =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.projected_appreciation ||
-		'--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]
+			?.projected_appreciation?.[0] || '--';
 	$: average5YearROI =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.average_5_year_roi ||
-		'--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]
+			?.average_5_year_roi?.[0] || '--';
 	$: capRate =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.cap_rate || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.cap_rate?.[0] || '--';
 
 	$: vacancyRate =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.vacancy_rate || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.vacancy_rate?.[0] || '--';
 
 	$: monthlyUtiliiies =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.monthly_utiliiies || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.monthly_utiliiies?.[0] ||
+		'--';
 
 	$: propertyManagementFee =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.property_managment_fee ||
-		'--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]
+			?.property_managment_fee?.[0] || '--';
 
 	$: llcMonthlyFranchiseTax =
 		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]
-			?.llc_monthly_franchise_tax || '--';
+			?.llc_monthly_franchise_tax?.[0] || '--';
 
 	$: propertyTaxes =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.property_taxes || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.property_taxes?.[0] ||
+		'--';
 
 	$: expenseToIncomeRatio =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.expense_to_income_ratio || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.expense_to_income_ratio?.[0] || '--';
 
 	$: monthlyCashFlow =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.monthly_cash_flow || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.monthly_cash_flow?.[0] || '--';
 
 	$: propertyInsurance =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.property_insurance || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.property_insurance?.[0] || '--';
 
 	$: monthlyCosts =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.total_monthly_cost || '--';
+		metadata.additional_metadata[0]?.financial_details?.[0]?.total_monthly_cost?.[0] || '--';
 </script>
 
 <div class="flex flex-col gap-8 py-4">
 	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Total Investment Value" />
-			<div class="font-bold text-lg">$ {assetPrice}</div>
+			<div class="font-bold text-lg">{renVal(assetPrice)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Underlyning Asset Price" />
-			<div class="text-lg">$ {assetPrice}</div>
+			<div class="text-lg">{renVal(assetPrice)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Platform fee (4%)" />
@@ -71,11 +84,11 @@
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Initial Maintenance Reserve (5%)" />
-			<div class="text-lg">$ {maintenanceReserve}</div>
+			<div class="text-lg">{renVal(maintenanceReserve)}</div>
 		</div>
 	</div>
 
-	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
+	<!-- <div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Total Returns (5 Year IRR)" />
 			<div class="font-bold text-lg">{fiveYearIRR} %</div>
@@ -97,46 +110,46 @@
 	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Monthly Gross Rents" />
-			<div class="font-bold text-lg">$1,900.00</div>
+			<div class="font-bold text-lg">--</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Vacancy Rate (5%)" />
-			<div class="text-lg">$ {vacancyRate}</div>
+			<div class="text-lg">{renVal(vacancyRate)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Monthly Utilities" />
-			<div class="text-lg">$ {monthlyUtiliiies}</div>
+			<div class="text-lg">{renVal(monthlyUtiliiies)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Property Management Fee" />
-			<div class="text-lg">$ {propertyManagementFee}</div>
+			<div class="text-lg">{renVal(propertyManagementFee)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="LLC Monthly Franchise Tax" />
-			<div class="text-lg">$ {llcMonthlyFranchiseTax}</div>
+			<div class="text-lg">{renVal(llcMonthlyFranchiseTax)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Property Taxes" />
-			<div class="text-lg">$ {propertyTaxes}</div>
+			<div class="text-lg">{renVal(propertyTaxes)}</div>
 		</div>
 	</div>
 
 	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Property Insurance" />
-			<div class="font-bold text-lg">$ {propertyInsurance}</div>
+			<div class="font-bold text-lg">{renVal(propertyInsurance)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Expense to income Ratio" />
-			<div class="text-lg">{expenseToIncomeRatio}</div>
+			<div class="text-lg">{renVal(expenseToIncomeRatio, '')}</div>
 		</div>
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Total Monthly Costs" />
-			<div class="text-lg">$ {monthlyCosts}</div>
+			<div class="text-lg">{renVal(monthlyCosts)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle classes="font-bold" title="Monthly Cash Flow" />
 			<div class="text-lg">${monthlyCashFlow}</div>
 		</div>
-	</div>
+	</div> -->
 </div>

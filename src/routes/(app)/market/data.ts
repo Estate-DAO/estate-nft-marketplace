@@ -15,18 +15,18 @@ export const staticData = {
 			documents: [],
 			property_details: [
 				{
-					year_built: [0],
+					year_built: [1990],
 					occupied: [false],
 					crime_score: [0],
 					monthly_rent: [0],
-					beds: [0],
+					beds: [2],
 					affordability: [0],
-					square_footage: [0],
+					square_footage: [1610],
 					flood_zone: [false],
 					price_per_sq_foot: [0],
-					baths: [0],
+					baths: [2],
 					school_score: [0],
-					last_renovated: [0]
+					last_renovated: [2002]
 				}
 			],
 			financial_details: [
@@ -37,7 +37,7 @@ export const staticData = {
 					investment: [
 						{
 							initial_maintenance_reserve: [0],
-							underlying_asset_price: [0],
+							underlying_asset_price: [520000],
 							platform_closing_fee: [0],
 							min_investment: [BigInt(0)]
 						}
@@ -66,10 +66,10 @@ export const staticData = {
 			],
 			market_details: [
 				{
-					country: [''],
-					city: [''],
+					country: ['Spain'],
+					city: ['Puerto Sotogrande'],
 					description: [''],
-					state: [''],
+					state: ['Cadiz'],
 					average_rent: [0],
 					median_home_sale_price: [0],
 					coordinates: [''],
@@ -81,10 +81,10 @@ export const staticData = {
 	status: { Draft: null },
 	total_supply: BigInt(100),
 	supply_cap: BigInt(50),
-	price: BigInt(10),
+	price: BigInt(520000),
 	owner: 'owner',
 	image_uri: '',
-	desc: 'Situated in the heart of the city, this property is a great investment!',
+	desc: 'The elegant gated development in the heart of Sotogrande.',
 	property_images: [],
 	is_initialised: true
 } satisfies Omit<CollectionMetadata, 'name'>;
