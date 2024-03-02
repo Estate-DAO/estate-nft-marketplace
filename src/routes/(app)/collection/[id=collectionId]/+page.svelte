@@ -18,14 +18,14 @@
 	$: waitlist = $page.url.searchParams.has('sample');
 </script>
 
-<div class="w-full flex flex-col items-center gap-4">
-	<div class="flex gap-2 h-[40rem] overflow-hidden">
+<div class="w-full flex flex-col items-center gap-4 pb-8">
+	<div class="flex flex-col lg:flex-row gap-2 lg:h-[40rem] w-full overflow-hidden">
 		<img
 			alt="House"
 			src={metadata.property_images[0]}
-			class="rounded-xl h-[37rem] w-full object-cover"
+			class="rounded-xl lg:h-[37rem] w-full object-cover"
 		/>
-		<div class="flex basis-1/3 flex-col gap-2 h-[37rem]">
+		<div class="flex basis-1/3 flex-col gap-2 lg:h-[37rem]">
 			<img
 				alt="House"
 				src={metadata.property_images[1]}
@@ -38,7 +38,7 @@
 			/>
 		</div>
 	</div>
-	<div class="flex gap-8 w-full max-w-6xl">
+	<div class="flex flex-col lg:flex-row gap-8 w-full max-w-6xl">
 		<PropertyHeader {metadata} />
 		<InvestInfo
 			{waitlist}

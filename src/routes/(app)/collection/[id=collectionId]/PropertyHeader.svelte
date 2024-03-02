@@ -27,9 +27,9 @@
 </script>
 
 <div class="flex flex-col grow gap-4">
-	<div class="flex justify-between">
-		<div class="flex gap-8 items-center">
-			<div class="text-5xl font-bold">{metadata.name}</div>
+	<div class="flex flex-col sm:flex-row gap-4 lg:justify-between">
+		<div class="flex flex-col lg:flex-row gap-8 items-start lg:items-center">
+			<div class="text-2xl lg:text-5xl font-bold">{metadata.name}</div>
 			<div
 				class="py-2 px-4 text-xs translate-y-1 bg-black rounded-full text-white font-thin flex h-min items-center justify-center"
 			>

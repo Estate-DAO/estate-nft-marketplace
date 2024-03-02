@@ -87,7 +87,7 @@
 				on:submit={submitData}
 				class="flex flex-col items-center gap-12"
 			>
-				<div class="w-full grid grid-cols-3 gap-8">
+				<div class="w-full grid lg:grid-cols-3 gap-8">
 					<Input
 						bind:value={firstName}
 						disabled={loading}

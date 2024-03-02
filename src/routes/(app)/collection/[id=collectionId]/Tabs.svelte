@@ -7,7 +7,9 @@
 	{#each tabs as option}
 		<button
 			on:click={() => (selected = option)}
-			class="capitalize px-6 pb-2 {selected === option ? 'font-bold border-b-2 border-black' : ''}"
+			class="capitalize px-6 pb-2 whitespace-nowrap {selected === option
+				? 'font-bold border-b-2 border-black'
+				: ''}"
 		>
 			{option}
 		</button>
