@@ -22,18 +22,18 @@
 	<div class="flex gap-2 h-[40rem] overflow-hidden">
 		<img
 			alt="House"
-			src="https://source.unsplash.com/random/?house,country,1"
+			src={metadata.property_images[0]}
 			class="rounded-xl h-[37rem] w-full object-cover"
 		/>
 		<div class="flex basis-1/3 flex-col gap-2 h-[37rem]">
 			<img
 				alt="House"
-				src="https://source.unsplash.com/random/?house,country,2"
+				src={metadata.property_images[1]}
 				class="rounded-xl h-[18.25rem] object-cover"
 			/>
 			<img
 				alt="House"
-				src="https://source.unsplash.com/random/?house,country,3"
+				src={metadata.property_images[2]}
 				class="rounded-xl h-[18.25rem] object-cover"
 			/>
 		</div>

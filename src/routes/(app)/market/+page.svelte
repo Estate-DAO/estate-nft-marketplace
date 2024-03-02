@@ -115,7 +115,7 @@
 				title={nft.name}
 				desc={nft.desc}
 				sample={nft.sample}
-				imgSrc={`https://source.unsplash.com/random/?house,country,${i}`}
+				imgSrc={nft.image_uri}
 			/>
 		{/each}
 	</div>

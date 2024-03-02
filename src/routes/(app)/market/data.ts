@@ -83,9 +83,20 @@ export const staticData = {
 	supply_cap: BigInt(50),
 	price: BigInt(520000),
 	owner: 'owner',
-	image_uri: '',
+	image_uri: 'https://i.ibb.co/hX6HG15/1.jpg',
 	desc: 'The elegant gated development in the heart of Sotogrande.',
-	property_images: [],
+	property_images: [
+		'https://i.ibb.co/hX6HG15/1.jpg',
+		'https://i.ibb.co/FsYy5fY/2.jpg',
+		'https://i.ibb.co/jVhVgJY/3.jpg',
+		'https://i.ibb.co/0DnkvY9/4.jpg',
+		'https://i.ibb.co/vz7ZtM2/5.jpg',
+		'https://i.ibb.co/LCBNGSC/6.jpg',
+		'https://i.ibb.co/yQPBPkC/7.jpg',
+		'https://i.ibb.co/NNtmHd6/8.jpg',
+		'https://i.ibb.co/8YKkWft/9.jpg',
+		'https://i.ibb.co/sjmSsLp/10.jpg'
+	],
 	is_initialised: true
 } satisfies Omit<CollectionMetadata, 'name'>;
 
