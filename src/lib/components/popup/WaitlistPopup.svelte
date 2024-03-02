@@ -3,14 +3,47 @@
 	import Button from '../button/Button.svelte';
 	import PlusIcon from '../icons/PlusIcon.svelte';
 	import Input from '../input/Input.svelte';
+	import { onMount, tick } from 'svelte';
+	import { isRegisteredWaitlist, registerForWaitlist } from '$lib/backend/waitlist';
+	import { authState } from '$lib/stores/auth';
 
 	export let show = false;
 
+	let init = false;
 	let submitted = false;
+	let loading = false;
 
-	function submitData() {
-		submitted = true;
+	let firstName = '';
+	let lastName = '';
+	let email = '';
+	let residenceCountry = '';
+	let citizenshipCountry = '';
+	let annualIncome: number;
+
+	async function checkIfSubmitted() {
+		await tick();
+		if (!$authState.idString) return;
+		submitted = await isRegisteredWaitlist($authState.idString);
+		init = true;
 	}
+
+	async function submitData(e: SubmitEvent) {
+		e.preventDefault();
+		if (!$authState.idString) return;
+		loading = true;
+		submitted = await registerForWaitlist($authState.idString, {
+			firstName,
+			lastName,
+			email,
+			residenceCountry,
+			citizenshipCountry,
+			annualIncome
+		});
+		loading = false;
+		return false;
+	}
+
+	onMount(checkIfSubmitted);
 </script>
 
 <div
@@ -31,28 +64,78 @@
 				class="inset-0 absolute flex flex-col items-center justify-center gap-4 h-full w-full z-[1]"
 			>
 				<div
-					class="bg-green-500 h-16 w-16 rounded-full flex items-center justify-center text-white"
+					class="bg-green-200 h-16 w-16 rounded-full flex items-center justify-center text-white"
 				>
-					✔︎
+					✅
 				</div>
-				<div>Thank you for submitting the form</div>
+				<div>Thank you for registering for the waitlist</div>
 			</div>
 		{/if}
-
-		<form
-			class:opacity-0={submitted}
-			on:submit={submitData}
-			class="flex flex-col items-center gap-12"
-		>
-			<div class="w-full grid grid-cols-3 gap-8">
-				<Input required label="First Name" placeholder="Enter you name" />
-				<Input required label="Last name" placeholder="Enter you surname" />
-				<Input required label="Email" placeholder="example@gmail.com" />
-				<Input required label="Country of Residence" placeholder="Your country" />
-				<Input required label="Country of Citizenship" placeholder="Your country" />
-				<Input required label="Annual Income" type="number" placeholder="(in USD)" />
+		{#if !init}
+			<div
+				class="inset-0 absolute flex flex-col items-center justify-center gap-4 h-full w-full z-[1]"
+			>
+				<PlusIcon class="h-5 w-5 animate-spin" />
 			</div>
-			<Button submit>Register</Button>
-		</form>
+		{/if}
+		{#if $authState.isLoggedIn}
+			<form
+				class:opacity-0={submitted || !init}
+				on:submit={submitData}
+				class="flex flex-col items-center gap-12"
+			>
+				<div class="w-full grid grid-cols-3 gap-8">
+					<Input
+						bind:value={firstName}
+						disabled={loading}
+						required
+						label="First Name"
+						placeholder="Enter you name"
+					/>
+					<Input
+						bind:value={lastName}
+						disabled={loading}
+						required
+						label="Last name"
+						placeholder="Enter you surname"
+					/>
+					<Input
+						bind:value={email}
+						disabled={loading}
+						required
+						type="email"
+						label="Email"
+						placeholder="example@gmail.com"
+					/>
+					<Input
+						bind:value={residenceCountry}
+						disabled={loading}
+						required
+						label="Country of Residence"
+						placeholder="Your country"
+					/>
+					<Input
+						bind:value={citizenshipCountry}
+						disabled={loading}
+						required
+						label="Country of Citizenship"
+						placeholder="Your country"
+					/>
+					<Input
+						bind:value={annualIncome}
+						disabled={loading}
+						required
+						label="Annual Income"
+						type="number"
+						placeholder="(in USD)"
+					/>
+				</div>
+				<Button disabled={loading} submit>Register</Button>
+			</form>
+		{:else}
+			<div class="flex flex-col items-center justify-center gap-4 h-full w-full z-[1]">
+				<div>You need to login before registering for the waitlist</div>
+				<Button href="/login">Login</Button>
+			</div>{/if}
 	</div>
 </div>
