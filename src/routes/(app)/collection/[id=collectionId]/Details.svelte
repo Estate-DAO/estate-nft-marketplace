@@ -59,7 +59,7 @@
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Square Footage</div>
-			<div>{squareFootage} sq ft.</div>
+			<div>{squareFootage.toLocaleString()} sq ft.</div>
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Baths</div>
@@ -75,11 +75,11 @@
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Monthly Rent</div>
-			<div>{renVal(monthlyRent)}</div>
+			<div>{renVal(monthlyRent.toLocaleString())}</div>
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Price Per Sq. Foot</div>
-			<div>{renVal(pricePerSqFoot)}</div>
+			<div>{renVal(pricePerSqFoot.toLocaleString())}</div>
 		</div>
 	</div>
 

@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
 	function renVal(val: string | number, prepend = '€') {
-		return val === '--' ? '--' : `${prepend ? prepend + ' ' : ''} ${val}`;
+		return val === '--' ? '--' : `${prepend ? prepend + ' ' : ''} ${Number(val).toLocaleString()}`;
 	}
 </script>
 
@@ -37,6 +37,9 @@
 
 	$: monthlyUtiliiies =
 		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.monthly_utiliiies?.[0] ||
+		'--';
+	$: projectedRent =
+		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.projected_rent?.[0] ||
 		'--';
 
 	$: propertyManagementFee =
@@ -103,12 +106,12 @@
 			<InfoTitle title="Cap Rate" />
 			<div class="text-lg">{capRate} %</div>
 		</div>
-	</div>
+	</div> -->
 
 	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Monthly Gross Rents" />
-			<div class="font-bold text-lg">--</div>
+			<div class="font-bold text-lg">{renVal(projectedRent)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
 			<InfoTitle title="Vacancy Rate (5%)" />
@@ -132,6 +135,7 @@
 		</div>
 	</div>
 
+	<!--
 	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
 		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
 			<InfoTitle classes="font-bold" title="Property Insurance" />
