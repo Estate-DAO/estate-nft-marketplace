@@ -24,26 +24,28 @@
 
 	<div class="font-thin text-2xl">Location: {location}</div>
 
-	<div class="lg:flex grid col-auto lg:flex-row items-center gap-2 pt-8">
-		<div
-			class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
-		>
-			<div class="font-bold text-nowrap">Median Home Sale Price</div>
-			<div class="">$ {medianHomeSalePrice}</div>
+	{#if false}
+		<div class="lg:flex grid col-auto lg:flex-row items-center gap-2 pt-8">
+			<div
+				class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
+			>
+				<div class="font-bold text-nowrap">Median Home Sale Price</div>
+				<div class="">$ {medianHomeSalePrice}</div>
+			</div>
+			<div
+				class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
+			>
+				<div class="font-bold whitespace-nowrap">Average Rent (3 Bed)</div>
+				<div class="">$ {averageRent}</div>
+			</div>
+			<div
+				class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
+			>
+				<div class="font-bold text-nowrap">Annual Population Growth</div>
+				<div class="">$ {annualPopulationGrowth}</div>
+			</div>
 		</div>
-		<div
-			class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
-		>
-			<div class="font-bold whitespace-nowrap">Average Rent (3 Bed)</div>
-			<div class="">$ {averageRent}</div>
-		</div>
-		<div
-			class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
-		>
-			<div class="font-bold text-nowrap">Annual Population Growth</div>
-			<div class="">$ {annualPopulationGrowth}</div>
-		</div>
-	</div>
+	{/if}
 
 	{#if description}
 		<div class="font-bold pt-4">Why Market?</div>
