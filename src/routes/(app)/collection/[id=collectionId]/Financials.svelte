@@ -15,7 +15,7 @@
 			?.underlying_asset_price?.[0] || '--';
 	$: platformFee =
 		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.platform_closing_fee?.[0] || 'WAVED';
+			?.platform_closing_fee?.[0] || 'Waived';
 	$: maintenanceReserve =
 		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
 			?.initial_maintenance_reserve?.[0] || '--';
@@ -73,7 +73,7 @@
 			class="flex items-center flex-nowrap gap-4 justify-between px-6 pb-4 border-black/10 border-b-[1px]"
 		>
 			<div class="text-lg font-bold">Total Investment Value</div>
-			<div class="font-bold text-lg whitespace-nowrap">{renVal(assetPrice)}</div>
+			<div class="font-bold text-lg whitespace-nowrap">{renVal(52000)}</div>
 		</div>
 		<div class="flex items-center gap-4 justify-between px-6">
 			<div>Underlying Asset Price</div>

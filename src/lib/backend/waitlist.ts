@@ -7,13 +7,16 @@ export async function isRegisteredWaitlist(principalId: string) {
 }
 
 export async function registerForWaitlist(principalId: string, data: object) {
-	const req = await fetch(`https://submitestatedaowaitlist-5nps3y6y6a-uc.a.run.app`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({ principalId, ...data })
-	});
+	const req = await fetch(
+		'https://us-central1-hot-or-not-aad91.cloudfunctions.net/submitEstateDAOWaitlist',
+		{
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ principalId, ...data })
+		}
+	);
 	const res = await req.json();
 	return res.success;
 }

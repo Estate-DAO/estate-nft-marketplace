@@ -29,7 +29,7 @@
 			class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
 		>
 			<div class="font-bold">Yield</div>
-			<div class="">{yields} %</div>
+			<div class="">{yields}%</div>
 		</div>
 	{/if}
 	{#if projectedRent !== '--'}
@@ -45,7 +45,7 @@
 			class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
 		>
 			<div class="font-bold text-nowrap">Min. Investment</div>
-			<div class="">€ {minInvestment.toLocaleString()}</div>
+			<div class="">{minInvestment.toLocaleString()} ICP</div>
 		</div>
 	{/if}
 	<div
