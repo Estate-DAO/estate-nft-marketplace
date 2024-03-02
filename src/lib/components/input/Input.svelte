@@ -22,7 +22,7 @@
 		? 'pointer-events-none opacity-50'
 		: 'opacity-100'}"
 >
-	<span class="text-sm font-medium leading-6 text-gray-900">{label}</span>
+	<span class="text-sm font-medium leading-6 text-gray-900">{label}{required ? ' *' : ''}</span>
 	<input
 		{min}
 		{max}
