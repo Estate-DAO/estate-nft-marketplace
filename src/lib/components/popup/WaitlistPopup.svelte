@@ -68,7 +68,10 @@
 				>
 					✅
 				</div>
-				<div>Thank you for registering for the waitlist</div>
+				<div>Your entry has been submitted</div>
+				<div>
+					Thank you for registering on EstateDAO, we will reach back shortly via email confirmation
+				</div>
 			</div>
 		{/if}
 		{#if !init}
