@@ -4,6 +4,7 @@
 	import { provisionCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 	import Input from '$lib/components/input/Input.svelte';
+	import { authState } from '$lib/stores/auth';
 
 	$: if ($adminStore.isLoggedIn) {
 		goto('/admin');
@@ -41,17 +42,23 @@
 	<Button href="/market">Go back</Button>
 
 	<div>or</div>
-	<form class="flex flex-col gap-4 items-center">
-		<Input
-			disabled={loading}
-			label="Password"
-			type="password"
-			bind:value
-			placeholder="Enter password"
-		/>
-		{#if error}
-			<div class="text-sm text-red-500">{error}</div>
-		{/if}
-		<Button {loading} submit secondary on:click={checkPassword}>Submit</Button>
-	</form>
+
+	{#if $authState.isLoggedIn}
+		<form class="flex flex-col gap-4 items-center">
+			<Input
+				disabled={loading}
+				label="Password"
+				type="password"
+				bind:value
+				placeholder="Enter password"
+			/>
+			{#if error}
+				<div class="text-sm text-red-500">{error}</div>
+			{/if}
+			<Button {loading} submit secondary on:click={checkPassword}>Submit</Button>
+		</form>
+	{:else}
+		<div>You need to first login using Internet Identity</div>
+		<Button href="/login">Login</Button>
+	{/if}
 </div>
