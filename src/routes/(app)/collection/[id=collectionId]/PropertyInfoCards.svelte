@@ -19,7 +19,7 @@
 	$: console.log({ yields });
 </script>
 
-<div class="flex items-center gap-2 pt-8">
+<div class="grid col-auto lg:flex items-center gap-2 pt-8">
 	<div
 		class="border border-black/20 flex-1 rounded-xl p-4 flex flex-col gap-1 text-black items-center"
 	>

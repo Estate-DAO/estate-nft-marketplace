@@ -1,10 +1,6 @@
 <script lang="ts" context="module">
 	function renVal(val: string | number, prepend = '€') {
-		if (val === '--') {
-			return '--';
-		} else {
-			return `${prepend ? prepend + ' ' : ''} ${val}`;
-		}
+		return val === '--' ? '--' : `${prepend ? prepend + ' ' : ''} ${val}`;
 	}
 </script>
 
@@ -70,21 +66,23 @@
 
 <div class="flex flex-col gap-8 py-4">
 	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
-		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
-			<InfoTitle classes="font-bold" title="Total Investment Value" />
-			<div class="font-bold text-lg">{renVal(assetPrice)}</div>
+		<div
+			class="flex items-center flex-nowrap gap-4 justify-between px-6 pb-4 border-black/10 border-b-[1px]"
+		>
+			<div class="text-lg font-bold">Total Investment Value</div>
+			<div class="font-bold text-lg whitespace-nowrap">{renVal(assetPrice)}</div>
 		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Underlyning Asset Price" />
-			<div class="text-lg">{renVal(assetPrice)}</div>
+		<div class="flex items-center gap-4 justify-between px-6">
+			<div>Underlying Asset Price</div>
+			<div class="text-lg whitespace-nowrap">{renVal(assetPrice)}</div>
 		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Platform fee (4%)" />
-			<div class="text-lg">{platformFee}</div>
+		<div class="flex items-center gap-4 justify-between px-6">
+			<div>Platform fee (4%)</div>
+			<div class="text-lg whitespace-nowrap">{platformFee}</div>
 		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Initial Maintenance Reserve (5%)" />
-			<div class="text-lg">{renVal(maintenanceReserve)}</div>
+		<div class="flex items-center gap-4 justify-between px-6">
+			<div>Initial Maintenance Reserve (5%)</div>
+			<div class="text-lg whitespace-nowrap">{renVal(maintenanceReserve)}</div>
 		</div>
 	</div>
 

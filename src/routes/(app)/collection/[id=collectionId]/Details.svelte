@@ -3,6 +3,9 @@
 
 	export let metadata: CollectionMetadata;
 
+	const renVal = (n: number | string, pre = '€') =>
+		n === '--' ? '--' : `${pre ? pre + ' ' : ''} ${n}`;
+
 	$: lastRenovated =
 		metadata.additional_metadata[0]?.property_details?.[0]?.last_renovated?.[0] || 'N/A';
 	$: beds = metadata.additional_metadata[0]?.property_details?.[0]?.beds?.[0] || 'N/A';
@@ -56,7 +59,7 @@
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Square Footage</div>
-			<div>{squareFootage}</div>
+			<div>{squareFootage} sq ft.</div>
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Baths</div>
@@ -72,11 +75,11 @@
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Monthly Rent</div>
-			<div>{monthlyRent}</div>
+			<div>{renVal(monthlyRent)}</div>
 		</div>
 		<div class="flex flex-col">
 			<div class="font-bold">Price Per Sq. Foot</div>
-			<div>{pricePerSqFoot}</div>
+			<div>{renVal(pricePerSqFoot)}</div>
 		</div>
 	</div>
 

@@ -31,16 +31,21 @@
 		e.preventDefault();
 		if (!$authState.idString) return;
 		loading = true;
-		submitted = await registerForWaitlist($authState.idString, {
-			firstName,
-			lastName,
-			email,
-			residenceCountry,
-			citizenshipCountry,
-			annualIncome
-		});
-		loading = false;
-		return false;
+		try {
+			submitted = await registerForWaitlist($authState.idString, {
+				firstName,
+				lastName,
+				email,
+				residenceCountry,
+				citizenshipCountry,
+				annualIncome
+			});
+		} catch {
+			console.log('Something went wrong');
+		} finally {
+			loading = false;
+			return false;
+		}
 	}
 
 	onMount(checkIfSubmitted);
