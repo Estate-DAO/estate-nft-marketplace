@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 
 const DFX_PORT = 8080;
-const prod = process.env.NODE_ENV !== 'production';
+const prod = process.env.NODE_ENV === 'production';
 const PROD_PROVISION_CANISTER_ID = 'tu3je-fyaaa-aaaap-abymq-cai';
 
 export default defineConfig({
