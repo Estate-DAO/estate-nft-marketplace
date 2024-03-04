@@ -47,6 +47,12 @@
 	/>
 	<Input
 		disabled={loading}
+		label="Thumbnail Image"
+		bind:value={data.coverImage}
+		placeholder="Enter an image url"
+	/>
+	<Input
+		disabled={loading}
 		type="number"
 		label="Price (in ICP)"
 		bind:value={data.price}
