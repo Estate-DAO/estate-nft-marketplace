@@ -24,7 +24,7 @@
 		description: '',
 		status: 'Draft',
 		supplyCap: 1000,
-		price: 10,
+		price: 1,
 		coverImage: ''
 	};
 
@@ -48,16 +48,16 @@
 	<Input
 		disabled={loading}
 		type="number"
-		label="Price"
+		label="Price (in ICP)"
 		bind:value={data.price}
 		placeholder="Price (in ICP)"
 	/>
 	<Input
 		disabled={loading}
 		type="number"
-		label="Supply cap"
+		label="Supply cap (number of NFTs)"
 		bind:value={data.supplyCap}
-		placeholder="Supply cap (in ICP)"
+		placeholder="Supply cap"
 	/>
 	<Textarea
 		disabled={loading}

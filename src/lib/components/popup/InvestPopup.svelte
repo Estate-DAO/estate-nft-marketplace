@@ -8,6 +8,7 @@
 	import { authState } from '$lib/stores/auth';
 	import { Principal } from '@dfinity/principal';
 	import { isPrincipal } from '$lib/utils/isPrincipal';
+	import { fromE8s } from '$lib/utils/icp';
 
 	export let show = false;
 	export let minterCanId: string;
@@ -104,11 +105,11 @@
 				<div class="w-full gap-8 flex flex-col">
 					<div class="flex w-full items-center justify-between text-sm gap-4">
 						<div>NFT Price:</div>
-						<div class="font-bold">{paymentInfo.nftPrice} ICP</div>
+						<div class="font-bold">{fromE8s(paymentInfo.nftPrice)} ICP</div>
 					</div>
 					<div class="flex w-full items-center justify-between text-sm gap-4">
 						<div>Current investment:</div>
-						<div class="font-bold">{paymentInfo.currentInvestment}</div>
+						<div class="font-bold">{fromE8s(paymentInfo.currentInvestment)} ICP</div>
 					</div>
 					<Input
 						bind:value={nftToBuy}
