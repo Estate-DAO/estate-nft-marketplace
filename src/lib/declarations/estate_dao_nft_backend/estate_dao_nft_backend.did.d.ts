@@ -24,7 +24,6 @@ export interface CollectionMetadata {
   'price' : bigint,
   'is_initialised' : boolean,
   'total_supply' : bigint,
-  'symbol' : string,
 }
 export interface FinancialDetails {
   'total_monthly_cost' : [] | [number],
@@ -44,7 +43,6 @@ export interface FormMetadata {
   'name' : string,
   'property_images' : Array<string>,
   'price' : bigint,
-  'symbol' : string,
 }
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],

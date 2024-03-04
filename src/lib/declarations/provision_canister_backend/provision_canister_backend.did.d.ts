@@ -12,6 +12,8 @@ export interface AdditionalMetadata {
   'financial_details' : [] | [FinancialDetails],
   'market_details' : [] | [MarketDetails],
 }
+export type ApprovedResponse = { 'StrResp' : string } |
+  { 'CanisterId' : CanisterIds };
 export interface CanisterIds {
   'minter_canister' : Principal,
   'asset_canister' : Principal,
@@ -82,7 +84,7 @@ export interface RentFinancials {
   'projected_rent' : [] | [number],
   'monthly_utiliiies' : [] | [number],
 }
-export type Result = { 'Ok' : CanisterIds } |
+export type Result = { 'Ok' : ApprovedResponse } |
   { 'Err' : string };
 export type Result_1 = { 'Ok' : Array<Principal> } |
   { 'Err' : string };

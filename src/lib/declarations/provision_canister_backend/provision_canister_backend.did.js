@@ -3,7 +3,11 @@ export const idlFactory = ({ IDL }) => {
     'minter_canister' : IDL.Principal,
     'asset_canister' : IDL.Principal,
   });
-  const Result = IDL.Variant({ 'Ok' : CanisterIds, 'Err' : IDL.Text });
+  const ApprovedResponse = IDL.Variant({
+    'StrResp' : IDL.Text,
+    'CanisterId' : CanisterIds,
+  });
+  const Result = IDL.Variant({ 'Ok' : ApprovedResponse, 'Err' : IDL.Text });
   const Status = IDL.Variant({
     'Ended' : IDL.Null,
     'Live' : IDL.Null,

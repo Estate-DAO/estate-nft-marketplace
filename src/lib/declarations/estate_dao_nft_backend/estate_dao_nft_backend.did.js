@@ -80,7 +80,6 @@ export const idlFactory = ({ IDL }) => {
     'price' : IDL.Nat64,
     'is_initialised' : IDL.Bool,
     'total_supply' : IDL.Nat64,
-    'symbol' : IDL.Text,
   });
   const Result_3 = IDL.Variant({ 'Ok' : CollectionMetadata, 'Err' : IDL.Text });
   const Result_4 = IDL.Variant({ 'Ok' : Status, 'Err' : IDL.Text });
@@ -133,7 +132,6 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'property_images' : IDL.Vec(IDL.Text),
     'price' : IDL.Nat64,
-    'symbol' : IDL.Text,
   });
   return IDL.Service({
     'add_collection_image' : IDL.Func([IDL.Text], [Result], []),
