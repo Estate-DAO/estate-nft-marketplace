@@ -8,7 +8,6 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
-	import { data } from './data';
 	import { sampleData } from './sampleData';
 
 	type CollectionId = {

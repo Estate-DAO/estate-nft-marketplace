@@ -60,6 +60,7 @@
 			<ItemInfo title="Description" value={formData.desc} />
 			<ItemInfo title="Supply cap" value={formData.supply_cap} />
 			<ItemInfo title="Submitted by" value={formData.owner} />
+			<ItemInfo title="Submitted by" value={formData.symbol} />
 		</InfoSection>
 		<InfoSection>
 			<FormHeader slot="header" title="Property details" />

@@ -1,14 +1,5 @@
 import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 
-type CollectionId = {
-	assetCanId: string;
-	minterCanId: string;
-};
-
-type CollectionDetails = CollectionMetadata & {
-	id: CollectionId;
-};
-
 export const staticData = {
 	additional_metadata: [
 		{
@@ -106,16 +97,3 @@ export const staticData = {
 	],
 	is_initialised: true
 } satisfies Omit<CollectionMetadata, 'name'>;
-
-export const data = [
-	{
-		...staticData,
-		name: 'Illionis, 1607',
-		id: { assetCanId: 'b77ix-eeaaa-aaaaa-qaada-cai', minterCanId: 'by6od-j4aaa-aaaaa-qaadq-cai' }
-	},
-	{
-		...staticData,
-		name: 'Mississippi, 1900',
-		id: { assetCanId: 'avqkn-guaaa-aaaaa-qaaea-cai', minterCanId: 'asrmz-lmaaa-aaaaa-qaaeq-cai' }
-	}
-] as CollectionDetails[];
