@@ -40,7 +40,7 @@
 </script>
 
 {#if error}
-	<div class="flex w-full items-center justify-center pt-8">
+	<div class="flex w-full flex-col items-center justify-center pt-8">
 		<div class="text-sm font-medium">{error}</div>
 		<Button on:click={checkPassword}>Try again</Button>
 	</div>
