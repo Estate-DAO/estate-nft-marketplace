@@ -9,6 +9,7 @@
 	import FormHeader from './FormHeader.svelte';
 	import InfoSection from './InfoSection.svelte';
 	import Button from '$lib/components/button/Button.svelte';
+	import { goto } from '$app/navigation';
 
 	let formData: FormMetadata;
 	let pageLoading = true;
@@ -32,6 +33,7 @@
 		const res = await actor.approve_collection(Number(id), approve);
 		console.log(res);
 		if (approve) {
+			goto('/admin/manage');
 			// actor.grant_commit_permission()
 		} else {
 			history.back();
@@ -60,7 +62,6 @@
 			<ItemInfo title="Description" value={formData.desc} />
 			<ItemInfo title="Supply cap" value={formData.supply_cap} />
 			<ItemInfo title="Submitted by" value={formData.owner} />
-			<ItemInfo title="Submitted by" value={formData.symbol} />
 		</InfoSection>
 		<InfoSection>
 			<FormHeader slot="header" title="Property details" />
