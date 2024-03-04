@@ -11,6 +11,7 @@
 	import { slide } from 'svelte/transition';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import type { PageData } from './$types';
+	import { replacer } from '$lib/utils/json';
 
 	export let data: PageData;
 
@@ -108,6 +109,6 @@
 
 {#if collectionMetadata}
 	<pre transition:slide class="text-sm p-4 mt-8 bg-gray-100 rounded-xl">
-    {JSON.stringify(collectionMetadata, null, 4)}
+    {JSON.stringify(collectionMetadata, replacer, 4)}
   </pre>
 {/if}

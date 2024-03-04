@@ -37,7 +37,7 @@
 			</div>
 		</div>
 		{#if $adminStore.isLoggedIn}
-			<Button secondary href="/auth/edit-collection/{id}">Edit</Button>
+			<Button secondary href="/admin/edit-collection/{id}">Edit</Button>
 		{:else}
 			<Actions title={metadata.name} />
 		{/if}

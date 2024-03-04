@@ -10,6 +10,7 @@
 	import { slide } from 'svelte/transition';
 	import { authState } from '$lib/stores/auth';
 	import { toE8s } from '$lib/utils/icp';
+	import { replacer } from '$lib/utils/json';
 
 	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
@@ -123,7 +124,7 @@
 	{#if res}
 		<pre transition:slide class="text-sm p-4 mt-8 bg-gray-100 rounded-xl">{JSON.stringify(
 				res,
-				null,
+				replacer,
 				4
 			)}</pre>
 

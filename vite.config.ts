@@ -1,8 +1,9 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
+import 'dotenv/config';
 
-const DFX_PORT = 8080;
+const DFX_PORT = process.env.DFX_PORT || 8080;
 const prod = process.env.NODE_ENV === 'production';
 const PROD_PROVISION_CANISTER_ID = 'tu3je-fyaaa-aaaap-abymq-cai';
 

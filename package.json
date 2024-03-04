@@ -42,6 +42,7 @@
 		"@dfinity/identity": "1.0.1",
 		"@dfinity/identity-secp256k1": "1.0.1",
 		"@dfinity/principal": "1.0.1",
+		"dotenv": "^16.4.5",
 		"svelte-local-storage-store": "^0.6.4"
 	},
 	"type": "module"
