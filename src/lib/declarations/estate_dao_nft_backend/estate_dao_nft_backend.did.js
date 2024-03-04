@@ -80,6 +80,7 @@ export const idlFactory = ({ IDL }) => {
     'price' : IDL.Nat64,
     'is_initialised' : IDL.Bool,
     'total_supply' : IDL.Nat64,
+    'symbol' : IDL.Text,
   });
   const Result_3 = IDL.Variant({ 'Ok' : CollectionMetadata, 'Err' : IDL.Text });
   const Result_4 = IDL.Variant({ 'Ok' : Status, 'Err' : IDL.Text });
@@ -92,7 +93,7 @@ export const idlFactory = ({ IDL }) => {
     'collection_name' : IDL.Text,
     'nft_uri' : IDL.Text,
     'total_supply' : IDL.Nat64,
-    'nft_symbol' : IDL.Text,
+    'symbol' : IDL.Text,
   });
   const Result_7 = IDL.Variant({ 'Ok' : Metadata, 'Err' : IDL.Text });
   const Result_8 = IDL.Variant({
@@ -132,6 +133,7 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'property_images' : IDL.Vec(IDL.Text),
     'price' : IDL.Nat64,
+    'symbol' : IDL.Text,
   });
   return IDL.Service({
     'add_collection_image' : IDL.Func([IDL.Text], [Result], []),
@@ -178,7 +180,6 @@ export const idlFactory = ({ IDL }) => {
       ),
     'mint_approved_nfts' : IDL.Func([IDL.Principal], [Result], []),
     'primary_sale' : IDL.Func([IDL.Principal], [Result], []),
-    'primary_sale_mint' : IDL.Func([IDL.Text], [Result], []),
     'refund_user_tokens' : IDL.Func([IDL.Principal], [Result], []),
     'sale_confirmed_mint' : IDL.Func([], [Result], []),
     'sale_confirmed_refund' : IDL.Func([], [Result], []),

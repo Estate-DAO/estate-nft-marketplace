@@ -24,6 +24,7 @@ export interface CollectionMetadata {
   'price' : bigint,
   'is_initialised' : boolean,
   'total_supply' : bigint,
+  'symbol' : string,
 }
 export interface FinancialDetails {
   'total_monthly_cost' : [] | [number],
@@ -43,6 +44,7 @@ export interface FormMetadata {
   'name' : string,
   'property_images' : Array<string>,
   'price' : bigint,
+  'symbol' : string,
 }
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],
@@ -67,7 +69,7 @@ export interface Metadata {
   'collection_name' : string,
   'nft_uri' : string,
   'total_supply' : bigint,
-  'nft_symbol' : string,
+  'symbol' : string,
 }
 export interface PropertyDetails {
   'year_built' : [] | [number],
@@ -164,7 +166,6 @@ export interface _SERVICE {
   'mint' : ActorMethod<[string, string, string, Principal], Result>,
   'mint_approved_nfts' : ActorMethod<[Principal], Result>,
   'primary_sale' : ActorMethod<[Principal], Result>,
-  'primary_sale_mint' : ActorMethod<[string], Result>,
   'refund_user_tokens' : ActorMethod<[Principal], Result>,
   'sale_confirmed_mint' : ActorMethod<[], Result>,
   'sale_confirmed_refund' : ActorMethod<[], Result>,
