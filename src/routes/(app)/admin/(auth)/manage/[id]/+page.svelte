@@ -33,7 +33,7 @@
 		const res = await actor.approve_collection(Number(id), approve);
 		console.log(res);
 		if (approve) {
-			goto('/admin/manage');
+			goto('/admin/manage/list');
 			// actor.grant_commit_permission()
 		} else {
 			history.back();
