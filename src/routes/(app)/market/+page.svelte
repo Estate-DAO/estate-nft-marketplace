@@ -73,7 +73,7 @@
 		class="rounded-xl p-4 bg-white/75 flex gap-4 z-[2] justify-between shadow-sm backdrop-blur-xl border-[1px] border-gray-50"
 	>
 		<TabsGroup defaultValue="Status" selected="all" />
-		<div class="flex flex-wrap items-center gap-4">
+		<div class="flex flex-col lg:flex-row items-end lg:items-center gap-4">
 			<Dropdown
 				title="Location"
 				options={[
@@ -108,7 +108,7 @@
 		<PlusIcon class="animate-spin w-10 h-10" />
 	</div>
 {:else}
-	<div class="flex py-12 items-center gap-8 justify-normal pl-6 flex-wrap">
+	<div class="flex py-12 items-center gap-8 justify-normal mx-auto flex-wrap">
 		{#each nfts as nft, i}
 			<Card
 				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
