@@ -9,6 +9,8 @@
 
 	export let data: PageData;
 
+	const PLACEHOLDER_IMG = 'https://i.ibb.co/Kx2VwVc/image.png';
+
 	const { minterCanId } = getCollectionId();
 
 	let showWaitlistPopup = false;
@@ -22,18 +24,18 @@
 	<div class="flex flex-col lg:flex-row gap-2 lg:h-[40rem] w-full overflow-hidden">
 		<img
 			alt="House"
-			src={metadata.property_images[0]}
-			class="rounded-xl lg:h-[37rem] w-full object-cover"
+			src={metadata.property_images[0] || PLACEHOLDER_IMG}
+			class="rounded-xl lg:h-[37rem] w-4/6 object-cover"
 		/>
 		<div class="flex basis-1/3 flex-col gap-2 lg:h-[37rem]">
 			<img
 				alt="House"
-				src={metadata.property_images[1]}
+				src={metadata.property_images[1] || PLACEHOLDER_IMG}
 				class="rounded-xl h-[18.25rem] object-cover"
 			/>
 			<img
 				alt="House"
-				src={metadata.property_images[2]}
+				src={metadata.property_images[2] || PLACEHOLDER_IMG}
 				class="rounded-xl h-[18.25rem] object-cover"
 			/>
 		</div>
