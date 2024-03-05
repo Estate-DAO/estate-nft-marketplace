@@ -9,7 +9,7 @@
 	<div class="w-72 bg-white/20 h-4 rounded-full relative overflow-hidden">
 		<div class="absolute bg-white left-0 h-full w-0" />
 	</div>
-	<div class="text-md font-thin">Funding not started</div>
+	<div class="text-md font-thin">Funding</div>
 
 	<button
 		on:click
