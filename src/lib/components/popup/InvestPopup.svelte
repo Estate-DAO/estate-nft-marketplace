@@ -30,16 +30,6 @@
 	let step: 1 | 2 | 3 = 1;
 	let paymentStatus = 'pending';
 
-	function checkForm(e: SubmitEvent) {
-		principalError = '';
-		if (!isPrincipal(nnsAccountId.trim())) {
-			principalError = 'Invalid principal Id';
-			e.preventDefault();
-			return false;
-		}
-		step = 2;
-	}
-
 	async function checkPaymentStatus() {
 		const actor = nftMinterCanister(minterCanId);
 		const res = await actor.primary_sale();
@@ -176,7 +166,10 @@
 				{/if}
 			</div>
 		{:else if step === 2}
-			<form on:submit={checkForm} class="flex w-full flex-col items-center gap-12">
+			<form
+				on:submit|preventDefault={() => (step = 3)}
+				class="flex w-full flex-col items-center gap-12"
+			>
 				<div class="w-full gap-8 flex flex-col">
 					<div class="flex w-full items-center justify-between text-sm gap-4">
 						<div>NFT Price:</div>
