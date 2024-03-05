@@ -92,6 +92,19 @@
 			/>
 			<ItemInfo title="Supply cap" value={formData.supply_cap} />
 			<ItemInfo title="Submitted by" value={formData.owner} />
+			<ItemInfo title="Images">
+				<div
+					class="h-[14rem] border rounded p-2 items-center w-full overflow-hidden overflow-x-auto flex gap-2"
+				>
+					{#each formData.property_images as src, i}
+						<div class="p-1 shrink-0 border rounded-md w-52 h-52 relative">
+							<img {src} class="h-full w-full rounded-md object-contain" alt={i + ' image'} />
+						</div>
+					{:else}
+						<div class="flex flex-1 items-center justify-center">No images added</div>
+					{/each}
+				</div>
+			</ItemInfo>
 		</InfoSection>
 
 		{#if !approved}

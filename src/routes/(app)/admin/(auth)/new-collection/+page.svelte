@@ -11,6 +11,8 @@
 	import { authState } from '$lib/stores/auth';
 	import { toE8s } from '$lib/utils/icp';
 	import { replacer } from '$lib/utils/json';
+	import ImagesInfo from './ImagesInfo.svelte';
+	import { preloadCode } from '$app/navigation';
 
 	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
@@ -20,6 +22,7 @@
 	let propertyInfoData: PropertyInfoData;
 	let financialInfoData: FinancialInfoData;
 	let marketInfoData: MarketInfoData;
+	let propertyImages: string[] = [];
 
 	function optional<T>(val: T | undefined | null): [] | [T] {
 		return val ? [val] : [];
@@ -33,7 +36,7 @@
 			name: basicInfoData.name,
 			desc: basicInfoData.description,
 			owner: $authState.idString || 'owner',
-			property_images: [],
+			property_images: propertyImages,
 			supply_cap: BigInt(basicInfoData.supplyCap),
 			image_uri: basicInfoData.coverImage,
 			price: BigInt(toE8s(basicInfoData.price)),
@@ -145,8 +148,8 @@
 					<FinancialInfo {loading} bind:data={financialInfoData} />
 				{:else if selectedTab === 'market'}
 					<MarketInfo bind:data={marketInfoData} {loading} />
-				{:else if selectedTab === 'documents'}
-					<DocumentsInfo {loading} />
+				{:else if selectedTab === 'images'}
+					<ImagesInfo bind:images={propertyImages} />
 				{/if}
 			</svelte:fragment>
 		</FormHeader>

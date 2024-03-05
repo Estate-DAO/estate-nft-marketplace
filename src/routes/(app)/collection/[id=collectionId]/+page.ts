@@ -16,7 +16,7 @@ export const load: PageData = async ({ params: { id }, url }) => {
 			fetch
 		}).get_collection_metadata();
 		if ('Ok' in res) {
-			metadata = sampleData[0];
+			metadata = res.Ok;
 		}
 	}
 	return {

@@ -12,6 +12,7 @@
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import type { PageData } from './$types';
 	import { replacer } from '$lib/utils/json';
+	import ImagesInfo from './ImagesInfo.svelte';
 
 	export let data: PageData;
 
@@ -28,6 +29,7 @@
 	let documentsInfo: DocumentsInfo;
 	let marketInfo: MarketInfo;
 	let financialInfo: FinancialInfo;
+	let imagesInfo: ImagesInfo;
 
 	async function editData() {
 		switch (selectedTab) {
@@ -100,6 +102,12 @@
 						documents={collectionMetadata?.additional_metadata?.[0]?.documents}
 						bind:loading
 						bind:this={documentsInfo}
+					/>
+				{:else if selectedTab === 'images'}
+					<ImagesInfo
+						bind:this={imagesInfo}
+						bind:loading
+						images={collectionMetadata?.property_images}
 					/>
 				{/if}
 			{/if}

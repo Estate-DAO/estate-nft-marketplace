@@ -11,6 +11,7 @@
 	import { fromE8s } from '$lib/utils/icp';
 
 	export let show = false;
+	export let showWarning = false;
 	export let minterCanId: string;
 
 	let nftToBuy = 1;
@@ -26,7 +27,6 @@
 	let principalError = '';
 	let step: 1 | 2 = 1;
 	let paymentStatus = 'pending';
-	let escrowAccount: Uint8Array | number[] = [];
 
 	function checkForm(e: SubmitEvent) {
 		principalError = '';
@@ -56,10 +56,6 @@
 				nftPrice: Number(details.Ok[1]),
 				currentInvestment: Number(details.Ok[2])
 			};
-		}
-		const res = await actor.create_escrow_accountid(Principal.from(nnsAccountId));
-		if ('Ok' in res) {
-			escrowAccount = res.Ok;
 		}
 		pollInterval = setInterval(() => checkPaymentStatus(), 5000);
 	}
@@ -95,7 +91,7 @@
 		in:scale={{ start: 0.9, delay: 100, duration: 100 }}
 		class="bg-white z-[2] max-w-2xl w-full px-16 py-12 flex flex-col items-center gap-12 relative shadow-xl rounded-lg"
 	>
-		<button on:click={() => (show = false)} class="absolute top-4 right-4 z-[2]">
+		<button on:click={() => (showWarning = false)} class="absolute top-4 right-4 z-[2]">
 			<PlusIcon class="h-5 w-5 rotate-45" />
 		</button>
 		<div class="text-3xl">{step === 1 ? 'Invest' : 'Pay'}</div>
@@ -134,7 +130,7 @@
 					<hr />
 					<div class="flex w-full items-center justify-between text-sm gap-4">
 						<div>Amount to pay:</div>
-						<div class="font-bold">{nftToBuy * paymentInfo.nftPrice} ICP</div>
+						<div class="font-bold">{nftToBuy * fromE8s(paymentInfo.nftPrice)} ICP</div>
 					</div>
 				</div>
 				<Button submit>Proceed to payment</Button>
@@ -144,7 +140,7 @@
 				<div class="flex w-full items-start justify-between text-sm gap-4">
 					<div>Amount to pay:</div>
 					<div class="font-bold text-xs w-1/2 break-all text-right">
-						{nftToBuy * paymentInfo.nftPrice} ICP
+						{nftToBuy * fromE8s(paymentInfo.nftPrice)} ICP
 					</div>
 				</div>
 				<div class="flex w-full items-start justify-between text-sm gap-4">
@@ -175,21 +171,12 @@
 
 					<hr />
 
-					<div class="flex w-full items-start justify-between text-sm gap-4">
-						<div>Escrow account:</div>
-						<div class="font-bold text-xs w-1/2 break-all text-right">
-							{escrowAccount.join('; ')}
-						</div>
-					</div>
-
-					<hr />
-
 					<PlusIcon class="h-4 w-4 animate-spin" />
 					<div class="text-center text-sm">
 						<span>Waiting for payment</span>
-						<button on:click={checkPaymentStatus} class="underline text-xs font-bold"
-							>Check now</button
-						>
+						<button on:click={checkPaymentStatus} class="underline text-xs font-bold">
+							Check now
+						</button>
 					</div>
 				{/if}
 			</div>
