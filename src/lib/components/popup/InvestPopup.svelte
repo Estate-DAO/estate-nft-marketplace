@@ -11,11 +11,13 @@
 	import { fromE8s } from '$lib/utils/icp';
 
 	export let show = false;
-	export let showWarning = false;
+	// export let showWarning = false;
 	export let minterCanId: string;
 
 	let nftToBuy = 1;
+	let initLoading = true;
 	let nnsAccountId = '';
+	let nnsIdErr = '';
 	let paymentInfo = {
 		transferTo: '',
 		nftPrice: 0,
@@ -25,7 +27,7 @@
 	let pollInterval: ReturnType<typeof setInterval>;
 
 	let principalError = '';
-	let step: 1 | 2 = 1;
+	let step: 1 | 2 | 3 = 1;
 	let paymentStatus = 'pending';
 
 	function checkForm(e: SubmitEvent) {
@@ -40,7 +42,7 @@
 
 	async function checkPaymentStatus() {
 		const actor = nftMinterCanister(minterCanId);
-		const res = await actor.primary_sale(Principal.from(nnsAccountId));
+		const res = await actor.primary_sale();
 		console.log({ paymentRes: res });
 		if ('Ok' in res) {
 			paymentStatus = 'completed';
@@ -49,7 +51,7 @@
 
 	async function startPoll() {
 		const actor = nftMinterCanister(minterCanId);
-		const details = await actor.get_payment_details(Principal.from(nnsAccountId));
+		const details = await actor.get_payment_details();
 		if ('Ok' in details) {
 			paymentInfo = {
 				transferTo: details.Ok[0],
@@ -60,9 +62,44 @@
 		pollInterval = setInterval(() => checkPaymentStatus(), 5000);
 	}
 
+	async function saveNnsAccountId() {
+		initLoading = true;
+		nnsIdErr = '';
+		if (!nnsAccountId) return;
+		try {
+			if (!isPrincipal(nnsAccountId)) {
+				nnsIdErr =
+					'Invalid principal. Please copy the correct principal from NNS Dapp settings page.';
+				return false;
+			}
+			const actor = nftMinterCanister(minterCanId);
+			const res = await actor.update_NNS_account(Principal.from(nnsAccountId));
+			if ('Ok' in res) {
+				step = 2;
+			} else {
+				initLoading = false;
+			}
+		} finally {
+			initLoading = false;
+		}
+	}
+
+	async function init() {
+		try {
+			const actor = await nftMinterCanister(minterCanId);
+			const res = await actor.get_NNS_account();
+			if ('Ok' in res) {
+				nnsAccountId = res.Ok.toString();
+				step = 2;
+			}
+		} finally {
+			initLoading = false;
+		}
+	}
+
 	async function getPaymentInfo() {
 		const actor = nftMinterCanister(minterCanId);
-		const details = await actor.get_payment_details(loggedInUser);
+		const details = await actor.get_payment_details();
 		if ('Ok' in details) {
 			paymentInfo = {
 				transferTo: '',
@@ -75,9 +112,10 @@
 	}
 
 	$: loggedInUser = Principal.from($authState.idString);
-	$: step === 1 && getPaymentInfo();
-	$: step === 2 && startPoll();
-	$: (step !== 2 || paymentStatus === 'completed') && clearInterval(pollInterval);
+	$: step === 1 && init();
+	$: step === 2 && getPaymentInfo();
+	$: step === 3 && startPoll();
+	$: (step !== 3 || paymentStatus === 'completed') && clearInterval(pollInterval);
 
 	onDestroy(() => clearInterval(pollInterval));
 </script>
@@ -91,12 +129,48 @@
 		in:scale={{ start: 0.9, delay: 100, duration: 100 }}
 		class="bg-white z-[2] max-w-2xl w-full px-16 py-12 flex flex-col items-center gap-12 relative shadow-xl rounded-lg"
 	>
-		<button on:click={() => (showWarning = false)} class="absolute top-4 right-4 z-[2]">
+		<button on:click={() => (show = false)} class="absolute top-4 right-4 z-[2]">
 			<PlusIcon class="h-5 w-5 rotate-45" />
 		</button>
-		<div class="text-3xl">{step === 1 ? 'Invest' : 'Pay'}</div>
+		<div class="text-3xl">{step === 3 ? 'Pay' : 'Invest'}</div>
 
-		{#if step == 1}
+		{#if step === 1}
+			<div>
+				{#if loggedInUser}
+					{#if initLoading}
+						<PlusIcon class="h-5 w-5 animate-spin" />
+					{:else}
+						<form on:submit|preventDefault={saveNnsAccountId} class="flex flex-col gap-4">
+							<div class="font-md font-medium">
+								You need to link your NNS Dapp account to continue
+							</div>
+
+							<div class="flex flex-col gap-2">
+								<Input
+									bind:value={nnsAccountId}
+									label="NNS Principal ID"
+									required
+									placeholder="Enter NNS principal ID"
+								/>
+								{#if nnsIdErr}
+									<div class="text-xs text-red-500">{nnsIdErr}</div>
+								{/if}
+								<div class="text-sm">
+									Note: Please make sure funds are always transferred from this account. You can
+									visit <a class="underline" href="https://nns.ic0.app/settings/" target="_blank"
+										>this link</a
+									> to get the ID.
+								</div>
+							</div>
+
+							<Button submit>Link</Button>
+						</form>
+					{/if}
+				{:else}
+					<Button href="/login">You need to login before continuing</Button>
+				{/if}
+			</div>
+		{:else if step === 2}
 			<form on:submit={checkForm} class="flex w-full flex-col items-center gap-12">
 				<div class="w-full gap-8 flex flex-col">
 					<div class="flex w-full items-center justify-between text-sm gap-4">
@@ -117,15 +191,8 @@
 						placeholder="(in USD)"
 					/>
 					<div>
-						<Input
-							bind:value={nnsAccountId}
-							required
-							label="NNS Account Principal ID"
-							placeholder="Enter your account Principal ID from which funds will be transferred"
-						/>
-						{#if principalError}
-							<div class="text-red-500 text-xs pt-1">{principalError}</div>
-						{/if}
+						<span class="text-sm font-medium leading-6 text-gray-900">Linked NNS Account ID:</span>
+						<div>{nnsAccountId}</div>
 					</div>
 					<hr />
 					<div class="flex w-full items-center justify-between text-sm gap-4">
@@ -135,7 +202,7 @@
 				</div>
 				<Button submit>Proceed to payment</Button>
 			</form>
-		{:else if step === 2}
+		{:else if step === 3}
 			<div class="flex flex-col w-full items-center gap-4 text-sm">
 				<div class="flex w-full items-start justify-between text-sm gap-4">
 					<div>Amount to pay:</div>
