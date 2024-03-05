@@ -112,7 +112,6 @@
 		}
 	}
 
-	$: loggedInUser = Principal.from($authState.idString);
 	$: step === 1 && init();
 	$: step === 2 && getPaymentInfo();
 	$: step === 3 && startPoll();
@@ -137,7 +136,7 @@
 
 		{#if step === 1}
 			<div>
-				{#if loggedInUser}
+				{#if $authState.isLoggedIn}
 					{#if initLoading}
 						<PlusIcon class="h-5 w-5 animate-spin" />
 					{:else}
@@ -168,7 +167,10 @@
 						</form>
 					{/if}
 				{:else}
-					<Button href="/login">You need to login before continuing</Button>
+					<div class="flex flex-col gap-8 items-center">
+						<div>You need to login before you can invest</div>
+						<Button href="/login">Click to login</Button>
+					</div>
 				{/if}
 			</div>
 		{:else if step === 2}
