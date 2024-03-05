@@ -74,6 +74,7 @@
 			}
 			const actor = nftMinterCanister(minterCanId);
 			const res = await actor.update_NNS_account(Principal.from(nnsAccountId));
+			console.log({ update_NNS_account: res });
 			if ('Ok' in res) {
 				step = 2;
 			} else {
@@ -88,6 +89,7 @@
 		try {
 			const actor = await nftMinterCanister(minterCanId);
 			const res = await actor.get_NNS_account();
+			console.log({ get_NNS_account: res });
 			if ('Ok' in res) {
 				nnsAccountId = res.Ok.toString();
 				step = 2;
@@ -100,6 +102,7 @@
 	async function getPaymentInfo() {
 		const actor = nftMinterCanister(minterCanId);
 		const details = await actor.get_payment_details();
+		console.log({ get_payment_details: details });
 		if ('Ok' in details) {
 			paymentInfo = {
 				transferTo: '',
@@ -107,8 +110,6 @@
 				currentInvestment: Number(details.Ok[2])
 			};
 		}
-
-		console.log(details);
 	}
 
 	$: loggedInUser = Principal.from($authState.idString);
