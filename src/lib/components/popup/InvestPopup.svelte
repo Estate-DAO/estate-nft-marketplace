@@ -17,7 +17,7 @@
 	let nftToBuy = 1;
 	let initLoading = true;
 	let nnsAccountId = '';
-	let nnsIdErr = '';
+	let initError = '';
 	let paymentInfo = {
 		transferTo: '',
 		nftPrice: 0,
@@ -64,11 +64,11 @@
 
 	async function saveNnsAccountId() {
 		initLoading = true;
-		nnsIdErr = '';
+		initError = '';
 		if (!nnsAccountId) return;
 		try {
 			if (!isPrincipal(nnsAccountId)) {
-				nnsIdErr =
+				initError =
 					'Invalid principal. Please copy the correct principal from NNS Dapp settings page.';
 				return false;
 			}
@@ -80,6 +80,8 @@
 			} else {
 				initLoading = false;
 			}
+		} catch {
+			initError = 'Something went wrong, please try again!';
 		} finally {
 			initLoading = false;
 		}
@@ -152,8 +154,8 @@
 									required
 									placeholder="Enter NNS principal ID"
 								/>
-								{#if nnsIdErr}
-									<div class="text-xs text-red-500">{nnsIdErr}</div>
+								{#if initError}
+									<div class="text-xs text-red-500">{initError}</div>
 								{/if}
 								<div class="text-sm">
 									Note: Please make sure funds are always transferred from this account. You can
