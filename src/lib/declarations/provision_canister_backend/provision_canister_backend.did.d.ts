@@ -98,9 +98,11 @@ export type Result_5 = { 'Ok' : FormMetadata } |
   { 'Err' : string };
 export type Result_6 = { 'Ok' : Metadata } |
   { 'Err' : string };
-export type Result_7 = { 'Ok' : SaleData } |
+export type Result_7 = { 'Ok' : [bigint, bigint] } |
   { 'Err' : string };
-export type Result_8 = { 'Ok' : string } |
+export type Result_8 = { 'Ok' : SaleData } |
+  { 'Err' : string };
+export type Result_9 = { 'Ok' : string } |
   { 'Err' : string };
 export interface ReturnsFinancials {
   'average_5_year_roi' : [] | [number],
@@ -135,15 +137,16 @@ export interface _SERVICE {
   'get_form_metadata' : ActorMethod<[number], Result_5>,
   'get_minter_wasm' : ActorMethod<[], Result_3>,
   'get_nft_metadata' : ActorMethod<[Principal, string], Result_6>,
-  'get_sale_data' : ActorMethod<[Principal, string], Result_7>,
-  'grant_commit_permission' : ActorMethod<[Principal, Principal], Result_8>,
-  'init_asset_wasm' : ActorMethod<[Uint8Array | number[]], Result_8>,
-  'init_form_metadata' : ActorMethod<[FormMetadata], Result_8>,
-  'init_minter_wasm' : ActorMethod<[Uint8Array | number[]], Result_8>,
-  'revoke_commit_permission' : ActorMethod<[Principal, Principal], Result_8>,
-  'sale_confirmed_mint' : ActorMethod<[Principal], Result_8>,
-  'sale_confirmed_refund' : ActorMethod<[Principal], Result_8>,
-  'update_key' : ActorMethod<[string], Result_8>,
+  'get_sale_balance' : ActorMethod<[Principal, Principal], Result_7>,
+  'get_sale_data' : ActorMethod<[Principal, string], Result_8>,
+  'grant_commit_permission' : ActorMethod<[Principal, Principal], Result_9>,
+  'init_asset_wasm' : ActorMethod<[Uint8Array | number[]], Result_9>,
+  'init_form_metadata' : ActorMethod<[FormMetadata], Result_9>,
+  'init_minter_wasm' : ActorMethod<[Uint8Array | number[]], Result_9>,
+  'revoke_commit_permission' : ActorMethod<[Principal, Principal], Result_9>,
+  'sale_confirmed_mint' : ActorMethod<[Principal], Result_9>,
+  'sale_confirmed_refund' : ActorMethod<[Principal], Result_9>,
+  'update_key' : ActorMethod<[string], Result_9>,
   'verify_key' : ActorMethod<[string], boolean>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;

@@ -105,6 +105,10 @@ export const idlFactory = ({ IDL }) => {
     'nft_symbol' : IDL.Text,
   });
   const Result_6 = IDL.Variant({ 'Ok' : Metadata, 'Err' : IDL.Text });
+  const Result_7 = IDL.Variant({
+    'Ok' : IDL.Tuple(IDL.Nat64, IDL.Nat64),
+    'Err' : IDL.Text,
+  });
   const SaleStatus = IDL.Variant({
     'Init' : IDL.Null,
     'Complete' : IDL.Null,
@@ -122,8 +126,8 @@ export const idlFactory = ({ IDL }) => {
     'buyer' : Account,
     'amount' : IDL.Nat64,
   });
-  const Result_7 = IDL.Variant({ 'Ok' : SaleData, 'Err' : IDL.Text });
-  const Result_8 = IDL.Variant({ 'Ok' : IDL.Text, 'Err' : IDL.Text });
+  const Result_8 = IDL.Variant({ 'Ok' : SaleData, 'Err' : IDL.Text });
+  const Result_9 = IDL.Variant({ 'Ok' : IDL.Text, 'Err' : IDL.Text });
   return IDL.Service({
     'approve_collection' : IDL.Func([IDL.Nat16, IDL.Bool], [Result], []),
     'filter_status' : IDL.Func([Status], [Result_1], []),
@@ -143,23 +147,28 @@ export const idlFactory = ({ IDL }) => {
     'get_form_metadata' : IDL.Func([IDL.Nat16], [Result_5], []),
     'get_minter_wasm' : IDL.Func([], [Result_3], ['query']),
     'get_nft_metadata' : IDL.Func([IDL.Principal, IDL.Text], [Result_6], []),
-    'get_sale_data' : IDL.Func([IDL.Principal, IDL.Text], [Result_7], []),
+    'get_sale_balance' : IDL.Func(
+        [IDL.Principal, IDL.Principal],
+        [Result_7],
+        [],
+      ),
+    'get_sale_data' : IDL.Func([IDL.Principal, IDL.Text], [Result_8], []),
     'grant_commit_permission' : IDL.Func(
         [IDL.Principal, IDL.Principal],
-        [Result_8],
+        [Result_9],
         [],
       ),
-    'init_asset_wasm' : IDL.Func([IDL.Vec(IDL.Nat8)], [Result_8], []),
-    'init_form_metadata' : IDL.Func([FormMetadata], [Result_8], []),
-    'init_minter_wasm' : IDL.Func([IDL.Vec(IDL.Nat8)], [Result_8], []),
+    'init_asset_wasm' : IDL.Func([IDL.Vec(IDL.Nat8)], [Result_9], []),
+    'init_form_metadata' : IDL.Func([FormMetadata], [Result_9], []),
+    'init_minter_wasm' : IDL.Func([IDL.Vec(IDL.Nat8)], [Result_9], []),
     'revoke_commit_permission' : IDL.Func(
         [IDL.Principal, IDL.Principal],
-        [Result_8],
+        [Result_9],
         [],
       ),
-    'sale_confirmed_mint' : IDL.Func([IDL.Principal], [Result_8], []),
-    'sale_confirmed_refund' : IDL.Func([IDL.Principal], [Result_8], []),
-    'update_key' : IDL.Func([IDL.Text], [Result_8], []),
+    'sale_confirmed_mint' : IDL.Func([IDL.Principal], [Result_9], []),
+    'sale_confirmed_refund' : IDL.Func([IDL.Principal], [Result_9], []),
+    'update_key' : IDL.Func([IDL.Text], [Result_9], []),
     'verify_key' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),
   });
 };
