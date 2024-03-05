@@ -105,7 +105,7 @@
 		console.log({ get_payment_details: details });
 		if ('Ok' in details) {
 			paymentInfo = {
-				transferTo: '',
+				transferTo: details.Ok[0],
 				nftPrice: Number(details.Ok[1]),
 				currentInvestment: Number(details.Ok[2])
 			};
