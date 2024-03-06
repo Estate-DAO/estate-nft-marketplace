@@ -4,7 +4,6 @@
 	import { adminStore } from '$lib/stores/admin';
 	import Actions from './Actions.svelte';
 	import Details from './Details.svelte';
-	import Documents from './Documents.svelte';
 	import Financials from './Financials.svelte';
 	import Market from './Market.svelte';
 	import PropertyInfoCards from './PropertyInfoCards.svelte';

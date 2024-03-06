@@ -43,6 +43,7 @@
 	<div class="flex flex-col lg:flex-row gap-8 w-full max-w-6xl">
 		<PropertyHeader {metadata} />
 		<InvestInfo
+			{metadata}
 			{waitlist}
 			on:click={() => {
 				if (waitlist) {
