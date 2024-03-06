@@ -21,6 +21,7 @@ export interface CollectionMetadata {
   'additional_metadata' : [] | [AdditionalMetadata],
   'name' : string,
   'property_images' : Array<string>,
+  'treasury_account' : string,
   'price' : bigint,
   'is_initialised' : boolean,
   'total_supply' : bigint,
@@ -43,6 +44,7 @@ export interface FormMetadata {
   'name' : string,
   'property_images' : Array<string>,
   'price' : bigint,
+  'treasury' : string,
 }
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],
@@ -164,11 +166,10 @@ export interface _SERVICE {
   'icrc7_owner_of' : ActorMethod<[string], Result_13>,
   'icrc7_total_supply' : ActorMethod<[], bigint>,
   'init_collection' : ActorMethod<[FormMetadata], Result>,
-  'mint' : ActorMethod<[string, string, string, Principal], Result>,
   'primary_sale' : ActorMethod<[], Result>,
   'refund_user_tokens' : ActorMethod<[Principal], Result>,
-  'sale_confirmed_mint' : ActorMethod<[], Result>,
-  'sale_confirmed_refund' : ActorMethod<[], Result>,
+  'sale_accepted' : ActorMethod<[], Result>,
+  'sale_rejected' : ActorMethod<[], Result>,
   'update_NNS_account' : ActorMethod<[Principal], Result>,
   'update_basic_details' : ActorMethod<
     [[] | [string], [] | [string], [] | [Status]],

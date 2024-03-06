@@ -93,6 +93,7 @@ export const idlFactory = ({ IDL }) => {
     'name' : IDL.Text,
     'property_images' : IDL.Vec(IDL.Text),
     'price' : IDL.Nat64,
+    'treasury' : IDL.Text,
   });
   const Result_5 = IDL.Variant({ 'Ok' : FormMetadata, 'Err' : IDL.Text });
   const Metadata = IDL.Record({
@@ -166,7 +167,7 @@ export const idlFactory = ({ IDL }) => {
         [Result_9],
         [],
       ),
-    'sale_confirmed_mint' : IDL.Func([IDL.Principal], [Result_9], []),
+    'sale_accept' : IDL.Func([IDL.Principal], [Result_9], []),
     'sale_confirmed_refund' : IDL.Func([IDL.Principal], [Result_9], []),
     'update_key' : IDL.Func([IDL.Text], [Result_9], []),
     'verify_key' : IDL.Func([IDL.Text], [IDL.Bool], ['query']),

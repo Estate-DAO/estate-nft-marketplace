@@ -36,6 +36,7 @@ export interface FormMetadata {
   'name' : string,
   'property_images' : Array<string>,
   'price' : bigint,
+  'treasury' : string,
 }
 export interface InvestmentFinancials {
   'initial_maintenance_reserve' : [] | [number],
@@ -144,7 +145,7 @@ export interface _SERVICE {
   'init_form_metadata' : ActorMethod<[FormMetadata], Result_9>,
   'init_minter_wasm' : ActorMethod<[Uint8Array | number[]], Result_9>,
   'revoke_commit_permission' : ActorMethod<[Principal, Principal], Result_9>,
-  'sale_confirmed_mint' : ActorMethod<[Principal], Result_9>,
+  'sale_accept' : ActorMethod<[Principal], Result_9>,
   'sale_confirmed_refund' : ActorMethod<[Principal], Result_9>,
   'update_key' : ActorMethod<[string], Result_9>,
   'verify_key' : ActorMethod<[string], boolean>,

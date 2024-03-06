@@ -79,6 +79,7 @@ export const staticData = {
 	price: BigInt(520000),
 	owner: 'owner',
 	image_uri: 'https://i.ibb.co/hX6HG15/1.jpg',
+	treasury_account: '3nhwi-bzr6v-ifvra-2wtz7-6cf6r-tgtez-vblz5-zjrmw-bkawc-iyxal-bqe',
 	desc: `Situated in the heart of Puerto Sotogrande, this attractive vacation property is available. Featuring two generously sized bedrooms and baths, with a total area of 1610.40 square meters, including a pleasant terrace of about 15 square meters, this residence effortlessly combines comfort, sophistication, and a touch of Mediterranean charm.
 	The terrace serves as an additional living space, perfect for outdoor meals, evening drinks, or simply relaxing with a good book.
 	Indoors, the atmosphere is classic and welcoming. The living area has an open design, seamlessly connecting the cozy lounge, dining area, and modern kitchen. Natural light streams through large windows, highlighting the warm wooden floors and tasteful details. Envision hosting intimate gatherings with friends, the sound of laughter blending with the backdrop of sea views.
