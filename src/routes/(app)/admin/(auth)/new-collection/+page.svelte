@@ -124,7 +124,7 @@
 	}
 </script>
 
-<div class="flex flex-col gap-12">
+<div class="flex flex-col gap-12 pb-16">
 	{#if res}
 		<pre transition:slide class="text-sm p-4 mt-8 bg-gray-100 rounded-xl">{JSON.stringify(
 				res,
