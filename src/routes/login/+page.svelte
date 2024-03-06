@@ -89,6 +89,13 @@
 				<h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
 					You are logged in!
 				</h2>
+				<div class="text-center text-sm text-gray-500">
+					<div class="pb-2">Your principal ID:</div>
+					<div class="font-mono bg-gray-200 p-2 rounded-md max-w-sm select-all">
+						{$authState.idString}
+					</div>
+				</div>
+
 				<Button href="/market" class="w-min">Go to the marketplace</Button>
 				<Button on:click={logout} loading={!$authHelper?.init} secondary class="w-min">
 					Logout
