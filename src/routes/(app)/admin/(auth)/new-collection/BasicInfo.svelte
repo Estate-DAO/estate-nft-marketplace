@@ -8,6 +8,7 @@
 		supplyCap: number;
 		price: number;
 		coverImage: string;
+		userNNsPrincipal: string;
 	};
 </script>
 
@@ -17,6 +18,7 @@
 	import Textarea from '$lib/components/textarea/Textarea.svelte';
 	import type { Status } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import Select from '$lib/components/select/Select.svelte';
+	import { isPrincipal } from '$lib/utils/isPrincipal';
 
 	export let loading = true;
 	export let data: BasicInfoData = {
@@ -25,7 +27,8 @@
 		status: 'Draft',
 		supplyCap: 1000,
 		price: 1,
-		coverImage: ''
+		coverImage: '',
+		userNNsPrincipal: ''
 	};
 
 	const handleStatusChange = ({ detail }: { detail: string }) =>
@@ -51,6 +54,30 @@
 		bind:value={data.coverImage}
 		placeholder="Enter an image url"
 	/>
+	<div class="flex flex-col gap-1 w-full">
+		<Input
+			disabled={loading}
+			label="Owner's NNS Principal ID"
+			bind:value={data.userNNsPrincipal}
+			placeholder="Enter NNS Principal ID"
+		/>
+		{#await isPrincipal(data.userNNsPrincipal) then isPrincipal}
+			{#if !isPrincipal}
+				<div class="text-red-500 text-xs">
+					Invalid NNS Principal ID. Please correct this before submitting the form
+				</div>
+			{:else}
+				<div class="text-green-500 text-xs">NNS Principal ID is valid</div>
+			{/if}
+		{/await}
+		<div class="text-xs">
+			Note: You can get your NNS Principal ID from <a
+				class="underline"
+				target="_blank"
+				href="https://nns.ic0.app/settings/">here</a
+			>
+		</div>
+	</div>
 	<Input
 		disabled={loading}
 		type="number"

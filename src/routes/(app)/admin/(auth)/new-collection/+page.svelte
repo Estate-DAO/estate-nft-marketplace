@@ -37,6 +37,7 @@
 			desc: basicInfoData.description,
 			owner: $authState.idString || 'owner',
 			property_images: propertyImages,
+			treasury: basicInfoData.userNNsPrincipal,
 			supply_cap: BigInt(basicInfoData.supplyCap),
 			image_uri: basicInfoData.coverImage,
 			price: BigInt(toE8s(basicInfoData.price)),

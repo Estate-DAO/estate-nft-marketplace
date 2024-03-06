@@ -3,7 +3,7 @@
 	import Button from '../button/Button.svelte';
 	import PlusIcon from '../icons/PlusIcon.svelte';
 	import Input from '../input/Input.svelte';
-	import { onDestroy, onMount } from 'svelte';
+	import { onDestroy } from 'svelte';
 	import { nftMinterCanister } from '$lib/backend';
 	import { authState } from '$lib/stores/auth';
 	import { Principal } from '@dfinity/principal';
@@ -190,7 +190,6 @@
 						bind:value={nftToBuy}
 						required
 						min={1}
-						max={10}
 						label="Number of NFTs to buy"
 						type="number"
 						placeholder="(in USD)"
