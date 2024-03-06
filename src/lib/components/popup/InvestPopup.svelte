@@ -10,6 +10,19 @@
 	import { isPrincipal } from '$lib/utils/isPrincipal';
 	import { fromE8s } from '$lib/utils/icp';
 
+	const links = [
+		'https://in.sumsub.com/websdk/p/sbx_1Dds9ZQtHzpIImt0',
+		'https://in.sumsub.com/websdk/p/sbx_OwfsYqc8CAJDlQpd',
+		'https://in.sumsub.com/websdk/p/sbx_pfImiHfa8V3AUdHp',
+		'https://in.sumsub.com/websdk/p/sbx_V197zCspgncnrXXn',
+		'https://in.sumsub.com/websdk/p/sbx_CzQ44v3kSwRPmHeZ',
+		'https://in.sumsub.com/websdk/p/sbx_I1kLCxbFPqPOJkkt',
+		'https://in.sumsub.com/websdk/p/sbx_KKOlacaRI7CNOxRt',
+		'https://in.sumsub.com/websdk/p/sbx_2VYqdRdd5pXO5XsO',
+		'https://in.sumsub.com/websdk/p/sbx_Xt5D4agfkpopA8Fi',
+		'https://in.sumsub.com/websdk/p/sbx_Xoq0WwyDN69YtA0r'
+	];
+
 	export let show = false;
 	// export let showWarning = false;
 	export let minterCanId: string;
@@ -135,9 +148,13 @@
 				<iframe
 					title="KYC"
 					class="w-full h-[28rem] rounded-xl"
-					src="https://in.sumsub.com/websdk/p/sbx_Y41hna5jyzsLpRk5"
+					src={links[Math.floor(Math.random() * links.length) | 0]}
 				/>
-				<Button on:click={() => (step = 2)}>Continue</Button>
+				<div class="text-xs text-gray-400">
+					Having issue with KYC? <button class="text-gray-200" on:click={() => (step = 2)}
+						>Click here.</button
+					>
+				</div>
 			</div>
 		{:else if step === 2}
 			<div>
