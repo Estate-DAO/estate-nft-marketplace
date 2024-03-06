@@ -87,7 +87,7 @@
 				</p>
 			{:else}
 				<h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-					You are already logged in!
+					You are logged in!
 				</h2>
 				<Button href="/market" class="w-min">Go to the marketplace</Button>
 				<Button on:click={logout} loading={!$authHelper?.init} secondary class="w-min">

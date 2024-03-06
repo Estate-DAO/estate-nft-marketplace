@@ -16,15 +16,12 @@
 
 	async function checkPassword() {
 		error = '';
-		if (!$adminStore.isLoggedIn) gotoAuthPage();
 		try {
 			const actor = provisionCanister();
-
 			const res = await actor.verify_key($adminStore.key);
 			if (res) {
 				loading = false;
 			} else {
-				$adminStore.isLoggedIn = false;
 				gotoAuthPage();
 			}
 		} catch (e) {
@@ -34,6 +31,10 @@
 	}
 
 	function gotoAuthPage() {
+		$adminStore = {
+			isLoggedIn: false,
+			key: ''
+		};
 		goto('/admin/auth');
 	}
 

@@ -25,9 +25,7 @@
 	};
 
 	let pollInterval: ReturnType<typeof setInterval>;
-
-	let principalError = '';
-	let step: 1 | 2 | 3 = 1;
+	let step: 1 | 2 | 3 | 4 = 1;
 	let paymentStatus = 'pending';
 
 	async function checkPaymentStatus() {
@@ -66,7 +64,7 @@
 			const res = await actor.update_NNS_account(Principal.from(nnsAccountId));
 			console.log({ update_NNS_account: res });
 			if ('Ok' in res) {
-				step = 2;
+				step = 3;
 			} else {
 				initLoading = false;
 			}
@@ -84,7 +82,7 @@
 			console.log({ get_NNS_account: res });
 			if ('Ok' in res) {
 				nnsAccountId = res.Ok.toString();
-				step = 2;
+				step = 3;
 			}
 		} finally {
 			initLoading = false;
@@ -104,10 +102,10 @@
 		}
 	}
 
-	$: step === 1 && init();
-	$: step === 2 && getPaymentInfo();
-	$: step === 3 && startPoll();
-	$: (step !== 3 || paymentStatus === 'completed') && clearInterval(pollInterval);
+	$: step === 2 && init();
+	$: step === 3 && getPaymentInfo();
+	$: step === 4 && startPoll();
+	$: (step !== 4 || paymentStatus === 'completed') && clearInterval(pollInterval);
 
 	onDestroy(() => clearInterval(pollInterval));
 </script>
@@ -124,50 +122,59 @@
 		<button on:click={() => (show = false)} class="absolute top-4 right-4 z-[2]">
 			<PlusIcon class="h-5 w-5 rotate-45" />
 		</button>
-		<div class="text-3xl">{step === 3 ? 'Pay' : 'Invest'}</div>
+		<div class="text-3xl">{step === 4 ? 'Pay' : 'Invest'}</div>
 
-		{#if step === 1}
-			<div>
-				{#if $authState.isLoggedIn}
-					{#if initLoading}
-						<PlusIcon class="h-5 w-5 animate-spin" />
-					{:else}
-						<form on:submit|preventDefault={saveNnsAccountId} class="flex flex-col gap-4">
-							<div class="font-md font-medium">
-								You need to link your NNS Dapp account to continue
-							</div>
-
-							<div class="flex flex-col gap-2">
-								<Input
-									bind:value={nnsAccountId}
-									label="NNS Principal ID"
-									required
-									placeholder="Enter NNS principal ID"
-								/>
-								{#if initError}
-									<div class="text-xs text-red-500">{initError}</div>
-								{/if}
-								<div class="text-sm">
-									Note: Please make sure funds are always transferred from this account. You can
-									visit <a class="underline" href="https://nns.ic0.app/settings/" target="_blank"
-										>this link</a
-									> to get the ID.
-								</div>
-							</div>
-
-							<Button submit>Link</Button>
-						</form>
-					{/if}
-				{:else}
-					<div class="flex flex-col gap-8 items-center">
-						<div>You need to login before you can invest</div>
-						<Button href="/login">Click to login</Button>
-					</div>
-				{/if}
+		{#if !$authState.isLoggedIn}
+			<div class="flex flex-col gap-8 items-center">
+				<div>You need to login before you can invest</div>
+				<Button href="/login">Click to login</Button>
+			</div>
+		{:else if step === 1}
+			<div class="flex flex-col gap-8 items-center w-full">
+				<div>Complete KYC to continue</div>
+				<iframe
+					title="KYC"
+					class="w-full h-[28rem] rounded-xl"
+					src="https://in.sumsub.com/websdk/p/sbx_Y41hna5jyzsLpRk5"
+				/>
+				<Button on:click={() => (step = 2)}>Continue</Button>
 			</div>
 		{:else if step === 2}
+			<div>
+				{#if initLoading}
+					<PlusIcon class="h-5 w-5 animate-spin" />
+				{:else}
+					<form on:submit|preventDefault={saveNnsAccountId} class="flex flex-col gap-4">
+						<div class="font-md font-medium">
+							You need to link your NNS Dapp account to continue
+						</div>
+
+						<div class="flex flex-col gap-2">
+							<Input
+								bind:value={nnsAccountId}
+								label="NNS Principal ID"
+								required
+								placeholder="Enter NNS principal ID"
+							/>
+							{#if initError}
+								<div class="text-xs text-red-500">{initError}</div>
+							{/if}
+							<div class="text-sm">
+								Note: Please make sure funds are always transferred from this account. You can visit <a
+									class="underline"
+									href="https://nns.ic0.app/settings/"
+									target="_blank">this link</a
+								> to get the ID.
+							</div>
+						</div>
+
+						<Button submit>Link</Button>
+					</form>
+				{/if}
+			</div>
+		{:else if step === 3}
 			<form
-				on:submit|preventDefault={() => (step = 3)}
+				on:submit|preventDefault={() => (step = 4)}
 				class="flex w-full flex-col items-center gap-12"
 			>
 				<div class="w-full gap-8 flex flex-col">
@@ -200,7 +207,7 @@
 				</div>
 				<Button submit>Proceed to payment</Button>
 			</form>
-		{:else if step === 3}
+		{:else if step === 4}
 			<div class="flex flex-col w-full items-center gap-4 text-sm">
 				<div class="flex w-full items-start justify-between text-sm gap-4">
 					<div>Amount to pay:</div>
