@@ -5,11 +5,12 @@
 	import { goto } from '$app/navigation';
 	import { provisionCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
+	import { authState } from '$lib/stores/auth';
 
 	let loading = true;
 	let error = '';
 
-	$: if (!$adminStore.isLoggedIn) {
+	$: if (!$adminStore.isLoggedIn || !$authState.isLoggedIn) {
 		gotoAuthPage();
 	}
 

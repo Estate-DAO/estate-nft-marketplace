@@ -6,7 +6,7 @@
 	import Input from '$lib/components/input/Input.svelte';
 	import { authState } from '$lib/stores/auth';
 
-	$: if ($adminStore.isLoggedIn) {
+	$: if ($adminStore.isLoggedIn && $authState.isLoggedIn) {
 		goto('/admin');
 	}
 

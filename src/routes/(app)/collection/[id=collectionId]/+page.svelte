@@ -25,7 +25,7 @@
 		<img
 			alt="House"
 			src={metadata.property_images[0] || PLACEHOLDER_IMG}
-			class="rounded-xl lg:h-[37rem] w-4/6 object-cover"
+			class="rounded-xl lg:h-[37rem] lg:w-4/6 object-cover"
 		/>
 		<div class="flex basis-1/3 flex-col gap-2 lg:h-[37rem]">
 			<img

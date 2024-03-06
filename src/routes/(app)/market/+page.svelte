@@ -108,7 +108,7 @@
 	</div>
 {:else}
 	<div class="flex py-12 items-center gap-8 justify-normal mx-auto flex-wrap">
-		{#each nfts as nft, i}
+		{#each nfts as nft}
 			<Card
 				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
 				title={nft.name}
