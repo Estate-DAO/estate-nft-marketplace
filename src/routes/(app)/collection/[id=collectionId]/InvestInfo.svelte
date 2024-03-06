@@ -2,6 +2,7 @@
 	import { nftMinterCanister } from '$lib/backend';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import { fromE8s } from '$lib/utils/icp';
+	import { onMount, tick } from 'svelte';
 	import { getCollectionId } from './collectionId.context';
 
 	export let waitlist = false;
@@ -19,6 +20,7 @@
 
 	async function getInvestedAmount() {
 		try {
+			await tick();
 			const actor = nftMinterCanister(minterCanId);
 			const res = await actor.get_total_invested();
 			invested = res;
@@ -29,7 +31,7 @@
 		}
 	}
 
-	getInvestedAmount();
+	onMount(getInvestedAmount);
 </script>
 
 <div class="shrink-0 bg-black rounded-xl flex flex-col text-white gap-3 p-6 shadow-xl h-fit">
