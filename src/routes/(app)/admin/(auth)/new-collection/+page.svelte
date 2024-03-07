@@ -12,8 +12,6 @@
 	import { toE8s } from '$lib/utils/icp';
 	import { replacer } from '$lib/utils/json';
 	import ImagesInfo from './ImagesInfo.svelte';
-	import { preloadCode } from '$app/navigation';
-	import { load } from '../edit-collection/[id=collectionId]/proxy+page';
 
 	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
