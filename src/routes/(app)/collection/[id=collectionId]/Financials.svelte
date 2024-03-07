@@ -80,11 +80,11 @@
 			<div class="text-lg whitespace-nowrap">{renVal(assetPrice)}</div>
 		</div>
 		<div class="flex items-center gap-4 justify-between px-6">
-			<div>Platform fee (4%)</div>
+			<div>Platform fee</div>
 			<div class="text-lg whitespace-nowrap">{platformFee}</div>
 		</div>
 		<div class="flex items-center gap-4 justify-between px-6">
-			<div>Initial Maintenance Reserve (5%)</div>
+			<div>Initial Maintenance Reserve</div>
 			<div class="text-lg whitespace-nowrap">{renVal(maintenanceReserve)}</div>
 		</div>
 	</div>
@@ -114,7 +114,7 @@
 			<div class="font-bold text-lg">{renVal(projectedRent)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Vacancy Rate (5%)" />
+			<InfoTitle title="Vacancy Rate" />
 			<div class="text-lg">{renVal(vacancyRate)}</div>
 		</div>
 		<div class="flex items-center justify-between px-6">

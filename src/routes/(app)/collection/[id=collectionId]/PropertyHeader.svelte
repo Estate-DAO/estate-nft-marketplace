@@ -30,7 +30,7 @@
 		<div class="flex flex-col lg:flex-row gap-8 items-start lg:items-center">
 			<div class="text-2xl lg:text-5xl font-bold">{metadata.name}</div>
 			<div
-				class="py-2 px-4 text-xs translate-y-1 bg-black rounded-full text-white font-thin flex h-min items-center justify-center"
+				class="py-2 px-4 text-xs translate-y-1 bg-black rounded-full text-white font-light flex h-min items-center justify-center"
 			>
 				Live
 			</div>
@@ -41,7 +41,7 @@
 			<Actions title={metadata.name} />
 		{/if}
 	</div>
-	<div class="font-thin text-2xl">
+	<div class="font-light text-2xl">
 		Location: {country}
 	</div>
 	<div class="font-light text-2xl">{beds} Beds | {baths} Baths | {squareFootage} sq. ft.</div>

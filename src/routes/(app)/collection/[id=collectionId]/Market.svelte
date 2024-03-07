@@ -22,7 +22,7 @@
 		><a href="https://www.openstreetmap.org/#map=14/36.2821/-5.3078">View Larger Map</a></small
 	>
 
-	<div class="font-thin text-2xl">Location: {location}</div>
+	<div class="font-light text-2xl">Location: {location}</div>
 
 	{#if false}
 		<div class="lg:flex grid col-auto lg:flex-row items-center gap-2 pt-8">

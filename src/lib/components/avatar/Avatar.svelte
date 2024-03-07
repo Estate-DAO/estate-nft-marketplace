@@ -7,7 +7,7 @@
 	role="presentation"
 	{href}
 	on:click
-	class="h-10 w-10 bg-black flex items-center text-xl select-none justify-center font-thin text-white rounded-full uppercase"
+	class="h-10 w-10 bg-black flex items-center text-xl select-none justify-center font-light text-white rounded-full uppercase"
 >
 	<slot />
 </svelte:element>

@@ -22,10 +22,11 @@
 	let marketInfoData: MarketInfoData;
 	let propertyImages: string[] = [];
 
-	function optional<T>(val: T | undefined | null): [] | [T] {
-		if (!val) return [];
+	function optional<T>(val: T | undefined | null, bigint = false): [] | [T] {
+		if (val === undefined || val === null) return [];
+		if (typeof val === 'boolean') return [val];
 		if (isNaN(Number(val))) return [val];
-		else return [Number(val) as T];
+		else return [bigint ? (BigInt(Number(val)) as T) : (Number(val) as T)];
 	}
 
 	async function submitForm() {
@@ -89,7 +90,8 @@
 											financialInfoData?.investment.underlyingAssetPrice
 										),
 										min_investment: optional(
-											BigInt(financialInfoData?.investment.mininumInvestment ?? 0)
+											BigInt(financialInfoData?.investment.mininumInvestment ?? 0),
+											true
 										)
 									}
 								],

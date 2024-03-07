@@ -36,12 +36,12 @@
 
 <div class="shrink-0 bg-black rounded-xl flex flex-col text-white gap-3 p-6 shadow-xl h-fit">
 	<div class="font-bold text-5xl">Open</div>
-	<div class="text-3xl font-thin">Invested</div>
+	<div class="text-3xl font-light">Invested</div>
 	<div class="text-lg font-bold">{fromE8s(invested).toFixed(2)} ICP</div>
 	<div class="w-72 bg-white/20 h-4 rounded-full relative overflow-hidden">
 		<div style="width: {investedPercentage}%;" class="absolute bg-white left-0 h-full" />
 	</div>
-	<div class="text-md font-thin">Funded {investedPercentage}% till now</div>
+	<div class="text-md font-light">Funded {investedPercentage}% till now</div>
 
 	<button
 		on:click
