@@ -38,8 +38,8 @@
 	};
 
 	let pollInterval: ReturnType<typeof setInterval>;
-	let step: 1 | 2 | 3 | 4 = 4;
-	let paymentStatus = 'completed';
+	let step: 1 | 2 | 3 | 4 = 1;
+	let paymentStatus = 'pending';
 
 	async function checkPaymentStatus() {
 		const actor = nftMinterCanister(minterCanId);
@@ -112,6 +112,14 @@
 				nftPrice: Number(details.Ok[1]),
 				currentInvestment: Number(details.Ok[2])
 			};
+		}
+	}
+
+	async function copy(text: string) {
+		try {
+			await navigator.clipboard.writeText(text);
+		} catch (e) {
+			console.error(e);
 		}
 	}
 
