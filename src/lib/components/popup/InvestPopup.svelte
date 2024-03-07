@@ -150,10 +150,8 @@
 					class="w-full h-[28rem] rounded-xl"
 					src={links[Math.floor(Math.random() * links.length) | 0]}
 				/>
-				<div class="text-xs text-gray-400">
-					Having issue with KYC? <button class="text-gray-200" on:click={() => (step = 2)}
-						>Click here.</button
-					>
+				<div class="text-xs text-white">
+					Having issue with KYC? <button on:click={() => (step = 2)}>Click here.</button>
 				</div>
 			</div>
 		{:else if step === 2}
