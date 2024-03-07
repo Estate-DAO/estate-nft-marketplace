@@ -2,6 +2,7 @@
 	import { fade, scale } from 'svelte/transition';
 	import Button from '../button/Button.svelte';
 	import PlusIcon from '../icons/PlusIcon.svelte';
+	import CopyIcon from '../icons/CopyIcon.svelte';
 	import Input from '../input/Input.svelte';
 	import { onDestroy } from 'svelte';
 	import { nftMinterCanister } from '$lib/backend';
@@ -9,6 +10,7 @@
 	import { Principal } from '@dfinity/principal';
 	import { isPrincipal } from '$lib/utils/isPrincipal';
 	import { fromE8s } from '$lib/utils/icp';
+	import CopyButton from '../button/CopyButton.svelte';
 
 	const links = [
 		'https://in.sumsub.com/websdk/p/sbx_1Dds9ZQtHzpIImt0',
@@ -248,10 +250,16 @@
 						<Button on:click={() => (show = false)}>Close</Button>
 					</div>
 				{:else}
+					{@const amount = nftToBuy * fromE8s(paymentInfo.nftPrice)}
 					<div class="flex w-full items-start justify-between text-sm gap-4">
 						<div>Amount to pay:</div>
-						<div class="font-bold text-xs w-1/2 break-all text-right">
-							{nftToBuy * fromE8s(paymentInfo.nftPrice)} ICP
+						<div class="flex items-center gap-2">
+							<div class="font-bold whitespace-nowrap text-xs w-1/2 break-all text-right">
+								{amount} ICP
+							</div>
+							<CopyButton on:click={() => copy(amount.toString())}>
+								<CopyIcon class="w-3 h-3" />
+							</CopyButton>
 						</div>
 					</div>
 					<div class="flex w-full items-start justify-between text-sm gap-4">
@@ -264,8 +272,13 @@
 
 					<div class="flex w-full items-start justify-between text-sm gap-4">
 						<div>Transferring to:</div>
-						<div class="font-bold text-xs w-1/2 break-all text-right">
-							{paymentInfo.transferTo}
+						<div class="flex items-center gap-2">
+							<div class="font-bold text-xs w-1/2 break-all text-right">
+								{paymentInfo.transferTo}
+							</div>
+							<CopyButton on:click={() => copy(paymentInfo.transferTo)}>
+								<CopyIcon class="w-3 h-3" />
+							</CopyButton>
 						</div>
 					</div>
 

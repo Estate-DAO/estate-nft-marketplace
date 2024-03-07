@@ -39,7 +39,10 @@
 	<div class="text-3xl font-light">Invested</div>
 	<div class="text-lg font-bold">{fromE8s(invested).toFixed(4)} ICP</div>
 	<div class="w-72 bg-white/20 h-4 rounded-full relative overflow-hidden">
-		<div style="width: {investedPercentage}%;" class="absolute bg-white left-0 h-full" />
+		<div
+			style="width: {investedPercentage}%;"
+			class="absolute transition-all bg-white left-0 h-full"
+		/>
 	</div>
 	<div class="text-md font-light">Funded {investedPercentage}% till now</div>
 
