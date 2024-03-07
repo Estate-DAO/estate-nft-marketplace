@@ -38,8 +38,8 @@
 	};
 
 	let pollInterval: ReturnType<typeof setInterval>;
-	let step: 1 | 2 | 3 | 4 = 1;
-	let paymentStatus = 'pending';
+	let step: 1 | 2 | 3 | 4 = 4;
+	let paymentStatus = 'completed';
 
 	async function checkPaymentStatus() {
 		const actor = nftMinterCanister(minterCanId);
@@ -223,29 +223,35 @@
 			</form>
 		{:else if step === 4}
 			<div class="flex flex-col w-full items-center gap-4 text-sm">
-				<div class="flex w-full items-start justify-between text-sm gap-4">
-					<div>Amount to pay:</div>
-					<div class="font-bold text-xs w-1/2 break-all text-right">
-						{nftToBuy * fromE8s(paymentInfo.nftPrice)} ICP
-					</div>
-				</div>
-				<div class="flex w-full items-start justify-between text-sm gap-4">
-					<div>Transferring from account:</div>
-					<div class="font-bold text-xs w-1/2 break-all text-right">
-						{nnsAccountId}
-					</div>
-				</div>
-
 				{#if paymentStatus === 'completed'}
 					<div class="flex flex-col items-center justify-center gap-4 h-full w-full">
-						<div
-							class="bg-green-500 h-16 w-16 rounded-full flex items-center justify-center text-white"
-						>
-							✔︎
+						<div class="flex w-full items-start justify-between text-sm gap-4">
+							<div>Amount for NFT:</div>
+							<div class="font-bold text-xs w-1/2 break-all text-right">
+								{nftToBuy * fromE8s(paymentInfo.nftPrice)} ICP
+							</div>
 						</div>
-						<div>Transaction successful</div>
+						<div
+							class="bg-green-100 h-24 w-24 rounded-full text-xl flex items-center justify-center text-white"
+						>
+							✅
+						</div>
+						<div class="font-bold py-4 text-2xl">Transaction successful</div>
+						<Button on:click={() => (show = false)}>Close</Button>
 					</div>
 				{:else}
+					<div class="flex w-full items-start justify-between text-sm gap-4">
+						<div>Amount to pay:</div>
+						<div class="font-bold text-xs w-1/2 break-all text-right">
+							{nftToBuy * fromE8s(paymentInfo.nftPrice)} ICP
+						</div>
+					</div>
+					<div class="flex w-full items-start justify-between text-sm gap-4">
+						<div>Transferring from account:</div>
+						<div class="font-bold text-xs w-1/2 break-all text-right">
+							{nnsAccountId}
+						</div>
+					</div>
 					<hr />
 
 					<div class="flex w-full items-start justify-between text-sm gap-4">
