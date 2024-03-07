@@ -3,7 +3,6 @@
 	import FormHeader, { type SelectedTab } from './FormHeader.svelte';
 	import BasicInfo, { type BasicInfoData } from './BasicInfo.svelte';
 	import PropertyInfo, { type PropertyInfoData } from './PropertyInfo.svelte';
-	import DocumentsInfo from './DocumentsInfo.svelte';
 	import MarketInfo, { type MarketInfoData } from './MarketInfo.svelte';
 	import FinancialInfo, { type FinancialInfoData } from './FinancialInfo.svelte';
 	import { provisionCanister } from '$lib/backend';
@@ -24,7 +23,9 @@
 	let propertyImages: string[] = [];
 
 	function optional<T>(val: T | undefined | null): [] | [T] {
-		return val ? [val] : [];
+		if (!val) return [];
+		if (isNaN(Number(val))) return [val];
+		else return [Number(val) as T];
 	}
 
 	async function submitForm() {
