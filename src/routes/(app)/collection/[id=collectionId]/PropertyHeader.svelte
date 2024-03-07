@@ -32,7 +32,7 @@
 			<div
 				class="py-2 px-4 text-xs translate-y-1 bg-black rounded-full text-white font-thin flex h-min items-center justify-center"
 			>
-				Upcoming
+				Live
 			</div>
 		</div>
 		{#if $adminStore.isLoggedIn}

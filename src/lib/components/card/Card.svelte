@@ -12,7 +12,7 @@
 	<div
 		class="absolute top-2 left-2 rounded-lg bg-white/70 backdrop-blur p-1 px-3 text-black text-xs"
 	>
-		{sample ? 'Waitlist' : 'Upcoming'}
+		{sample ? 'Waitlist' : 'Live'}
 	</div>
 	{#if imgSrc}
 		<img alt="Property preview" src={imgSrc} class="w-full h-64 z-[2] object-cover" />
