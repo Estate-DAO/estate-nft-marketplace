@@ -1,7 +1,7 @@
 <script lang="ts">
 	import ImageIcon from '$lib/components/icons/ImageIcon.svelte';
 
-	export let imgSrc = ''; //https://source.unsplash.com/random/?house,country,{id}
+	export let imgSrc = '';
 	export let title = '';
 	export let desc = '';
 	export let sample = false;
