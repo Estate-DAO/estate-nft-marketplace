@@ -63,87 +63,13 @@
 		<button on:click={() => (show = false)} class="absolute top-4 right-4 z-[2]">
 			<PlusIcon class="h-5 w-5 rotate-45" />
 		</button>
-		<div class="text-3xl">Register for waitlist</div>
-		{#if submitted}
-			<div
-				class="inset-0 absolute flex flex-col items-center justify-center gap-4 h-full w-full z-[1]"
-			>
-				<div
-					class="bg-green-200 h-16 w-16 rounded-full flex items-center justify-center text-white"
-				>
-					✅
-				</div>
-				<div>Your entry has been submitted</div>
-				<div>
-					Thank you for registering on EstateDAO, we will reach back shortly via email confirmation
-				</div>
+
+		<div class="flex flex-col items-center justify-center gap-4 h-full w-full z-[1]">
+			<div>
+				The waitlist is now closed. The invites for completion of KYC would be sent out to selected
+				users. We will notify you for further process. Thank you for registering for the waitlist!
 			</div>
-		{/if}
-		{#if !init}
-			<div
-				class="inset-0 absolute flex flex-col items-center justify-center gap-4 h-full w-full z-[1]"
-			>
-				<PlusIcon class="h-5 w-5 animate-spin" />
-			</div>
-		{/if}
-		{#if $authState.isLoggedIn}
-			<form
-				class:opacity-0={submitted || !init}
-				on:submit={submitData}
-				class="flex flex-col items-center gap-12"
-			>
-				<div class="w-full grid lg:grid-cols-3 gap-8">
-					<Input
-						bind:value={firstName}
-						disabled={loading}
-						required
-						label="First Name"
-						placeholder="Enter you name"
-					/>
-					<Input
-						bind:value={lastName}
-						disabled={loading}
-						required
-						label="Last name"
-						placeholder="Enter you surname"
-					/>
-					<Input
-						bind:value={email}
-						disabled={loading}
-						required
-						type="email"
-						label="Email"
-						placeholder="example@gmail.com"
-					/>
-					<Input
-						bind:value={residenceCountry}
-						disabled={loading}
-						required
-						label="Country of Residence"
-						placeholder="Your country"
-					/>
-					<Input
-						bind:value={citizenshipCountry}
-						disabled={loading}
-						required
-						label="Country of Citizenship"
-						placeholder="Your country"
-					/>
-					<Input
-						bind:value={annualIncome}
-						disabled={loading}
-						required
-						label="Annual Income"
-						type="number"
-						placeholder="(in USD)"
-					/>
-				</div>
-				<Button disabled={loading} submit>Register</Button>
-			</form>
-		{:else}
-			<div class="flex flex-col items-center justify-center gap-4 h-full w-full z-[1]">
-				<div>You need to login before registering for the waitlist</div>
-				<Button href="/login">Login</Button>
-			</div>{/if}
+			<Button on:click={() => (show = false)}>Close</Button>
+		</div>
 	</div>
 </div>
