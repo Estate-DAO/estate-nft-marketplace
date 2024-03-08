@@ -32,7 +32,7 @@
 			<div
 				class="py-2 px-4 text-xs translate-y-1 bg-black rounded-full text-white font-light flex h-min items-center justify-center"
 			>
-				Live
+				{Object.keys(metadata.status)?.[0] || 'Live'}
 			</div>
 		</div>
 		{#if $adminStore.isLoggedIn}

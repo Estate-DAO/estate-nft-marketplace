@@ -26,6 +26,7 @@
 	];
 
 	const allowedIds = [
+		'xhlmj-ejtk2-rdeng-jpr7y-tsxbg-pblxc-sv7py-c4ek2-zfa2l-cpvga-tqe',
 		'7ticg-6lqof-r6ovt-2bstx-2a3nl-7od46-cmdn3-a4rbm-r5jlo-uuys6-6qe',
 		'27zvx-tsc3k-4nbka-lld3q-katj4-q2nna-klrrk-fihsy-hxhuu-fdmnn-oqe',
 		'uiw6g-yfrmb-qwv5q-jh7e4-b4eri-paqxv-etsjd-v4all-63w3g-r6zgj-kae',
