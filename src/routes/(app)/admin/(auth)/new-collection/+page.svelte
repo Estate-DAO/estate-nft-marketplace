@@ -25,6 +25,7 @@
 	function optional<T>(val: T | undefined | null): [] | [T] {
 		if (val === undefined || val === null) return [];
 		if (typeof val === 'boolean') return [val];
+		if (typeof val === 'string') return val ? [val] : [];
 		if (isNaN(Number(val))) return [val];
 		else return [typeof val === 'bigint' ? (BigInt(val) as T) : (Number(val) as T)];
 	}
