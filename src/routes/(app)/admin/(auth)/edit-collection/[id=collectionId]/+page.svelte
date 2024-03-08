@@ -42,7 +42,7 @@
 			case 'market':
 				await marketInfo.saveData();
 				break;
-			case 'financials':
+			case 'financial':
 				await financialInfo.saveData();
 				break;
 		}
@@ -85,7 +85,7 @@
 						bind:loading
 						bind:this={propertyInfo}
 					/>
-				{:else if selectedTab === 'financials'}
+				{:else if selectedTab === 'financial'}
 					<FinancialInfo
 						financialDetails={collectionMetadata?.additional_metadata?.[0]?.financial_details?.[0]}
 						bind:loading

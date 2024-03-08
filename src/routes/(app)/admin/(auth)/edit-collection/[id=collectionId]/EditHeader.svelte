@@ -1,10 +1,10 @@
 <script lang="ts" context="module">
-	const tabs: SelectedEditTab[] = ['basic', 'property', 'market', 'financials', 'images'];
+	const tabs: SelectedEditTab[] = ['basic', 'property', 'market', 'financial', 'images'];
 	export type SelectedEditTab =
 		| 'basic'
 		| 'property'
 		| 'market'
-		| 'financials'
+		| 'financial'
 		| 'documents'
 		| 'images';
 </script>
