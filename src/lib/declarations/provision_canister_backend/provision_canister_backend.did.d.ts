@@ -28,6 +28,7 @@ export interface FinancialDetails {
   'returns' : [] | [ReturnsFinancials],
 }
 export interface FormMetadata {
+  'status' : Status,
   'supply_cap' : bigint,
   'image_uri' : string,
   'owner' : string,
@@ -61,7 +62,7 @@ export interface Metadata {
   'collection_name' : string,
   'nft_uri' : string,
   'total_supply' : bigint,
-  'nft_symbol' : string,
+  'symbol' : string,
 }
 export interface PropertyDetails {
   'year_built' : [] | [number],
@@ -85,13 +86,13 @@ export interface RentFinancials {
   'projected_rent' : [] | [number],
   'monthly_utiliiies' : [] | [number],
 }
-export type Result = { 'Ok' : ApprovedResponse } |
+export type Result = { 'Ok' : string } |
   { 'Err' : string };
-export type Result_1 = { 'Ok' : Array<Principal> } |
+export type Result_1 = { 'Ok' : ApprovedResponse } |
   { 'Err' : string };
-export type Result_2 = { 'Ok' : Array<CanisterIds> } |
+export type Result_2 = { 'Ok' : Array<Principal> } |
   { 'Err' : string };
-export type Result_3 = { 'Ok' : Uint8Array | number[] } |
+export type Result_3 = { 'Ok' : Array<CanisterIds> } |
   { 'Err' : string };
 export type Result_4 = { 'Ok' : bigint } |
   { 'Err' : string };
@@ -102,8 +103,6 @@ export type Result_6 = { 'Ok' : Metadata } |
 export type Result_7 = { 'Ok' : [bigint, bigint] } |
   { 'Err' : string };
 export type Result_8 = { 'Ok' : SaleData } |
-  { 'Err' : string };
-export type Result_9 = { 'Ok' : string } |
   { 'Err' : string };
 export interface ReturnsFinancials {
   'average_5_year_roi' : [] | [number],
@@ -123,31 +122,36 @@ export type SaleStatus = { 'Init' : null } |
   { 'Complete' : null } |
   { 'Incomplete' : null };
 export type Status = { 'Ended' : null } |
+  { 'Refunded' : null } |
   { 'Live' : null } |
   { 'Draft' : null } |
+  { 'Minted' : null } |
   { 'Upcoming' : null };
 export interface Timestamp { 'timestamp_nanos' : bigint }
 export interface _SERVICE {
-  'approve_collection' : ActorMethod<[number, boolean], Result>,
-  'filter_status' : ActorMethod<[Status], Result_1>,
-  'get_all_canisters' : ActorMethod<[], Result_2>,
-  'get_all_minter_canisters' : ActorMethod<[], Result_1>,
-  'get_asset_wasm' : ActorMethod<[], Result_3>,
+  'add_known_principals' : ActorMethod<[Principal], Result>,
+  'approve_collection' : ActorMethod<[number, boolean], Result_1>,
+  'filter_status' : ActorMethod<[Status], Result_2>,
+  'get_all_canisters' : ActorMethod<[], Result_3>,
+  'get_all_minter_canisters' : ActorMethod<[], Result_2>,
   'get_escrow_balance' : ActorMethod<[Principal, Principal], Result_4>,
   'get_form_list' : ActorMethod<[], Array<[number, FormMetadata]>>,
   'get_form_metadata' : ActorMethod<[number], Result_5>,
-  'get_minter_wasm' : ActorMethod<[], Result_3>,
   'get_nft_metadata' : ActorMethod<[Principal, string], Result_6>,
   'get_sale_balance' : ActorMethod<[Principal, Principal], Result_7>,
   'get_sale_data' : ActorMethod<[Principal, string], Result_8>,
-  'grant_commit_permission' : ActorMethod<[Principal, Principal], Result_9>,
-  'init_asset_wasm' : ActorMethod<[Uint8Array | number[]], Result_9>,
-  'init_form_metadata' : ActorMethod<[FormMetadata], Result_9>,
-  'init_minter_wasm' : ActorMethod<[Uint8Array | number[]], Result_9>,
-  'revoke_commit_permission' : ActorMethod<[Principal, Principal], Result_9>,
-  'sale_accept' : ActorMethod<[Principal], Result_9>,
-  'sale_confirmed_refund' : ActorMethod<[Principal], Result_9>,
-  'update_key' : ActorMethod<[string], Result_9>,
+  'get_total_invested' : ActorMethod<[Principal], Result_2>,
+  'grant_commit_permission' : ActorMethod<[Principal, Principal], Result>,
+  'init_asset_wasm' : ActorMethod<[Uint8Array | number[]], Result>,
+  'init_form_metadata' : ActorMethod<[FormMetadata], Result>,
+  'init_minter_wasm' : ActorMethod<[Uint8Array | number[]], Result>,
+  'reprocess_sale_accept' : ActorMethod<[Principal], Result>,
+  'reprocess_sale_refund' : ActorMethod<[Principal], Result>,
+  'revoke_commit_permission' : ActorMethod<[Principal, Principal], Result>,
+  'sale_accept' : ActorMethod<[Principal], Result>,
+  'sale_confirmed_refund' : ActorMethod<[Principal], Result>,
+  'update_key' : ActorMethod<[string], Result>,
+  'verify_admin' : ActorMethod<[Principal], boolean>,
   'verify_key' : ActorMethod<[string], boolean>,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
