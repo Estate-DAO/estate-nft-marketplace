@@ -32,7 +32,7 @@
 	<Input label="Area (in square ft.)" type="number" bind:value={data.areaSqFoot} />
 	<Input label="Price per square feet" type="number" bind:value={data.priceSqFt} />
 	<Input label="Monthly rent" type="number" bind:value={data.monthlyRent} />
-	<Input label="Affordibility score" type="number" bind:value={data.affordability} />
+	<Input label="Affordability score" type="number" bind:value={data.affordability} />
 	<Select
 		label="Occupied"
 		on:change={({ detail }) => (data.occupied = detail === 'yes')}

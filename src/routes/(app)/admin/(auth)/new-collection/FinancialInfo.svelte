@@ -65,7 +65,7 @@
 	/>
 
 	<Input label="Average 5 Years ROI" type="number" bind:value={data.returns.average5YearROI} />
-	<Input label="Total yeilds" type="number" bind:value={data.returns.yields} />
+	<Input label="Total yields" type="number" bind:value={data.returns.yields} />
 	<Input label="5 Years IRR" type="number" bind:value={data.returns.total5YearsIrr} />
 	<Input
 		label="Projected appreciation"
