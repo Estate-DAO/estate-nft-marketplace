@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-	const tabs: SelectedTab[] = ['basic', 'property', 'market', 'financials', 'images'];
-	export type SelectedTab = 'basic' | 'property' | 'market' | 'financials' | 'documents' | 'images';
+	const tabs: SelectedTab[] = ['basic', 'property', 'market', 'financial', 'images'];
+	export type SelectedTab = 'basic' | 'property' | 'market' | 'financial' | 'documents' | 'images';
 </script>
 
 <script lang="ts">

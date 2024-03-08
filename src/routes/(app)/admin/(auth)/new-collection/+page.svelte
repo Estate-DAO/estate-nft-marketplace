@@ -64,7 +64,7 @@
 					<BasicInfo {loading} bind:data={basicInfoData} />
 				{:else if selectedTab === 'property'}
 					<PropertyInfo {loading} bind:data={propertyInfoData} />
-				{:else if selectedTab === 'financials'}
+				{:else if selectedTab === 'financial'}
 					<FinancialInfo {loading} bind:data={financialInfoData} />
 				{:else if selectedTab === 'market'}
 					<MarketInfo bind:data={marketInfoData} {loading} />
