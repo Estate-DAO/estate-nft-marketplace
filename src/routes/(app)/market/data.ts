@@ -78,6 +78,7 @@ export const staticData = {
 	supply_cap: BigInt(50),
 	price: BigInt(520000),
 	owner: 'owner',
+	primary_sale_happened: false,
 	image_uri: 'https://i.ibb.co/hX6HG15/1.jpg',
 	treasury_account: '3nhwi-bzr6v-ifvra-2wtz7-6cf6r-tgtez-vblz5-zjrmw-bkawc-iyxal-bqe',
 	desc: `Situated in the heart of Puerto Sotogrande, this attractive vacation property is available. Featuring two generously sized bedrooms and baths, with a total area of 1610.40 square meters, including a pleasant terrace of about 15 square meters, this residence effortlessly combines comfort, sophistication, and a touch of Mediterranean charm.

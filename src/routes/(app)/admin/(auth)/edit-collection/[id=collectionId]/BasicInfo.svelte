@@ -34,16 +34,16 @@
 		console.log({ minterCanId });
 		try {
 			const actor = nftMinterCanister(minterCanId);
-			const res = await actor.update_basic_details(
-				[name],
-				[description],
-				[
-					{
-						[status]: null
-					} as Status
-				]
-			);
-			console.log('updated', { res });
+			// const res = await actor.update_basic_details(
+			// 	[name],
+			// 	[description],
+			// 	[
+			// 		{
+			// 			[status]: null
+			// 		} as Status
+			// 	]
+			// );
+			// console.log('updated', { res });
 		} catch (e) {
 			console.error('Error update_basic_details data', e);
 		} finally {

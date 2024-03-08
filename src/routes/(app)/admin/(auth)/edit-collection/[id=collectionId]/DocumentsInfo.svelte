@@ -49,7 +49,7 @@
 
 		console.log({ assetRes });
 
-		const greeting = await actor.collection_image();
+		// const greeting = await actor.collection_image();
 	}
 </script>
 
