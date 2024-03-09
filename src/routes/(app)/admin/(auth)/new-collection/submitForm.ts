@@ -8,11 +8,10 @@ import type { FinancialInfoData } from './FinancialInfo.svelte';
 import type { MarketInfoData } from './MarketInfo.svelte';
 import type { PropertyInfoData } from './PropertyInfo.svelte';
 
-function optional<T>(val: T | undefined | null): [] | [T] {
+export function optional<T>(val: T | undefined | null, string = false): [] | [T] {
 	if (val === undefined || val === null) return [];
 	if (typeof val === 'boolean') return [val];
-	if (typeof val === 'string') return val ? [val] : [];
-	if (isNaN(Number(val))) return [val];
+	if (string) return val ? [val] : [];
 	else return [typeof val === 'bigint' ? (BigInt(val) as T) : (Number(val) as T)];
 }
 
@@ -44,11 +43,11 @@ export function getFormData(
 						annual_popullation_growth: optional(marketInfoData?.annualPopulationGrowth),
 						average_rent: optional(marketInfoData?.averageRent),
 						median_home_sale_price: optional(marketInfoData?.medianHomeSalePrice),
-						country: optional(marketInfoData?.country),
-						city: optional(marketInfoData?.city),
-						state: optional(marketInfoData?.state),
-						description: optional(marketInfoData?.description),
-						coordinates: optional(marketInfoData?.coordinates)
+						country: optional(marketInfoData?.country, true),
+						city: optional(marketInfoData?.city, true),
+						state: optional(marketInfoData?.state, true),
+						description: optional(marketInfoData?.description, true),
+						coordinates: optional(marketInfoData?.coordinates, true)
 					}
 				],
 				property_details: [
