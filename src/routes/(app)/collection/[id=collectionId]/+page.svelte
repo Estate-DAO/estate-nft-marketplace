@@ -18,7 +18,7 @@
 
 	$: metadata = data.metadata;
 	$: waitlist = $page.url.searchParams.has('sample');
-	$: images = (metadata.property_images || []).slice(1, 3).reduce((acc, _c, i, v) => {
+	$: images = (metadata.property_images || []).reduce((acc, _c, i, v) => {
 		if (i % 2 === 0) acc.push(v.slice(i, i + 2));
 		return acc;
 	}, []);
