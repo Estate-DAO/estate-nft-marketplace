@@ -8,7 +8,6 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
-	import { sampleData } from './sampleData';
 
 	type CollectionId = {
 		assetCanId: string;
@@ -55,7 +54,7 @@
 						minterCanId: o.minter_canister.toText()
 					}))
 				);
-				nfts = [...res, ...sampleData];
+				nfts = res.filter((o) => o.id.minterCanId === 'nvot4-uqaaa-aaaap-ab54q-cai');
 			}
 		} catch (error) {
 			console.error(error);

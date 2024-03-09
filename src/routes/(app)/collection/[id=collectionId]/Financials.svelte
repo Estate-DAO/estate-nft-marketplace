@@ -109,29 +109,9 @@
 	</div> -->
 
 	<div class="rounded-2xl shadow-lg py-4 flex flex-col gap-5">
-		<div class="flex items-center justify-between px-6 pb-4 border-black/10 border-b-[1px]">
+		<div class="flex items-center justify-between px-6 border-black/10">
 			<InfoTitle classes="font-bold" title="Monthly Gross Rents" />
 			<div class="font-bold text-lg">{renVal(projectedRent)}</div>
-		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Vacancy Rate" />
-			<div class="text-lg">{renVal(vacancyRate)}</div>
-		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Monthly Utilities" />
-			<div class="text-lg">{renVal(monthlyUtiliiies)}</div>
-		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Property Management Fee" />
-			<div class="text-lg">{renVal(propertyManagementFee)}</div>
-		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="LLC Monthly Franchise Tax" />
-			<div class="text-lg">{renVal(llcMonthlyFranchiseTax)}</div>
-		</div>
-		<div class="flex items-center justify-between px-6">
-			<InfoTitle title="Property Taxes" />
-			<div class="text-lg">{renVal(propertyTaxes)}</div>
 		</div>
 	</div>
 
