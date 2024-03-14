@@ -1,17 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import InvestPopup from '$lib/components/popup/InvestPopup.svelte';
+	import InvestComplete from '$lib/components/popup/InvestComplete.svelte';
 	import WaitlistPopup from '$lib/components/popup/WaitlistPopup.svelte';
 	import type { PageData } from './$types';
 	import InvestInfo from './InvestInfo.svelte';
 	import PropertyHeader from './PropertyHeader.svelte';
-	import { getCollectionId } from './collectionId.context';
 
 	export let data: PageData;
 
 	const PLACEHOLDER_IMG = 'https://i.ibb.co/Kx2VwVc/image.png';
-
-	const { minterCanId } = getCollectionId();
 
 	let showWaitlistPopup = false;
 	let showInvestPopup = false;
@@ -51,19 +48,17 @@
 	</div>
 	<div class="flex flex-col lg:flex-row gap-8 w-full max-w-6xl">
 		<PropertyHeader {metadata} />
-		{#key showInvestPopup}
-			<InvestInfo
-				{metadata}
-				{waitlist}
-				on:click={() => {
-					if (waitlist) {
-						showWaitlistPopup = true;
-					} else {
-						showInvestPopup = true;
-					}
-				}}
-			/>
-		{/key}
+		<InvestInfo
+			{metadata}
+			{waitlist}
+			on:click={() => {
+				if (waitlist) {
+					showWaitlistPopup = true;
+				} else {
+					showInvestPopup = true;
+				}
+			}}
+		/>
 	</div>
 </div>
 
@@ -72,5 +67,5 @@
 {/if}
 
 {#if showInvestPopup}
-	<InvestPopup bind:show={showInvestPopup} {minterCanId} />
+	<InvestComplete bind:show={showInvestPopup} />
 {/if}
