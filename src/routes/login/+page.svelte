@@ -11,6 +11,12 @@
 		import.meta.env.NODE_ENV === 'dev'
 			? `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:${import.meta.env.DFX_PORT}`
 			: 'https://identity.ic0.app/#authorize';
+
+	const DERIVATION_ORIGIN =
+		import.meta.env.NODE_ENV === 'dev'
+			? undefined
+			: 'https://wbdy5-yyaaa-aaaap-abysq-cai.raw.icp0.io';
+
 	let error = '';
 
 	async function handleSuccessfulLogin() {
@@ -39,7 +45,8 @@
 			maxTimeToLive: BigInt(30 * 24 * 60 * 60 * 1000 * 1000 * 1000),
 			onSuccess: () => handleSuccessfulLogin(),
 			onError: (e) => handleError(e),
-			identityProvider: IDENTITY_PROVIDER
+			identityProvider: IDENTITY_PROVIDER,
+			derivationOrigin: DERIVATION_ORIGIN
 		});
 	}
 
