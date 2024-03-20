@@ -40,7 +40,7 @@
 		{/if}
 		<a href="/market">Marketplace</a>
 		{#if !onCollectionPage}
-			<a href="https://www.estatedao.org/">About Us</a>
+			<a href="/about">About Us</a>
 		{/if}
 		<Avatar href="/login">
 			{#if $authState.isLoggedIn}

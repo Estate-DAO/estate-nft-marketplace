@@ -1,5 +1,5 @@
 <script lang="ts">
-	import bg from '$lib/assets/home-bg.webp';
+	import bg from './landing-bg.webp';
 	let loaded = false;
 </script>
 
