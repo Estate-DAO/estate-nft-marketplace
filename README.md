@@ -25,8 +25,8 @@ To get the hash for the `webclient` canister:
 To get the hash for `webclient` canister deployment:
 
 - Go to [Github actions deployment runs](https://github.com/Estate-DAO/estate-nft-marketplace/blob/main/.github/workflows/webclient-deploy.yml)
-- Open the latest succesful run. ([Click to see an example run](https://github.com/Estate-DAO/estate-nft-marketplace/actions/runs/4900015913/jobs/8750374252))
-- Go to `web-client-deploy-dapp` job. ([Click to see an example job](https://github.com/Estate-DAO/estate-nft-marketplace/actions/runs/4900015913/jobs/8750374252))
-- Open `dfx deploy webclient --network ic --no-wallet` step. You should find the `Module hash` in this step. This value should match the value you got locally. ([Click to see an example step](https://github.com/Estate-DAO/estate-nft-marketplace/actions/runs/4900015913/jobs/8750374252#step:8:16))
+- Open the latest succesful run. ([Click to see an example run](https://github.com/Estate-DAO/estate-nft-marketplace/actions/runs/8388592221/))
+- Go to `web-client-deploy-dapp` job. ([Click to see an example job](https://github.com/Estate-DAO/estate-nft-marketplace/actions/runs/8388592221/job/22973101835))
+- Open `dfx deploy webclient --network ic --no-wallet` step. You should find the `Module hash` in this step. This value should match the value you got locally. ([Click to see an example step](https://github.com/Estate-DAO/estate-nft-marketplace/actions/runs/8388592221/job/22973101835#step:9:11))
 
 ---
