@@ -6,15 +6,23 @@
 	import InvestInfo from './InvestInfo.svelte';
 	import PropertyHeader from './PropertyHeader.svelte';
 	import placeholder from '$lib/assets/placeholder.png';
+	import { getCollectionId } from './collectionId.context';
 
 	export let data: PageData;
 
 	let showWaitlistPopup = false;
 	let showInvestPopup = false;
 
+	const { minterCanId } = getCollectionId();
+
+	function getImage(i: number) {
+		return `/property/${minterCanId}/${i + 1}.webp`;
+	}
+
 	$: metadata = data.metadata;
 	$: waitlist = $page.url.searchParams.has('sample');
-	$: images = (metadata.property_images || []).reduce((acc, _c, i, v) => {
+	$: _images = metadata.property_images.map((_, i) => getImage(i));
+	$: images = (_images || []).reduce((acc, _c, i, v) => {
 		if (i % 2 === 0) acc.push(v.slice(i, i + 2));
 		return acc;
 	}, []);
