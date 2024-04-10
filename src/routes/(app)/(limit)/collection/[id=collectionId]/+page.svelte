@@ -5,10 +5,9 @@
 	import type { PageData } from './$types';
 	import InvestInfo from './InvestInfo.svelte';
 	import PropertyHeader from './PropertyHeader.svelte';
+	import placeholder from '$lib/assets/placeholder.png';
 
 	export let data: PageData;
-
-	const PLACEHOLDER_IMG = 'https://i.ibb.co/Kx2VwVc/image.png';
 
 	let showWaitlistPopup = false;
 	let showInvestPopup = false;
@@ -25,23 +24,15 @@
 	<div class="flex flex-col lg:flex-row gap-2 lg:h-[40rem] w-full overflow-hidden overflow-x-auto">
 		<img
 			alt="House"
-			src={metadata.property_images[0] || PLACEHOLDER_IMG}
+			src={metadata.property_images[0] || placeholder}
 			class="rounded-xl lg:h-[37rem] lg:grow object-cover"
 		/>
 
 		{#each images as [im1, im2]}
 			<div class="flex basis-[25%] shrink-0 flex-col gap-2 lg:h-[37rem]">
-				<img
-					alt="House"
-					src={im1 || PLACEHOLDER_IMG}
-					class="rounded-xl h-[18.25rem] object-cover"
-				/>
+				<img alt="House" src={im1 || placeholder} class="rounded-xl h-[18.25rem] object-cover" />
 				{#if im2}
-					<img
-						alt="House"
-						src={im2 || PLACEHOLDER_IMG}
-						class="rounded-xl h-[18.25rem] object-cover"
-					/>
+					<img alt="House" src={im2 || placeholder} class="rounded-xl h-[18.25rem] object-cover" />
 				{/if}
 			</div>
 		{/each}
