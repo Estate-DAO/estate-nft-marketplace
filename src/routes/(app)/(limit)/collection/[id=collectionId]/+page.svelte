@@ -32,7 +32,7 @@
 	<div class="flex flex-col lg:flex-row gap-2 lg:h-[40rem] w-full overflow-hidden overflow-x-auto">
 		<img
 			alt="House"
-			src={metadata.property_images[0] || placeholder}
+			src={getImage(0) || placeholder}
 			class="rounded-xl lg:h-[37rem] lg:grow object-cover"
 		/>
 
