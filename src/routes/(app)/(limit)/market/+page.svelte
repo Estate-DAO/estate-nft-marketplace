@@ -13,11 +13,14 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import type { _SERVICE } from '$lib/declarations/estate_dao_nft/estate_dao_nft.did';
 
 	type CollectionId = {
 		assetCanId: string;
 		minterCanId: string;
 	};
+
+	type CollectionMetadata = Awaited<ReturnType<_SERVICE['get_property_metadata']>>;
 
 	type CollectionDetails = CollectionMetadata & {
 		id: CollectionId;
@@ -30,12 +33,11 @@
 	async function fetchNftDetail(id: CollectionId): Promise<CollectionDetails | undefined> {
 		try {
 			const r = await nftCanister(id.minterCanId).get_property_metadata();
-			if ('Ok' in r)
-				return {
-					...r.Ok,
-					id,
-					sample: false
-				} as CollectionDetails;
+			return {
+				...r,
+				id,
+				sample: false
+			} as CollectionDetails;
 		} catch (e) {
 			return undefined;
 		}
@@ -115,7 +117,7 @@
 				status={Object.keys(nft.status)?.[0] || 'Live'}
 				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
 				title={nft.name}
-				desc={nft.desc}
+				desc={nft.description}
 				sample={nft.sample}
 				imgSrc={`/property/${nft.id.minterCanId}/1.webp`}
 			/>

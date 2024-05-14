@@ -33,8 +33,7 @@
 					propertyInfoData,
 					financialInfoData,
 					marketInfoData,
-					propertyImages,
-					$authState.idString
+					propertyImages
 				)
 			);
 		} finally {
