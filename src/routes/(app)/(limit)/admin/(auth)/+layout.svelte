@@ -3,7 +3,7 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { provisionCanister } from '$lib/backend';
+	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 	import { authState } from '$lib/stores/auth';
 
@@ -17,8 +17,8 @@
 	async function checkPassword() {
 		error = '';
 		try {
-			const actor = provisionCanister();
-			const res = await actor.verify_key($adminStore.key);
+			const actor = provisionCanisterV2();
+			const res = await actor.is_admin();
 			if (res) {
 				loading = false;
 			} else {

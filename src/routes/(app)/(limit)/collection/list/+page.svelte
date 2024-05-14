@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { provisionCanister } from '$lib/backend';
+	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
 
 	async function fetchCollections() {
-		const actor = provisionCanister();
+		const actor = provisionCanisterV2();
 
-		const all = await actor.get_all_minter_canisters();
-		if ('Ok' in all) {
-			console.log({ all: all.Ok.map((o) => o.toText()) });
-		}
+		const all = await actor.list_properties();
+		console.log(all);
 	}
 </script>
 

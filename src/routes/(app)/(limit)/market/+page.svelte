@@ -4,7 +4,12 @@
 	import LocationIcon from '$lib/components/icons/LocationIcon.svelte';
 	import SortIcon from '$lib/components/icons/SortIcon.svelte';
 	import TabsGroup from '$lib/components/tabs-group/TabsGroup.svelte';
-	import { nftMinterCanister, provisionCanister } from '$lib/backend';
+	import {
+		nftCanister,
+		nftMinterCanister,
+		provisionCanister,
+		provisionCanisterV2
+	} from '$lib/backend';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
@@ -24,7 +29,7 @@
 
 	async function fetchNftDetail(id: CollectionId): Promise<CollectionDetails | undefined> {
 		try {
-			const r = await nftMinterCanister(id.minterCanId).get_collection_metadata();
+			const r = await nftCanister(id.minterCanId).get_property_metadata();
 			if ('Ok' in r)
 				return {
 					...r.Ok,
@@ -44,18 +49,16 @@
 
 	async function fetchCollections() {
 		try {
-			const actor = provisionCanister();
-			const all = await actor.get_all_canisters();
+			const actor = provisionCanisterV2();
+			const all = await actor.list_properties();
 
-			if ('Ok' in all) {
-				const res = await populatePosts(
-					all.Ok.map((o) => ({
-						assetCanId: o.asset_canister.toText(),
-						minterCanId: o.minter_canister.toText()
-					}))
-				);
-				nfts = res.filter((o) => o.id.minterCanId === 'nvot4-uqaaa-aaaap-ab54q-cai');
-			}
+			const res = await populatePosts(
+				all.map((o) => ({
+					assetCanId: o.asset_canister.toText(),
+					minterCanId: o.token_canister.toText()
+				}))
+			);
+			nfts = res.filter((o) => o.id.minterCanId === 'nvot4-uqaaa-aaaap-ab54q-cai');
 		} catch (error) {
 			console.error(error);
 		} finally {

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { adminStore } from '$lib/stores/admin';
-	import { provisionCanister } from '$lib/backend';
+	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 	import Input from '$lib/components/input/Input.svelte';
 	import { authState } from '$lib/stores/auth';
@@ -19,8 +19,8 @@
 		loading = true;
 		error = '';
 		try {
-			const actor = provisionCanister();
-			const res = await actor.verify_key(value);
+			const actor = provisionCanisterV2();
+			const res = await actor.is_admin();
 			if (res) {
 				adminStore.set({
 					isLoggedIn: true,

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { provisionCanister } from '$lib/backend';
+	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
 	import { onMount } from 'svelte';
 	import ListItem, { type FormMetadataWithId } from './ListItem.svelte';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
@@ -9,9 +9,9 @@
 
 	async function fetchList() {
 		loading = true;
-		const actor = provisionCanister();
+		const actor = provisionCanisterV2();
 
-		const res = await actor.get_form_list();
+		const res = await actor.get_pending_requests();
 		forms = res.map(([id, data]) => ({ id, ...data }));
 
 		loading = false;

@@ -5,7 +5,7 @@
 	import PropertyInfo, { type PropertyInfoData } from './PropertyInfo.svelte';
 	import MarketInfo, { type MarketInfoData } from './MarketInfo.svelte';
 	import FinancialInfo, { type FinancialInfoData } from './FinancialInfo.svelte';
-	import { provisionCanister } from '$lib/backend';
+	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
 	import { slide } from 'svelte/transition';
 	import { authState } from '$lib/stores/auth';
 	import { replacer } from '$lib/utils/json';
@@ -26,8 +26,8 @@
 		if (loading) return;
 		try {
 			loading = true;
-			const actor = provisionCanister();
-			res = await actor.init_form_metadata(
+			const actor = provisionCanisterV2();
+			res = await actor.add_property_request(
 				getFormData(
 					basicInfoData,
 					propertyInfoData,
