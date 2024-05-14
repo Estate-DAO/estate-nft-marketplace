@@ -3,31 +3,6 @@ import type { ActorMethod } from '@dfinity/agent';
 import type { IDL } from '@dfinity/candid';
 
 export interface _SERVICE {
-  'burn' : ActorMethod<
-    [Array<{ 'token_id' : bigint }>],
-    Array<
-      [] | [
-        { 'Ok' : bigint } |
-          {
-            'Err' : {
-                'GenericError' : { 'message' : string, 'error_code' : bigint }
-              } |
-              { 'Duplicate' : { 'duplicate_of' : bigint } } |
-              { 'NonExistingTokenId' : null } |
-              { 'Unauthorized' : null } |
-              { 'CreatedInFuture' : { 'ledger_time' : bigint } } |
-              { 'InvalidRecipient' : null } |
-              {
-                'GenericBatchError' : {
-                  'message' : string,
-                  'error_code' : bigint,
-                }
-              } |
-              { 'TooOld' : null }
-          }
-      ]
-    >
-  >,
   'change_ownership' : ActorMethod<
     [Principal],
     { 'Ok' : bigint } |
@@ -40,11 +15,14 @@ export interface _SERVICE {
       'monthly_utilities' : number,
       'total_monthly_cost' : number,
       'average_5_year_roi' : number,
+      'token' : Principal,
       'documents' : Array<[string, string]>,
       'yields' : number,
+      'supply_cap' : bigint,
       'llc_monthly_franchise_tax' : number,
       'country' : string,
       'occupied' : boolean,
+      'annual_population_growth' : number,
       'monthly_cash_flow' : number,
       'crime_score' : number,
       'monthly_rent' : number,
@@ -67,13 +45,14 @@ export interface _SERVICE {
       'state' : string,
       'property_taxes' : number,
       'price_per_sq_foot' : number,
-      'property_managment_fee' : number,
+      'property_management_fee' : number,
       'market_description' : string,
       'cap_rate' : number,
       'baths' : number,
       'platform_closing_fee' : number,
       'property_owner' : Principal,
       'school_score' : number,
+      'price' : bigint,
       'last_renovated' : number,
       'projected_rent' : number,
       'average_rent' : number,
@@ -82,7 +61,7 @@ export interface _SERVICE {
       'total_supply' : bigint,
       'symbol' : string,
       'coordinates' : string,
-      'annual_popullation_growth' : number,
+      'treasury' : Principal,
     }
   >,
   'icrc61_supported_standards' : ActorMethod<
@@ -233,29 +212,14 @@ export interface _SERVICE {
   >,
   'icrc7_tx_window' : ActorMethod<[], [] | [bigint]>,
   'mint' : ActorMethod<
-    [Array<{ 'subaccount' : [] | [Uint8Array | number[]] }>],
-    Array<
-      [] | [
-        { 'Ok' : bigint } |
-          {
-            'Err' : {
-                'GenericError' : { 'message' : string, 'error_code' : bigint }
-              } |
-              { 'Duplicate' : { 'duplicate_of' : bigint } } |
-              { 'NonExistingTokenId' : null } |
-              { 'Unauthorized' : null } |
-              { 'CreatedInFuture' : { 'ledger_time' : bigint } } |
-              { 'InvalidRecipient' : null } |
-              {
-                'GenericBatchError' : {
-                  'message' : string,
-                  'error_code' : bigint,
-                }
-              } |
-              { 'TooOld' : null }
-          }
-      ]
-    >
+    [{ 'subaccount' : [] | [Uint8Array | number[]] }],
+    { 'Ok' : bigint } |
+      { 'Err' : string }
+  >,
+  'refund' : ActorMethod<
+    [{ 'subaccount' : [] | [Uint8Array | number[]] }],
+    { 'Ok' : boolean } |
+      { 'Err' : string }
   >,
   'update_metadata' : ActorMethod<
     [
@@ -264,11 +228,14 @@ export interface _SERVICE {
         'monthly_utilities' : [] | [number],
         'total_monthly_cost' : [] | [number],
         'average_5_year_roi' : [] | [number],
+        'token' : [] | [Principal],
         'documents' : [] | [Array<[string, string]>],
         'yields' : [] | [number],
+        'supply_cap' : [] | [bigint],
         'llc_monthly_franchise_tax' : [] | [number],
         'country' : [] | [string],
         'occupied' : [] | [boolean],
+        'annual_population_growth' : [] | [number],
         'monthly_cash_flow' : [] | [number],
         'crime_score' : [] | [number],
         'monthly_rent' : [] | [number],
@@ -291,12 +258,13 @@ export interface _SERVICE {
         'state' : [] | [string],
         'property_taxes' : [] | [number],
         'price_per_sq_foot' : [] | [number],
-        'property_managment_fee' : [] | [number],
+        'property_management_fee' : [] | [number],
         'market_description' : [] | [string],
         'cap_rate' : [] | [number],
         'baths' : [] | [number],
         'platform_closing_fee' : [] | [number],
         'school_score' : [] | [number],
+        'price' : [] | [bigint],
         'last_renovated' : [] | [number],
         'projected_rent' : [] | [number],
         'average_rent' : [] | [number],
@@ -304,7 +272,7 @@ export interface _SERVICE {
         'median_home_sale_price' : [] | [number],
         'symbol' : [] | [string],
         'coordinates' : [] | [string],
-        'annual_popullation_growth' : [] | [number],
+        'treasury' : [] | [Principal],
       },
     ],
     { 'Ok' : bigint } |

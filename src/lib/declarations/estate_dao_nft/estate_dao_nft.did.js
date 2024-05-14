@@ -1,34 +1,5 @@
 export const idlFactory = ({ IDL }) => {
   return IDL.Service({
-    'burn' : IDL.Func(
-        [IDL.Vec(IDL.Record({ 'token_id' : IDL.Nat }))],
-        [
-          IDL.Vec(
-            IDL.Opt(
-              IDL.Variant({
-                'Ok' : IDL.Nat,
-                'Err' : IDL.Variant({
-                  'GenericError' : IDL.Record({
-                    'message' : IDL.Text,
-                    'error_code' : IDL.Nat,
-                  }),
-                  'Duplicate' : IDL.Record({ 'duplicate_of' : IDL.Nat }),
-                  'NonExistingTokenId' : IDL.Null,
-                  'Unauthorized' : IDL.Null,
-                  'CreatedInFuture' : IDL.Record({ 'ledger_time' : IDL.Nat64 }),
-                  'InvalidRecipient' : IDL.Null,
-                  'GenericBatchError' : IDL.Record({
-                    'message' : IDL.Text,
-                    'error_code' : IDL.Nat,
-                  }),
-                  'TooOld' : IDL.Null,
-                }),
-              })
-            )
-          ),
-        ],
-        [],
-      ),
     'change_ownership' : IDL.Func(
         [IDL.Principal],
         [IDL.Variant({ 'Ok' : IDL.Nat, 'Err' : IDL.Text })],
@@ -42,11 +13,14 @@ export const idlFactory = ({ IDL }) => {
             'monthly_utilities' : IDL.Float32,
             'total_monthly_cost' : IDL.Float32,
             'average_5_year_roi' : IDL.Float32,
+            'token' : IDL.Principal,
             'documents' : IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text)),
             'yields' : IDL.Float32,
+            'supply_cap' : IDL.Nat,
             'llc_monthly_franchise_tax' : IDL.Float32,
             'country' : IDL.Text,
             'occupied' : IDL.Bool,
+            'annual_population_growth' : IDL.Nat32,
             'monthly_cash_flow' : IDL.Float32,
             'crime_score' : IDL.Nat32,
             'monthly_rent' : IDL.Float32,
@@ -69,13 +43,14 @@ export const idlFactory = ({ IDL }) => {
             'state' : IDL.Text,
             'property_taxes' : IDL.Float32,
             'price_per_sq_foot' : IDL.Float32,
-            'property_managment_fee' : IDL.Float32,
+            'property_management_fee' : IDL.Float32,
             'market_description' : IDL.Text,
             'cap_rate' : IDL.Float32,
             'baths' : IDL.Nat32,
             'platform_closing_fee' : IDL.Float32,
             'property_owner' : IDL.Principal,
             'school_score' : IDL.Nat32,
+            'price' : IDL.Nat,
             'last_renovated' : IDL.Float32,
             'projected_rent' : IDL.Float32,
             'average_rent' : IDL.Nat32,
@@ -84,7 +59,7 @@ export const idlFactory = ({ IDL }) => {
             'total_supply' : IDL.Nat,
             'symbol' : IDL.Text,
             'coordinates' : IDL.Text,
-            'annual_popullation_growth' : IDL.Nat32,
+            'treasury' : IDL.Principal,
           }),
         ],
         ['query'],
@@ -278,32 +253,13 @@ export const idlFactory = ({ IDL }) => {
       ),
     'icrc7_tx_window' : IDL.Func([], [IDL.Opt(IDL.Nat)], ['query']),
     'mint' : IDL.Func(
-        [IDL.Vec(IDL.Record({ 'subaccount' : IDL.Opt(IDL.Vec(IDL.Nat8)) }))],
-        [
-          IDL.Vec(
-            IDL.Opt(
-              IDL.Variant({
-                'Ok' : IDL.Nat,
-                'Err' : IDL.Variant({
-                  'GenericError' : IDL.Record({
-                    'message' : IDL.Text,
-                    'error_code' : IDL.Nat,
-                  }),
-                  'Duplicate' : IDL.Record({ 'duplicate_of' : IDL.Nat }),
-                  'NonExistingTokenId' : IDL.Null,
-                  'Unauthorized' : IDL.Null,
-                  'CreatedInFuture' : IDL.Record({ 'ledger_time' : IDL.Nat64 }),
-                  'InvalidRecipient' : IDL.Null,
-                  'GenericBatchError' : IDL.Record({
-                    'message' : IDL.Text,
-                    'error_code' : IDL.Nat,
-                  }),
-                  'TooOld' : IDL.Null,
-                }),
-              })
-            )
-          ),
-        ],
+        [IDL.Record({ 'subaccount' : IDL.Opt(IDL.Vec(IDL.Nat8)) })],
+        [IDL.Variant({ 'Ok' : IDL.Nat, 'Err' : IDL.Text })],
+        [],
+      ),
+    'refund' : IDL.Func(
+        [IDL.Record({ 'subaccount' : IDL.Opt(IDL.Vec(IDL.Nat8)) })],
+        [IDL.Variant({ 'Ok' : IDL.Bool, 'Err' : IDL.Text })],
         [],
       ),
     'update_metadata' : IDL.Func(
@@ -313,11 +269,14 @@ export const idlFactory = ({ IDL }) => {
             'monthly_utilities' : IDL.Opt(IDL.Float32),
             'total_monthly_cost' : IDL.Opt(IDL.Float32),
             'average_5_year_roi' : IDL.Opt(IDL.Float32),
+            'token' : IDL.Opt(IDL.Principal),
             'documents' : IDL.Opt(IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text))),
             'yields' : IDL.Opt(IDL.Float32),
+            'supply_cap' : IDL.Opt(IDL.Nat),
             'llc_monthly_franchise_tax' : IDL.Opt(IDL.Float32),
             'country' : IDL.Opt(IDL.Text),
             'occupied' : IDL.Opt(IDL.Bool),
+            'annual_population_growth' : IDL.Opt(IDL.Nat32),
             'monthly_cash_flow' : IDL.Opt(IDL.Float32),
             'crime_score' : IDL.Opt(IDL.Nat32),
             'monthly_rent' : IDL.Opt(IDL.Float32),
@@ -340,12 +299,13 @@ export const idlFactory = ({ IDL }) => {
             'state' : IDL.Opt(IDL.Text),
             'property_taxes' : IDL.Opt(IDL.Float32),
             'price_per_sq_foot' : IDL.Opt(IDL.Float32),
-            'property_managment_fee' : IDL.Opt(IDL.Float32),
+            'property_management_fee' : IDL.Opt(IDL.Float32),
             'market_description' : IDL.Opt(IDL.Text),
             'cap_rate' : IDL.Opt(IDL.Float32),
             'baths' : IDL.Opt(IDL.Nat32),
             'platform_closing_fee' : IDL.Opt(IDL.Float32),
             'school_score' : IDL.Opt(IDL.Nat32),
+            'price' : IDL.Opt(IDL.Nat),
             'last_renovated' : IDL.Opt(IDL.Float32),
             'projected_rent' : IDL.Opt(IDL.Float32),
             'average_rent' : IDL.Opt(IDL.Nat32),
@@ -353,7 +313,7 @@ export const idlFactory = ({ IDL }) => {
             'median_home_sale_price' : IDL.Opt(IDL.Nat32),
             'symbol' : IDL.Opt(IDL.Text),
             'coordinates' : IDL.Opt(IDL.Text),
-            'annual_popullation_growth' : IDL.Opt(IDL.Nat32),
+            'treasury' : IDL.Opt(IDL.Principal),
           }),
         ],
         [IDL.Variant({ 'Ok' : IDL.Nat, 'Err' : IDL.Text })],
@@ -368,11 +328,14 @@ export const init = ({ IDL }) => {
       'monthly_utilities' : IDL.Float32,
       'total_monthly_cost' : IDL.Float32,
       'average_5_year_roi' : IDL.Float32,
+      'token' : IDL.Principal,
       'documents' : IDL.Vec(IDL.Tuple(IDL.Text, IDL.Text)),
       'yields' : IDL.Float32,
+      'supply_cap' : IDL.Nat,
       'llc_monthly_franchise_tax' : IDL.Float32,
       'country' : IDL.Text,
       'occupied' : IDL.Bool,
+      'annual_population_growth' : IDL.Nat32,
       'monthly_cash_flow' : IDL.Float32,
       'crime_score' : IDL.Nat32,
       'monthly_rent' : IDL.Float32,
@@ -395,13 +358,14 @@ export const init = ({ IDL }) => {
       'state' : IDL.Text,
       'property_taxes' : IDL.Float32,
       'price_per_sq_foot' : IDL.Float32,
-      'property_managment_fee' : IDL.Float32,
+      'property_management_fee' : IDL.Float32,
       'market_description' : IDL.Text,
       'cap_rate' : IDL.Float32,
       'baths' : IDL.Nat32,
       'platform_closing_fee' : IDL.Float32,
       'property_owner' : IDL.Principal,
       'school_score' : IDL.Nat32,
+      'price' : IDL.Nat,
       'last_renovated' : IDL.Float32,
       'projected_rent' : IDL.Float32,
       'average_rent' : IDL.Nat32,
@@ -409,7 +373,7 @@ export const init = ({ IDL }) => {
       'median_home_sale_price' : IDL.Nat32,
       'symbol' : IDL.Text,
       'coordinates' : IDL.Text,
-      'annual_popullation_growth' : IDL.Nat32,
+      'treasury' : IDL.Principal,
     }),
   ];
 };
