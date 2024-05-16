@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
-	import { adminStore } from '$lib/stores/admin';
+	import { authState } from '$lib/stores/auth';
 	import type { CollectionMetadata } from '$lib/types/nftCanister';
 	import Actions from './Actions.svelte';
 	import Details from './Details.svelte';
@@ -34,7 +34,7 @@
 				Live
 			</div>
 		</div>
-		{#if $adminStore.isLoggedIn}
+		{#if $authState.isLoggedIn && metadata.property_owner.toText() === $authState.idString}
 			<Button secondary href="/admin/edit-collection/{id}">Edit</Button>
 		{:else}
 			<Actions title={metadata.name} />
