@@ -50,52 +50,104 @@
 		bind:value={data.investment.platformClosingFee}
 	/>
 	<Input
+		disabled={loading}
 		label="Initial maintenance reserve"
 		type="number"
 		bind:value={data.investment.initialMaintenanceReserve}
 	/>
 	<Input
+		disabled={loading}
 		label="Underlying asset price"
 		type="number"
 		bind:value={data.investment.underlyingAssetPrice}
 	/>
 	<Input
+		disabled={loading}
 		label="Minimum investment required"
 		type="number"
 		bind:value={data.investment.minimumInvestment}
 	/>
 
-	<Input label="Average 5 Years ROI" type="number" bind:value={data.returns.average5YearROI} />
-	<Input label="Total yields" type="number" bind:value={data.returns.yields} />
-	<Input label="5 Years IRR" type="number" bind:value={data.returns.total5YearsIrr} />
 	<Input
+		disabled={loading}
+		label="Average 5 Years ROI"
+		type="number"
+		bind:value={data.returns.average5YearROI}
+	/>
+	<Input disabled={loading} label="Total yields" type="number" bind:value={data.returns.yields} />
+	<Input
+		disabled={loading}
+		label="5 Years IRR"
+		type="number"
+		bind:value={data.returns.total5YearsIrr}
+	/>
+	<Input
+		disabled={loading}
 		label="Projected appreciation"
 		type="number"
 		bind:value={data.returns.projectedAppreciation}
 	/>
-	<Input label="Cap rate" type="number" bind:value={data.returns.capRate} />
+	<Input disabled={loading} label="Cap rate" type="number" bind:value={data.returns.capRate} />
 
-	<Input label="Projected rent" type="number" bind:value={data.rents.projectedRent} />
 	<Input
+		disabled={loading}
+		label="Projected rent"
+		type="number"
+		bind:value={data.rents.projectedRent}
+	/>
+	<Input
+		disabled={loading}
 		label="Monthly franchise tax"
 		type="number"
 		bind:value={data.rents.llcMonthlyFranchiseTax}
 	/>
-	<Input label="Vacancy rate" type="number" bind:value={data.rents.vacancyRate} />
-	<Input label="Property taxes" type="number" bind:value={data.rents.propertyTaxes} />
 	<Input
+		disabled={loading}
+		label="Vacancy rate"
+		type="number"
+		bind:value={data.rents.vacancyRate}
+	/>
+	<Input
+		disabled={loading}
+		label="Property taxes"
+		type="number"
+		bind:value={data.rents.propertyTaxes}
+	/>
+	<Input
+		disabled={loading}
 		label="Property management fee"
 		type="number"
 		bind:value={data.rents.propertyManagementFee}
 	/>
-	<Input label="Monthly utilities" type="number" bind:value={data.rents.monthlyUtilities} />
-
-	<Input label="Property insurance" type="number" bind:value={data.overall.propertyInsurance} />
-	<Input label="Monthly cash flow" type="number" bind:value={data.overall.monthlyCashFlow} />
 	<Input
+		disabled={loading}
+		label="Monthly utilities"
+		type="number"
+		bind:value={data.rents.monthlyUtilities}
+	/>
+
+	<Input
+		disabled={loading}
+		label="Property insurance"
+		type="number"
+		bind:value={data.overall.propertyInsurance}
+	/>
+	<Input
+		disabled={loading}
+		label="Monthly cash flow"
+		type="number"
+		bind:value={data.overall.monthlyCashFlow}
+	/>
+	<Input
+		disabled={loading}
 		label="Expense to income ratio"
 		type="number"
 		bind:value={data.overall.expenseToIncomeRatio}
 	/>
-	<Input label="Total monthly costs" type="number" bind:value={data.overall.totalMonthlyCost} />
+	<Input
+		disabled={loading}
+		label="Total monthly costs"
+		type="number"
+		bind:value={data.overall.totalMonthlyCost}
+	/>
 </div>

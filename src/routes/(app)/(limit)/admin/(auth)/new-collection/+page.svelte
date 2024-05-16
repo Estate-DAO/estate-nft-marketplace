@@ -31,13 +31,7 @@
 			loading = true;
 			const actor = provisionCanisterV2();
 			res = await actor.add_property_request(
-				getNewPropertyFormData(
-					basicInfoData,
-					propertyInfoData,
-					financialInfoData,
-					marketInfoData,
-					propertyImages
-				)
+				getNewPropertyFormData(basicInfoData, propertyInfoData, financialInfoData, marketInfoData)
 			);
 		} finally {
 			loading = false;

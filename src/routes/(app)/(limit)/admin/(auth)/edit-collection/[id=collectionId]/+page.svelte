@@ -43,16 +43,6 @@
 		try {
 			loading = true;
 			const actor = nftCanister(minterCanId);
-			console.log(
-				getUpdatePropertyFormData(
-					basicInfoData,
-					propertyInfoData,
-					financialInfoData,
-					marketInfoData,
-					Principal.from(assetCanId),
-					collectionMetadata
-				)[0]
-			);
 			await actor.update_metadata(
 				getUpdatePropertyFormData(
 					basicInfoData,

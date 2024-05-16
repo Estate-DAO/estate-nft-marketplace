@@ -29,11 +29,21 @@
 		type="number"
 		bind:value={data.medianHomeSalePrice}
 	/>
-	<Input label="Average rent" type="number" bind:value={data.averageRent} />
-	<Input label="Annual Population Growth" type="number" bind:value={data.annualPopulationGrowth} />
-	<Input label="Country" type="text" bind:value={data.country} />
-	<Input label="State" type="text" bind:value={data.state} />
-	<Input label="City" type="text" bind:value={data.city} />
-	<Input label="Coordinates" type="text" bind:value={data.coordinates} />
-	<Textarea label="Area/Market description" rows={5} bind:value={data.description} />
+	<Input disabled={loading} label="Average rent" type="number" bind:value={data.averageRent} />
+	<Input
+		disabled={loading}
+		label="Annual Population Growth"
+		type="number"
+		bind:value={data.annualPopulationGrowth}
+	/>
+	<Input disabled={loading} label="Country" type="text" bind:value={data.country} />
+	<Input disabled={loading} label="State" type="text" bind:value={data.state} />
+	<Input disabled={loading} label="City" type="text" bind:value={data.city} />
+	<Input disabled={loading} label="Coordinates" type="text" bind:value={data.coordinates} />
+	<Textarea
+		disabled={loading}
+		label="Area/Market description"
+		rows={5}
+		bind:value={data.description}
+	/>
 </div>

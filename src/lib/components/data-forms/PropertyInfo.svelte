@@ -28,12 +28,28 @@
 
 <div class="flex flex-col gap-4">
 	<Input disabled={loading} label="Number of Bedrooms" type="number" bind:value={data.beds} />
-	<Input label="Number of Bathrooms" type="number" bind:value={data.baths} />
-	<Input label="Area (in square ft.)" type="number" bind:value={data.areaSqFoot} />
-	<Input label="Price per square feet" type="number" bind:value={data.priceSqFt} />
-	<Input label="Monthly rent" type="number" bind:value={data.monthlyRent} />
-	<Input label="Affordability score" type="number" bind:value={data.affordability} />
+	<Input disabled={loading} label="Number of Bathrooms" type="number" bind:value={data.baths} />
+	<Input
+		disabled={loading}
+		label="Area (in square ft.)"
+		type="number"
+		bind:value={data.areaSqFoot}
+	/>
+	<Input
+		disabled={loading}
+		label="Price per square feet"
+		type="number"
+		bind:value={data.priceSqFt}
+	/>
+	<Input disabled={loading} label="Monthly rent" type="number" bind:value={data.monthlyRent} />
+	<Input
+		disabled={loading}
+		label="Affordability score"
+		type="number"
+		bind:value={data.affordability}
+	/>
 	<Select
+		disabled={loading}
 		label="Occupied"
 		on:change={({ detail }) => (data.occupied = detail === 'yes')}
 		value={data.occupied ? 'yes' : 'no'}
@@ -42,9 +58,10 @@
 			{ value: 'no', label: 'No' }
 		]}
 	/>
-	<Input label="Year Built" type="number" bind:value={data.yearBuilt} />
-	<Input label="Last renovated" type="number" bind:value={data.lastRenovated} />
+	<Input disabled={loading} label="Year Built" type="number" bind:value={data.yearBuilt} />
+	<Input disabled={loading} label="Last renovated" type="number" bind:value={data.lastRenovated} />
 	<Select
+		disabled={loading}
 		label="Flood zone"
 		on:change={({ detail }) => (data.floodZone = detail === 'yes')}
 		value={data.floodZone ? 'yes' : 'no'}
@@ -53,6 +70,6 @@
 			{ value: 'no', label: 'No' }
 		]}
 	/>
-	<Input label="School score" type="number" bind:value={data.schoolScore} />
-	<Input label="Crime score" type="number" bind:value={data.crimeScore} />
+	<Input disabled={loading} label="School score" type="number" bind:value={data.schoolScore} />
+	<Input disabled={loading} label="Crime score" type="number" bind:value={data.crimeScore} />
 </div>

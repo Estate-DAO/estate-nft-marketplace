@@ -30,7 +30,6 @@
 			formData = res[0];
 		}
 		pageLoading = false;
-		console.log(formData);
 	}
 
 	async function approve(approve: boolean) {
