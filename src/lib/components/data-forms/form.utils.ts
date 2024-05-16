@@ -1,6 +1,6 @@
 import type { _SERVICE as PROVISION_SERVICE } from '$lib/declarations/provision/provision.did';
 import type { _SERVICE as NFT_SERVICE } from '$lib/declarations/estate_dao_nft/estate_dao_nft.did';
-import { toE8s } from '$lib/utils/icp';
+import { fromE8s, toE8s } from '$lib/utils/icp';
 import { Principal } from '@dfinity/principal';
 import type { BasicInfoData } from './BasicInfo.svelte';
 import type { FinancialInfoData } from './FinancialInfo.svelte';
@@ -141,7 +141,7 @@ export function initUpdateFormData(data: CollectionMetadata) {
 			name: data.name,
 			description: data.description,
 			logo: data.logo,
-			price: Number(data.price),
+			price: Number(fromE8s(data.price)),
 			supplyCap: Number(data.supply_cap),
 			status: 'Live'
 		} as BasicInfoData,
