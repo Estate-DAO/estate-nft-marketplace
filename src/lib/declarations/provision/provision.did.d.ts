@@ -196,6 +196,16 @@ export interface _SERVICE {
     { 'Ok' : boolean } |
       { 'Err' : string }
   >,
+  'upgrade_token_canister' : ActorMethod<
+    [Principal],
+    { 'Ok' : boolean } |
+      { 'Err' : string }
+  >,
+  'upgrade_token_canisters' : ActorMethod<
+    [],
+    { 'Ok' : boolean } |
+      { 'Err' : string }
+  >,
 }
 export declare const idlFactory: IDL.InterfaceFactory;
 export declare const init: ({ IDL }: { IDL: IDL }) => IDL.Type[];

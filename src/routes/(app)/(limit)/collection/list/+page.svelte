@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
+	import { provisionCanisterV2 } from '$lib/backend';
 
 	async function fetchCollections() {
 		const actor = provisionCanisterV2();

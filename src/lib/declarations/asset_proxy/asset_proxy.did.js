@@ -47,4 +47,6 @@ export const idlFactory = ({ IDL }) => {
       ),
   });
 };
-export const init = ({ IDL }) => { return []; };
+export const init = ({ IDL }) => {
+  return [IDL.Opt(IDL.Variant({ 'Upgrade' : IDL.Null, 'Init' : IDL.Null }))];
+};

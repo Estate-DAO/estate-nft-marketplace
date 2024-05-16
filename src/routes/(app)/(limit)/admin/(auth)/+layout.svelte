@@ -3,9 +3,10 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
+	import { provisionCanisterV2 } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
 	import { authState } from '$lib/stores/auth';
+	import { Principal } from '@dfinity/principal';
 
 	let loading = true;
 	let error = '';
@@ -14,11 +15,11 @@
 		gotoAuthPage();
 	}
 
-	async function checkPassword() {
+	async function checkAuthStatus() {
 		error = '';
 		try {
 			const actor = provisionCanisterV2();
-			const res = await actor.is_admin();
+			const res = await actor.is_admin([Principal.from($authState.idString)]);
 			if (res) {
 				loading = false;
 			} else {
@@ -38,13 +39,13 @@
 		goto('/admin/auth');
 	}
 
-	onMount(checkPassword);
+	onMount(checkAuthStatus);
 </script>
 
 {#if error}
 	<div class="flex w-full flex-col items-center justify-center pt-8">
 		<div class="text-sm font-medium">{error}</div>
-		<Button on:click={checkPassword}>Try again</Button>
+		<Button on:click={checkAuthStatus}>Try again</Button>
 	</div>
 {:else if loading}
 	<div class="flex w-full items-center justify-center pt-8">

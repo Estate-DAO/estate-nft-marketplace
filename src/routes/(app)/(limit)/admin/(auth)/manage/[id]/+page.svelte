@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
+	import { provisionCanisterV2 } from '$lib/backend';
 	import type { FormMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { page } from '$app/stores';

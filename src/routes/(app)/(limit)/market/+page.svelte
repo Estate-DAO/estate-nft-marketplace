@@ -4,12 +4,7 @@
 	import LocationIcon from '$lib/components/icons/LocationIcon.svelte';
 	import SortIcon from '$lib/components/icons/SortIcon.svelte';
 	import TabsGroup from '$lib/components/tabs-group/TabsGroup.svelte';
-	import {
-		nftCanister,
-		nftMinterCanister,
-		provisionCanister,
-		provisionCanisterV2
-	} from '$lib/backend';
+	import { nftCanister, provisionCanisterV2 } from '$lib/backend';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
@@ -114,7 +109,7 @@
 	<div class="flex py-12 items-center gap-8 justify-normal mx-auto flex-wrap">
 		{#each nfts as nft}
 			<Card
-				status={Object.keys(nft.status)?.[0] || 'Live'}
+				status="Live"
 				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
 				title={nft.name}
 				desc={nft.description}

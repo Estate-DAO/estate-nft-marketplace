@@ -5,7 +5,7 @@
 	import PropertyInfo, { type PropertyInfoData } from './PropertyInfo.svelte';
 	import MarketInfo, { type MarketInfoData } from './MarketInfo.svelte';
 	import FinancialInfo, { type FinancialInfoData } from './FinancialInfo.svelte';
-	import { provisionCanister, provisionCanisterV2 } from '$lib/backend';
+	import { provisionCanisterV2 } from '$lib/backend';
 	import { slide } from 'svelte/transition';
 	import { authState } from '$lib/stores/auth';
 	import { replacer } from '$lib/utils/json';

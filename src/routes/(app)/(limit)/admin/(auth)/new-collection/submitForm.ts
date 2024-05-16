@@ -28,11 +28,9 @@ export function getFormData(
 		token: Principal.from(''),
 		symbol: 'ICP',
 		treasury: Principal.from(''),
-
+		images: [],
 		documents: [],
-
 		annual_population_growth: marketInfoData?.annualPopulationGrowth,
-
 		average_rent: marketInfoData?.averageRent || 0,
 		median_home_sale_price: marketInfoData?.medianHomeSalePrice,
 		country: marketInfoData?.country,
@@ -40,7 +38,6 @@ export function getFormData(
 		state: marketInfoData?.state,
 		market_description: marketInfoData?.description,
 		coordinates: marketInfoData?.coordinates,
-
 		affordability: propertyInfoData?.affordability,
 		baths: propertyInfoData?.baths,
 		beds: propertyInfoData?.beds,
