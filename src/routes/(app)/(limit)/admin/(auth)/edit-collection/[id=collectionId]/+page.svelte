@@ -21,6 +21,8 @@
 		initUpdateFormData
 	} from '$lib/components/data-forms/form.utils';
 	import { Principal } from '@dfinity/principal';
+	import { authState } from '$lib/stores/auth';
+	import Button from '$lib/components/button/Button.svelte';
 
 	export let data: PageData;
 
@@ -29,6 +31,7 @@
 
 	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
+	let unauthorized = false;
 	let collectionMetadata: CollectionMetadata;
 
 	let basicInfoData: BasicInfoData;
@@ -61,8 +64,12 @@
 	async function fetchDetails() {
 		loading = true;
 		try {
+			if (!$authState.isLoggedIn) return (unauthorized = true);
 			const actor = nftCanister(minterCanId);
 			collectionMetadata = await actor.get_property_metadata();
+			if (collectionMetadata.property_owner.toText() !== $authState.idString) {
+				return (unauthorized = true);
+			}
 			const data = initUpdateFormData(collectionMetadata);
 			basicInfoData = data.basicInfoData;
 			propertyInfoData = data.propertyInfoData;
@@ -79,34 +86,39 @@
 </script>
 
 <div class="flex flex-col gap-12">
-	<FormHeader
-		title="Edit collection"
-		bind:loading
-		on:cancel={() => history.back()}
-		on:save={() => editData()}
-		bind:selected={selectedTab}
-	>
-		<svelte:fragment>
-			{#if collectionMetadata}
-				{#if selectedTab === 'basic'}
-					<BasicInfo {loading} bind:data={basicInfoData} />
-				{:else if selectedTab === 'property'}
-					<PropertyInfo {loading} bind:data={propertyInfoData} />
-				{:else if selectedTab === 'financial'}
-					<FinancialInfo {loading} bind:data={financialInfoData} />
-				{:else if selectedTab === 'market'}
-					<MarketInfo bind:data={marketInfoData} {loading} />
-					<!-- {:else if selectedTab === 'documents'}
+	{#if unauthorized}
+		<div class="text-red-500">Unauthorized</div>
+		<Button href="/collection/{minterCanId}@{assetCanId}">Go back</Button>
+	{:else}
+		<FormHeader
+			title="Edit collection"
+			bind:loading
+			on:cancel={() => history.back()}
+			on:save={() => editData()}
+			bind:selected={selectedTab}
+		>
+			<svelte:fragment>
+				{#if collectionMetadata}
+					{#if selectedTab === 'basic'}
+						<BasicInfo {loading} bind:data={basicInfoData} />
+					{:else if selectedTab === 'property'}
+						<PropertyInfo {loading} bind:data={propertyInfoData} />
+					{:else if selectedTab === 'financial'}
+						<FinancialInfo {loading} bind:data={financialInfoData} />
+					{:else if selectedTab === 'market'}
+						<MarketInfo bind:data={marketInfoData} {loading} />
+						<!-- {:else if selectedTab === 'documents'}
 					<DocumentsInfo bind:data={collectionMetadata} {loading} /> -->
-				{:else if selectedTab === 'images'}
-					<ImagesInfo bind:images={propertyImages} />
+					{:else if selectedTab === 'images'}
+						<ImagesInfo bind:images={propertyImages} />
+					{/if}
 				{/if}
-			{/if}
-		</svelte:fragment>
-	</FormHeader>
+			</svelte:fragment>
+		</FormHeader>
+	{/if}
 </div>
 
-{#if collectionMetadata}
+{#if !unauthorized && collectionMetadata}
 	<pre transition:slide class="text-sm p-4 mt-8 bg-gray-100 rounded-xl">
     {JSON.stringify(collectionMetadata, replacer, 4)}
   </pre>
