@@ -13,7 +13,7 @@
 			: 'https://identity.ic0.app/#authorize';
 
 	const DERIVATION_ORIGIN =
-		import.meta.env.NODE_ENV === 'dev' ? undefined : 'https://wbdy5-yyaaa-aaaap-abysq-cai.icp0.io';
+		import.meta.env.NODE_ENV === 'dev' ? undefined : 'https://zlfuj-kaaaa-aaaam-acneq-cai.icp0.io';
 
 	let error = '';
 
