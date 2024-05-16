@@ -9,6 +9,7 @@
 	import { createEventDispatcher } from 'svelte';
 
 	export let selected: SelectedTab = 'basic';
+	export let title: string;
 	export let loading = false;
 
 	const dispatch = createEventDispatcher<{
@@ -20,11 +21,8 @@
 <div class="relative border-b border-gray-200 pb-5 sm:pb-0">
 	<div class="flex items-start justify-between py-4 gap-4">
 		<div class="flex flex-col gap-1">
-			<div class="text-4xl">Submit Collection</div>
-			<div class="text-sm text-gray-500">Submit data to create a new collection.</div>
-			<div class="text-sm text-gray-400">
-				Submitted form will be approved by an admin for listing.
-			</div>
+			<div class="text-4xl">{title}</div>
+			<slot name="subtitle" />
 		</div>
 		<div class="mt-3 flex gap-3">
 			<Button on:click={() => dispatch('cancel')} secondary>Cancel</Button>

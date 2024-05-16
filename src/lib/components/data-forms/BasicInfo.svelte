@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-	type StatusKey = UnionKeyOf<Status>;
+	type StatusKey = 'Draft' | 'Live';
 
 	export type BasicInfoData = {
 		name: string;
@@ -12,10 +12,8 @@
 </script>
 
 <script lang="ts">
-	import { type UnionKeyOf } from '$lib/backend';
 	import Input from '$lib/components/input/Input.svelte';
 	import Textarea from '$lib/components/textarea/Textarea.svelte';
-	import type { Status } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import Select from '$lib/components/select/Select.svelte';
 
 	export let loading = true;
@@ -37,7 +35,7 @@
 	<Select
 		label="Status"
 		on:change={handleStatusChange}
-		value={data.status}
+		value="Live"
 		options={[
 			{ value: 'Ended', label: 'Ended' },
 			{ value: 'Live', label: 'Live' },

@@ -105,14 +105,14 @@
 	</div>
 {:else}
 	<div class="flex py-12 items-center gap-8 justify-normal mx-auto flex-wrap">
-		{#each nfts as nft}
+		{#each nfts as nft, i}
 			<Card
 				status="Live"
 				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
 				title={nft.name}
 				desc={nft.description}
 				sample={nft.sample}
-				imgSrc={'https://source.unsplash.com/random/?home'}
+				imgSrc={`https://source.unsplash.com/random/?home,${i}`}
 			/>
 		{/each}
 	</div>

@@ -1,65 +1,85 @@
 <script lang="ts">
-	import EditHeader, { type SelectedEditTab } from './EditHeader.svelte';
-	import BasicInfo from './BasicInfo.svelte';
-	import PropertyInfo from './PropertyInfo.svelte';
-	import DocumentsInfo from './DocumentsInfo.svelte';
-	import MarketInfo from './MarketInfo.svelte';
-	import FinancialInfo from './FinancialInfo.svelte';
-	import { nftMinterCanister } from '$lib/backend';
+	import FormHeader, { type SelectedTab } from '$lib/components/data-forms/FormHeader.svelte';
+	import BasicInfo, { type BasicInfoData } from '$lib/components/data-forms/BasicInfo.svelte';
+	import PropertyInfo, {
+		type PropertyInfoData
+	} from '$lib/components/data-forms/PropertyInfo.svelte';
+	import MarketInfo, { type MarketInfoData } from '$lib/components/data-forms/MarketInfo.svelte';
+	import FinancialInfo, {
+		type FinancialInfoData
+	} from '$lib/components/data-forms/FinancialInfo.svelte';
 	import { setCollectionId } from './collectionId.context';
 	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import type { PageData } from './$types';
 	import { replacer } from '$lib/utils/json';
-	import ImagesInfo from './ImagesInfo.svelte';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
+	import { nftCanister } from '$lib/backend';
+	import ImagesInfo from '$lib/components/data-forms/ImagesInfo.svelte';
+	import {
+		getUpdatePropertyFormData,
+		initUpdateFormData
+	} from '$lib/components/data-forms/form.utils';
+	import { Principal } from '@dfinity/principal';
 
 	export let data: PageData;
 
 	const { minterCanId, assetCanId } = data;
-
 	$: setCollectionId(minterCanId, assetCanId);
 
-	let selectedTab: SelectedEditTab = 'basic';
+	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
 	let collectionMetadata: CollectionMetadata;
 
-	let basicInfo: BasicInfo;
-	let propertyInfo: PropertyInfo;
-	let documentsInfo: DocumentsInfo;
-	let marketInfo: MarketInfo;
-	let financialInfo: FinancialInfo;
-	let imagesInfo: ImagesInfo;
+	let basicInfoData: BasicInfoData;
+	let propertyInfoData: PropertyInfoData;
+	let financialInfoData: FinancialInfoData;
+	let marketInfoData: MarketInfoData;
+	let propertyImages: string[] = [];
+	// let documentsInfo: DocumentsInfo;
 
 	async function editData() {
-		switch (selectedTab) {
-			case 'basic':
-				await basicInfo.saveData();
-				break;
-			case 'property':
-				await propertyInfo.saveData();
-				break;
-			case 'market':
-				await marketInfo.saveData();
-				break;
-			case 'financial':
-				await financialInfo.saveData();
-				break;
+		if (loading) return;
+		try {
+			loading = true;
+			const actor = nftCanister(minterCanId);
+			console.log(
+				getUpdatePropertyFormData(
+					basicInfoData,
+					propertyInfoData,
+					financialInfoData,
+					marketInfoData,
+					Principal.from(assetCanId),
+					collectionMetadata
+				)[0]
+			);
+			await actor.update_metadata(
+				getUpdatePropertyFormData(
+					basicInfoData,
+					propertyInfoData,
+					financialInfoData,
+					marketInfoData,
+					Principal.from(assetCanId),
+					collectionMetadata
+				)[0]
+			);
+		} finally {
+			loading = false;
 		}
-		await fetchDetails();
 	}
 
 	async function fetchDetails() {
 		loading = true;
 		try {
-			const actor = nftMinterCanister(minterCanId);
-
-			const res = await actor.get_collection_metadata();
-			if ('Ok' in res) {
-				collectionMetadata = res.Ok;
-			}
+			const actor = nftCanister(minterCanId);
+			collectionMetadata = await actor.get_property_metadata();
+			const data = initUpdateFormData(collectionMetadata);
+			basicInfoData = data.basicInfoData;
+			propertyInfoData = data.propertyInfoData;
+			financialInfoData = data.financialInfoData;
+			marketInfoData = data.marketInfoData;
 		} catch (_) {
-			console.error('Error fetching get_collection_metadata data');
+			console.error('Error updating metadata');
 		} finally {
 			loading = false;
 		}
@@ -69,7 +89,8 @@
 </script>
 
 <div class="flex flex-col gap-12">
-	<EditHeader
+	<FormHeader
+		title="Edit collection"
 		bind:loading
 		on:cancel={() => history.back()}
 		on:save={() => editData()}
@@ -78,41 +99,21 @@
 		<svelte:fragment>
 			{#if collectionMetadata}
 				{#if selectedTab === 'basic'}
-					<BasicInfo {collectionMetadata} bind:loading bind:this={basicInfo} />
+					<BasicInfo {loading} bind:data={basicInfoData} />
 				{:else if selectedTab === 'property'}
-					<PropertyInfo
-						propertyDetails={collectionMetadata?.additional_metadata?.[0]?.property_details?.[0]}
-						bind:loading
-						bind:this={propertyInfo}
-					/>
+					<PropertyInfo {loading} bind:data={propertyInfoData} />
 				{:else if selectedTab === 'financial'}
-					<FinancialInfo
-						financialDetails={collectionMetadata?.additional_metadata?.[0]?.financial_details?.[0]}
-						bind:loading
-						bind:this={financialInfo}
-					/>
+					<FinancialInfo {loading} bind:data={financialInfoData} />
 				{:else if selectedTab === 'market'}
-					<MarketInfo
-						marketDetails={collectionMetadata?.additional_metadata?.[0]?.market_details?.[0]}
-						bind:loading
-						bind:this={marketInfo}
-					/>
-				{:else if selectedTab === 'documents'}
-					<DocumentsInfo
-						documents={collectionMetadata?.additional_metadata?.[0]?.documents}
-						bind:loading
-						bind:this={documentsInfo}
-					/>
+					<MarketInfo bind:data={marketInfoData} {loading} />
+					<!-- {:else if selectedTab === 'documents'}
+					<DocumentsInfo bind:data={collectionMetadata} {loading} /> -->
 				{:else if selectedTab === 'images'}
-					<ImagesInfo
-						bind:this={imagesInfo}
-						bind:loading
-						images={collectionMetadata?.property_images}
-					/>
+					<ImagesInfo bind:images={propertyImages} />
 				{/if}
 			{/if}
 		</svelte:fragment>
-	</EditHeader>
+	</FormHeader>
 </div>
 
 {#if collectionMetadata}

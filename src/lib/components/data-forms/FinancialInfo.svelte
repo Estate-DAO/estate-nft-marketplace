@@ -1,41 +1,42 @@
 <script lang="ts" context="module">
+	import type { _SERVICE } from '$lib/declarations/estate_dao_nft/estate_dao_nft.did';
+
 	export type FinancialInfoData = ReturnType<typeof init>;
 
-	const init = (financialDetails?: FinancialDetails) => ({
+	const init = (data?: CollectionMetadata) => ({
 		overall: {
-			totalMonthlyCost: financialDetails?.total_monthly_cost?.[0] || 0,
-			montlyCashFlow: financialDetails?.monthly_cash_flow?.[0] || 0,
-			propertyInsurance: financialDetails?.property_insurance?.[0] || 0,
-			expenseToIncomeRatio: financialDetails?.expense_to_income_ratio?.[0] || 0
+			totalMonthlyCost: data?.total_monthly_cost || 0,
+			monthlyCashFlow: data?.monthly_cash_flow || 0,
+			propertyInsurance: data?.property_insurance || 0,
+			expenseToIncomeRatio: data?.expense_to_income_ratio || 0
 		},
 		investment: {
-			initialMaintenanceReserve:
-				financialDetails?.investment?.[0]?.initial_maintenance_reserve?.[0] || 0,
-			underlyingAssetPrice: financialDetails?.investment?.[0]?.underlying_asset_price?.[0] || 0,
-			platformClosingFee: financialDetails?.investment?.[0]?.platform_closing_fee?.[0] || 0,
-			mininumInvestment: Number(financialDetails?.investment?.[0]?.min_investment?.[0]) || 0
+			initialMaintenanceReserve: data?.initial_maintenance_reserve || 0,
+			underlyingAssetPrice: data?.underlying_asset_price || 0,
+			platformClosingFee: data?.platform_closing_fee || 0,
+			minimumInvestment: Number(data?.min_investment) || 0
 		},
 		returns: {
-			average5YearROI: financialDetails?.returns?.[0]?.average_5_year_roi?.[0] || 0,
-			projectedAppreciation: financialDetails?.returns?.[0]?.projected_appreciation?.[0] || 0,
-			capRate: financialDetails?.returns?.[0]?.cap_rate?.[0] || 0,
-			total5YearsIrr: financialDetails?.returns?.[0]?.total_5_year_irr?.[0] || 0,
-			yields: financialDetails?.returns?.[0]?.yields?.[0] || 0
+			average5YearROI: data?.average_5_year_roi || 0,
+			projectedAppreciation: data?.projected_appreciation || 0,
+			capRate: data?.cap_rate || 0,
+			total5YearsIrr: data?.total_5_year_irr || 0,
+			yields: data?.yields || 0
 		},
 		rents: {
-			vacancyRate: financialDetails?.rents?.[0]?.vacancy_rate?.[0] || 0,
-			propertyTaxes: financialDetails?.rents?.[0]?.property_taxes?.[0] || 0,
-			propertyManagementFee: financialDetails?.rents?.[0]?.property_managment_fee?.[0] || 0,
-			monthlyUtilities: financialDetails?.rents?.[0]?.monthly_utiliiies?.[0] || 0,
-			llcMonthlyFranchiseTax: financialDetails?.rents?.[0]?.llc_monthly_franchise_tax?.[0] || 0,
-			projectedRent: financialDetails?.rents?.[0]?.projected_rent?.[0] || 0
+			vacancyRate: data?.vacancy_rate || 0,
+			propertyTaxes: data?.property_taxes || 0,
+			propertyManagementFee: data?.property_management_fee || 0,
+			monthlyUtilities: data?.monthly_utilities || 0,
+			llcMonthlyFranchiseTax: data?.llc_monthly_franchise_tax || 0,
+			projectedRent: data?.projected_rent || 0
 		}
 	});
 </script>
 
 <script lang="ts">
 	import Input from '$lib/components/input/Input.svelte';
-	import type { FinancialDetails } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	export let loading = true;
 	export let data: FinancialInfoData = init();
@@ -61,7 +62,7 @@
 	<Input
 		label="Minimum investment required"
 		type="number"
-		bind:value={data.investment.mininumInvestment}
+		bind:value={data.investment.minimumInvestment}
 	/>
 
 	<Input label="Average 5 Years ROI" type="number" bind:value={data.returns.average5YearROI} />
@@ -90,7 +91,7 @@
 	<Input label="Monthly utilities" type="number" bind:value={data.rents.monthlyUtilities} />
 
 	<Input label="Property insurance" type="number" bind:value={data.overall.propertyInsurance} />
-	<Input label="Monthly cash flow" type="number" bind:value={data.overall.montlyCashFlow} />
+	<Input label="Monthly cash flow" type="number" bind:value={data.overall.monthlyCashFlow} />
 	<Input
 		label="Expense to income ratio"
 		type="number"

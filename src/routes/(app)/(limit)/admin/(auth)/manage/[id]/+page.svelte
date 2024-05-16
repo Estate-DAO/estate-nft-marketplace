@@ -217,7 +217,7 @@
 			<InfoSection>
 				<FormHeader slot="header" title="Documents" />
 				{#if formData.metadata?.[0]?.documents?.[0]?.length}
-					<Attachments docs={formData.metadata?.[0].documents} />
+					<Attachments docs={formData.metadata?.[0]?.documents} />
 				{:else}
 					<ItemInfo title="Attachments" value="No documents uploaded" />
 				{/if}

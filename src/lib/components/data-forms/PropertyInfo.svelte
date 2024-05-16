@@ -1,26 +1,26 @@
 <script lang="ts" context="module">
 	export type PropertyInfoData = ReturnType<typeof init>;
 
-	const init = (propertyDetails?: PropertyDetails) => ({
-		areaSqFoot: propertyDetails?.square_footage?.[0] || 0,
-		beds: propertyDetails?.beds?.[0] || 0,
-		baths: propertyDetails?.baths?.[0] || 0,
-		yearBuilt: propertyDetails?.year_built?.[0] || 0,
-		occupied: propertyDetails?.occupied?.[0] || false,
-		crimeScore: propertyDetails?.crime_score?.[0] || 0,
-		monthlyRent: propertyDetails?.monthly_rent?.[0] || 0,
-		affordability: propertyDetails?.affordability?.[0] || 0,
-		lastRenovated: propertyDetails?.last_renovated?.[0] || 0,
-		floodZone: propertyDetails?.flood_zone?.[0] || false,
-		priceSqFt: propertyDetails?.price_per_sq_foot?.[0] || 0,
-		schoolScore: propertyDetails?.school_score?.[0] || 0
+	const init = (data?: CollectionMetadata) => ({
+		areaSqFoot: data?.square_footage || 0,
+		beds: data?.beds || 0,
+		baths: data?.baths || 0,
+		yearBuilt: data?.year_built || 0,
+		occupied: data?.occupied || false,
+		crimeScore: data?.crime_score || 0,
+		monthlyRent: data?.monthly_rent || 0,
+		affordability: data?.affordability || 0,
+		lastRenovated: data?.last_renovated || 0,
+		floodZone: data?.flood_zone || false,
+		priceSqFt: data?.price_per_sq_foot || 0,
+		schoolScore: data?.school_score || 0
 	});
 </script>
 
 <script lang="ts">
 	import Input from '$lib/components/input/Input.svelte';
-	import type { PropertyDetails } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import Select from '$lib/components/select/Select.svelte';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	export let loading = true;
 	export let data: PropertyInfoData = init();
