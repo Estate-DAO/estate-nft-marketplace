@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { nftMinterCanister } from '$lib/backend';
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import { fromE8s } from '$lib/utils/icp';
 	import { onMount, tick } from 'svelte';
 	import { getCollectionId } from './collectionId.context';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	export let waitlist = false;
 	export let metadata: CollectionMetadata;

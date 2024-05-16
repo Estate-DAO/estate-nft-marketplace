@@ -18,6 +18,8 @@
 		<Button href="/admin">Refresh</Button>
 	{:else}
 		<div>You need to first login using Internet Identity</div>
+		<div class="text-sm">User ID: {$authState.idString}</div>
+
 		<Button href="/login">Login</Button>
 	{/if}
 </div>

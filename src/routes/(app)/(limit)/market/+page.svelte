@@ -7,15 +7,13 @@
 	import { nftCanister, provisionCanisterV2 } from '$lib/backend';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import type { _SERVICE } from '$lib/declarations/estate_dao_nft/estate_dao_nft.did';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	type CollectionId = {
 		assetCanId: string;
 		minterCanId: string;
 	};
-
-	type CollectionMetadata = Awaited<ReturnType<_SERVICE['get_property_metadata']>>;
 
 	type CollectionDetails = CollectionMetadata & {
 		id: CollectionId;
@@ -55,7 +53,7 @@
 					minterCanId: o.token_canister.toText()
 				}))
 			);
-			nfts = res.filter((o) => o.id.minterCanId === 'nvot4-uqaaa-aaaap-ab54q-cai');
+			nfts = res;
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -114,7 +112,7 @@
 				title={nft.name}
 				desc={nft.description}
 				sample={nft.sample}
-				imgSrc={`/property/${nft.id.minterCanId}/1.webp`}
+				imgSrc={'https://source.unsplash.com/random/?home'}
 			/>
 		{/each}
 	</div>

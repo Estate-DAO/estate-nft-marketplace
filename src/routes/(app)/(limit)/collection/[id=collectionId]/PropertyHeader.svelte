@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 	import { adminStore } from '$lib/stores/admin';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 	import Actions from './Actions.svelte';
 	import Details from './Details.svelte';
 	import Financials from './Financials.svelte';
@@ -18,11 +18,10 @@
 
 	const { id } = getCollectionId();
 
-	$: country = metadata.additional_metadata[0]?.market_details?.[0]?.country?.[0] || 'Not set';
-	$: beds = metadata.additional_metadata[0]?.property_details?.[0]?.beds?.[0] || '-';
-	$: baths = metadata.additional_metadata[0]?.property_details?.[0]?.baths?.[0] || '-';
-	$: squareFootage =
-		metadata.additional_metadata[0]?.property_details?.[0]?.square_footage?.[0] || '-';
+	$: country = metadata.country || 'Not set';
+	$: beds = metadata.beds || '-';
+	$: baths = metadata.baths || '-';
+	$: squareFootage = metadata.square_footage || '-';
 </script>
 
 <div class="flex flex-col grow gap-4">
@@ -32,7 +31,7 @@
 			<div
 				class="py-2 px-4 text-xs translate-y-1 bg-black rounded-full text-white font-light flex h-min items-center justify-center"
 			>
-				{Object.keys(metadata.status)?.[0] || 'Live'}
+				Live
 			</div>
 		</div>
 		{#if $adminStore.isLoggedIn}

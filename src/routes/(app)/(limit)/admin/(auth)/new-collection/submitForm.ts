@@ -13,7 +13,7 @@ export function getFormData(
 	propertyInfoData: PropertyInfoData,
 	financialInfoData: FinancialInfoData,
 	marketInfoData: MarketInfoData,
-	propertyImages: string[] = []
+	_propertyImages: string[] = []
 ): FormData {
 	return {
 		name: basicInfoData.name,
@@ -28,7 +28,7 @@ export function getFormData(
 		token: Principal.from(''),
 		symbol: 'ICP',
 		treasury: Principal.from(''),
-		images: [],
+		// images: [],
 		documents: [],
 		annual_population_growth: marketInfoData?.annualPopulationGrowth,
 		average_rent: marketInfoData?.averageRent || 0,
