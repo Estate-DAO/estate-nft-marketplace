@@ -43,8 +43,8 @@
 			maxTimeToLive: BigInt(30 * 24 * 60 * 60 * 1000 * 1000 * 1000),
 			onSuccess: () => handleSuccessfulLogin(),
 			onError: (e) => handleError(e),
-			identityProvider: IDENTITY_PROVIDER,
-			derivationOrigin: DERIVATION_ORIGIN
+			identityProvider: 'https://identity.ic0.app/#authorize'
+			// derivationOrigin: DERIVATION_ORIGIN
 		});
 	}
 

@@ -11,16 +11,16 @@
 	let loading = true;
 	let error = '';
 
-	$: if (!$adminStore.isLoggedIn || !$authState.isLoggedIn) {
-		gotoAuthPage();
-	}
-
 	async function checkAuthStatus() {
 		error = '';
 		try {
 			const actor = provisionCanisterV2();
 			const res = await actor.is_admin([Principal.from($authState.idString)]);
 			if (res) {
+				$adminStore = {
+					isLoggedIn: true,
+					key: $authState.idString || ''
+				};
 				loading = false;
 			} else {
 				gotoAuthPage();
