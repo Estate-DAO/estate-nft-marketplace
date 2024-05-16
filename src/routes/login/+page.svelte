@@ -6,6 +6,7 @@
 	import { authState, authHelper } from '$lib/stores/auth';
 	import { initializeAuthClient } from '$lib/auth/init';
 	import { tick } from 'svelte';
+	import { adminStore } from '$lib/stores/admin';
 
 	const IDENTITY_PROVIDER =
 		import.meta.env.NODE_ENV === 'dev'
@@ -51,6 +52,7 @@
 	async function logout() {
 		$authHelper.init = false;
 		await $authHelper?.client?.logout();
+		adminStore.set({ isLoggedIn: false, key: '' });
 		initializeAuthClient();
 	}
 </script>
