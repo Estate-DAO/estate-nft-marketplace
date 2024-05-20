@@ -1,10 +1,3 @@
-import { createActor as createNftActor } from '../declarations/estate_dao_nft_backend';
-import {
-	createActor as createProvisionActor,
-	canisterId as provisionCanisterId
-} from '../declarations/provision_canister_backend';
-import type { _SERVICE as NFT_SERVICE } from '../declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
-import type { _SERVICE as PROVISION_SERVICE } from '../declarations/provision_canister_backend/provision_canister_backend.did';
 import { HttpAgent, type ActorSubclass, type HttpAgentOptions } from '@dfinity/agent';
 import { authHelper } from '$lib/stores/auth';
 import { get } from 'svelte/store';
@@ -23,8 +16,6 @@ export const host =
 		? `http://localhost:${import.meta.env.DFX_PORT}`
 		: 'https://ic0.app';
 
-export type EstateDaoActor = ActorSubclass<NFT_SERVICE>;
-export type ProvisionActor = ActorSubclass<PROVISION_SERVICE>;
 export type UnionKeyOf<U> = U extends U ? keyof U : never;
 
 const agentOptions = (_fetch?: typeof fetch): HttpAgentOptions => {
@@ -36,24 +27,6 @@ const agentOptions = (_fetch?: typeof fetch): HttpAgentOptions => {
 		identity: authHelperData?.identity
 	};
 };
-
-export function nftMinterCanister(
-	canisterId: string,
-	options?: { fetch?: typeof fetch }
-): EstateDaoActor {
-	return createNftActor(canisterId, {
-		agentOptions: agentOptions(options?.fetch)
-	}) as EstateDaoActor;
-}
-
-export function provisionCanister(options?: {
-	fetch?: typeof fetch;
-	canisterId?: string;
-}): ProvisionActor {
-	return createProvisionActor(options?.canisterId || provisionCanisterId, {
-		agentOptions: agentOptions(options?.fetch)
-	}) as ProvisionActor;
-}
 
 export function assetManager(canisterId: string, options?: { fetch?: typeof fetch }) {
 	const agent = new HttpAgent(agentOptions(options?.fetch));

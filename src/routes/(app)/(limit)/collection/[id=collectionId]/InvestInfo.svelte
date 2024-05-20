@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { nftMinterCanister } from '$lib/backend';
+	import { nftCanister } from '$lib/backend';
 	import { fromE8s } from '$lib/utils/icp';
 	import { onMount, tick } from 'svelte';
 	import { getCollectionId } from './collectionId.context';
@@ -21,8 +21,8 @@
 	async function getInvestedAmount() {
 		try {
 			await tick();
-			const actor = nftMinterCanister(minterCanId);
-			const res = await actor.get_total_invested();
+			const actor = nftCanister(minterCanId);
+			const res = await (actor as any).get_total_invested();
 			invested = res;
 		} catch (e) {
 			console.error(e);
