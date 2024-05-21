@@ -10,7 +10,6 @@ export default defineConfig({
 	define: {
 		'process.env.CANISTER_ID_ASSET': JSON.stringify('t4l5p-laaaa-aaaam-aclba-cai'),
 		'process.env.CANISTER_ID_ASSET_PROXY': JSON.stringify('tviwt-5iaaa-aaaam-aclaq-cai'),
-		'process.env.CANISTER_ID_ESTATE_DAO_NFT': JSON.stringify('bpix63-oaaaa-aaaam-acfoa-cai'),
 		'process.env.CANISTER_ID_PROVISION': JSON.stringify('4pmll-diaaa-aaaam-ackeq-cai'),
 		'process.env.INTERNET_IDENTITY_CANISTER_ID': JSON.stringify('bw4dl-smaaa-aaaaa-qaacq-cai'),
 		'import.meta.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'dev'),
