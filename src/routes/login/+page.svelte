@@ -6,6 +6,7 @@
 	import { authState, authHelper } from '$lib/stores/auth';
 	import { initializeAuthClient } from '$lib/auth/init';
 	import { tick } from 'svelte';
+	import { adminStore } from '$lib/stores/admin';
 
 	const IDENTITY_PROVIDER =
 		import.meta.env.NODE_ENV === 'dev'
@@ -13,7 +14,7 @@
 			: 'https://identity.ic0.app/#authorize';
 
 	const DERIVATION_ORIGIN =
-		import.meta.env.NODE_ENV === 'dev' ? undefined : 'https://wbdy5-yyaaa-aaaap-abysq-cai.icp0.io';
+		import.meta.env.NODE_ENV === 'dev' ? undefined : 'https://zlfuj-kaaaa-aaaam-acneq-cai.icp0.io';
 
 	let error = '';
 
@@ -43,14 +44,15 @@
 			maxTimeToLive: BigInt(30 * 24 * 60 * 60 * 1000 * 1000 * 1000),
 			onSuccess: () => handleSuccessfulLogin(),
 			onError: (e) => handleError(e),
-			identityProvider: IDENTITY_PROVIDER,
-			derivationOrigin: DERIVATION_ORIGIN
+			identityProvider: 'https://identity.ic0.app/#authorize'
+			// derivationOrigin: DERIVATION_ORIGIN
 		});
 	}
 
 	async function logout() {
 		$authHelper.init = false;
 		await $authHelper?.client?.logout();
+		adminStore.set({ isLoggedIn: false, key: '' });
 		initializeAuthClient();
 	}
 </script>

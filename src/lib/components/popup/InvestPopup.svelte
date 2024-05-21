@@ -5,7 +5,7 @@
 	import CopyIcon from '../icons/CopyIcon.svelte';
 	import Input from '../input/Input.svelte';
 	import { onDestroy } from 'svelte';
-	import { nftMinterCanister } from '$lib/backend';
+	import { nftCanister } from '$lib/backend';
 	import { authState } from '$lib/stores/auth';
 	import { Principal } from '@dfinity/principal';
 	import { isPrincipal } from '$lib/utils/isPrincipal';
@@ -63,8 +63,8 @@
 	let paymentStatus = 'pending';
 
 	async function checkPaymentStatus() {
-		const actor = nftMinterCanister(minterCanId);
-		const res = await actor.primary_sale();
+		const actor = nftCanister(minterCanId);
+		const res = await (actor as any).primary_sale();
 		console.log({ paymentRes: res });
 		if ('Ok' in res) {
 			paymentStatus = 'completed';
@@ -72,8 +72,8 @@
 	}
 
 	async function startPoll() {
-		const actor = nftMinterCanister(minterCanId);
-		const details = await actor.get_payment_details();
+		const actor = nftCanister(minterCanId);
+		const details = await (actor as any).get_payment_details();
 		if ('Ok' in details) {
 			paymentInfo = {
 				transferTo: details.Ok[0],
@@ -94,8 +94,8 @@
 					'Invalid principal. Please copy the correct principal from NNS Dapp settings page.';
 				return false;
 			}
-			const actor = nftMinterCanister(minterCanId);
-			const res = await actor.update_NNS_account(Principal.from(nnsAccountId));
+			const actor = nftCanister(minterCanId);
+			const res = await (actor as any).update_NNS_account(Principal.from(nnsAccountId));
 			console.log({ update_NNS_account: res });
 			if ('Ok' in res) {
 				step = 3;
@@ -111,8 +111,8 @@
 
 	async function init() {
 		try {
-			const actor = await nftMinterCanister(minterCanId);
-			const res = await actor.get_NNS_account();
+			const actor = await nftCanister(minterCanId);
+			const res = await (actor as any).get_NNS_account();
 			console.log({ get_NNS_account: res });
 			if ('Ok' in res) {
 				nnsAccountId = res.Ok.toString();
@@ -124,8 +124,8 @@
 	}
 
 	async function getPaymentInfo() {
-		const actor = nftMinterCanister(minterCanId);
-		const details = await actor.get_payment_details();
+		const actor = nftCanister(minterCanId);
+		const details = await (actor as any).get_payment_details();
 		console.log({ get_payment_details: details });
 		if ('Ok' in details) {
 			paymentInfo = {

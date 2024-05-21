@@ -1,20 +1,13 @@
 <script lang="ts">
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	export let metadata: CollectionMetadata;
 
-	$: purchasePrice =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.underlying_asset_price?.[0] || '--';
-	$: yields =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.yields?.[0] || '--';
-	$: projectedRent =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.projected_rent?.[0] ||
-		'--';
-	$: minInvestment =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]?.min_investment?.[0] ||
-		'--';
-	$: yearBuilt = metadata.additional_metadata[0]?.property_details?.[0]?.year_built?.[0] || '--';
+	$: purchasePrice = metadata.underlying_asset_price || '--';
+	$: yields = metadata.yields || '--';
+	$: projectedRent = metadata.projected_rent || '--';
+	$: minInvestment = metadata.min_investment || '--';
+	$: yearBuilt = metadata.year_built || '--';
 </script>
 
 <div class="grid col-auto lg:flex items-center gap-2 pt-8">

@@ -30,8 +30,8 @@
 		{#if desc}
 			<div class="text-sm line-clamp-2 h-max">{desc} <br /><br /></div>
 		{:else}
-			<div class="text-sm">McAllen, TX(USA)</div>
-			<div class="text-sm">3 Beds | 2 Baths | 2,112.00 sq. ft.</div>
+			<div class="text-sm">Location: --</div>
+			<div class="text-sm">-- Beds | -- Baths | -- sq. ft.</div>
 		{/if}
 	</div>
 </a>

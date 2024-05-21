@@ -10,7 +10,8 @@
 
 	let menuOpen = false;
 
-	$: onCollectionPage = $page.url.pathname.includes('collection');
+	$: onCollectionPage =
+		$page.url.pathname.includes('collection') || $page.url.pathname.includes('admin');
 </script>
 
 <div

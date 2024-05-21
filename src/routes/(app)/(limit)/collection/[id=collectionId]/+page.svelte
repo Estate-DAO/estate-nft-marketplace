@@ -21,7 +21,9 @@
 
 	$: metadata = data.metadata;
 	$: waitlist = $page.url.searchParams.has('sample');
-	$: _images = metadata.property_images.map((_, i) => getImage(i));
+	$: _images = metadata.property_images
+		? metadata.property_images.map((_, i) => getImage(i))
+		: ['https://source.unsplash.com/random/?home', 'https://source.unsplash.com/random/?house'];
 	$: images = (_images || []).reduce((acc, _c, i, v) => {
 		if (i % 2 === 0) acc.push(v.slice(i, i + 2));
 		return acc;
@@ -30,11 +32,7 @@
 
 <div class="w-full flex flex-col items-center gap-4 pb-8">
 	<div class="flex flex-col lg:flex-row gap-2 lg:h-[40rem] w-full overflow-hidden overflow-x-auto">
-		<img
-			alt="House"
-			src={getImage(0) || placeholder}
-			class="rounded-xl lg:h-[37rem] lg:grow object-cover"
-		/>
+		<img alt="House" src={_images[0]} class="rounded-xl lg:h-[37rem] lg:grow object-cover" />
 
 		{#each images as [im1, im2]}
 			<div class="flex basis-[25%] shrink-0 flex-col gap-2 lg:h-[37rem]">

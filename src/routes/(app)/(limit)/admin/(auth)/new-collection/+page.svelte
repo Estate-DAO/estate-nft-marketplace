@@ -1,16 +1,19 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
-	import FormHeader, { type SelectedTab } from './FormHeader.svelte';
-	import BasicInfo, { type BasicInfoData } from './BasicInfo.svelte';
-	import PropertyInfo, { type PropertyInfoData } from './PropertyInfo.svelte';
-	import MarketInfo, { type MarketInfoData } from './MarketInfo.svelte';
-	import FinancialInfo, { type FinancialInfoData } from './FinancialInfo.svelte';
-	import { provisionCanister } from '$lib/backend';
+	import FormHeader, { type SelectedTab } from '$lib/components/data-forms/FormHeader.svelte';
+	import BasicInfo, { type BasicInfoData } from '$lib/components/data-forms/BasicInfo.svelte';
+	import PropertyInfo, {
+		type PropertyInfoData
+	} from '$lib/components/data-forms/PropertyInfo.svelte';
+	import MarketInfo, { type MarketInfoData } from '$lib/components/data-forms/MarketInfo.svelte';
+	import FinancialInfo, {
+		type FinancialInfoData
+	} from '$lib/components/data-forms/FinancialInfo.svelte';
+	import { provisionCanisterV2 } from '$lib/backend';
 	import { slide } from 'svelte/transition';
-	import { authState } from '$lib/stores/auth';
 	import { replacer } from '$lib/utils/json';
-	import ImagesInfo from './ImagesInfo.svelte';
-	import { getFormData } from './submitForm';
+	import ImagesInfo from '$lib/components/data-forms/ImagesInfo.svelte';
+	import { getNewPropertyFormData } from '$lib/components/data-forms/form.utils';
 
 	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
@@ -26,16 +29,9 @@
 		if (loading) return;
 		try {
 			loading = true;
-			const actor = provisionCanister();
-			res = await actor.init_form_metadata(
-				getFormData(
-					basicInfoData,
-					propertyInfoData,
-					financialInfoData,
-					marketInfoData,
-					propertyImages,
-					$authState.idString
-				)
+			const actor = provisionCanisterV2();
+			res = await actor.add_property_request(
+				getNewPropertyFormData(basicInfoData, propertyInfoData, financialInfoData, marketInfoData)
 			);
 		} finally {
 			loading = false;
@@ -54,11 +50,18 @@
 		<Button href="/admin/manage/list">Approve/Deny on admin panel</Button>
 	{:else}
 		<FormHeader
+			title="New Collection"
 			bind:selected={selectedTab}
 			on:cancel={() => history.back()}
 			on:save={() => submitForm()}
 			{loading}
 		>
+			<svelte:fragment slot="subtitle">
+				<div class="text-sm text-gray-500">Submit data to create a new collection.</div>
+				<div class="text-sm text-gray-400">
+					Submitted form will be approved by an admin for listing.
+				</div>
+			</svelte:fragment>
 			<svelte:fragment>
 				{#if selectedTab === 'basic'}
 					<BasicInfo {loading} bind:data={basicInfoData} />

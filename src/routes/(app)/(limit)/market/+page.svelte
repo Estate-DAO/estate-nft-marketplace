@@ -4,10 +4,11 @@
 	import LocationIcon from '$lib/components/icons/LocationIcon.svelte';
 	import SortIcon from '$lib/components/icons/SortIcon.svelte';
 	import TabsGroup from '$lib/components/tabs-group/TabsGroup.svelte';
-	import { nftMinterCanister, provisionCanister } from '$lib/backend';
+	import { nftCanister, provisionCanisterV2 } from '$lib/backend';
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import type { _SERVICE } from '$lib/declarations/estate_dao_nft/estate_dao_nft.did';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	type CollectionId = {
 		assetCanId: string;
@@ -24,13 +25,12 @@
 
 	async function fetchNftDetail(id: CollectionId): Promise<CollectionDetails | undefined> {
 		try {
-			const r = await nftMinterCanister(id.minterCanId).get_collection_metadata();
-			if ('Ok' in r)
-				return {
-					...r.Ok,
-					id,
-					sample: false
-				} as CollectionDetails;
+			const r = await nftCanister(id.minterCanId).get_property_metadata();
+			return {
+				...r,
+				id,
+				sample: false
+			} as CollectionDetails;
 		} catch (e) {
 			return undefined;
 		}
@@ -44,18 +44,16 @@
 
 	async function fetchCollections() {
 		try {
-			const actor = provisionCanister();
-			const all = await actor.get_all_canisters();
+			const actor = provisionCanisterV2();
+			const all = await actor.list_properties();
 
-			if ('Ok' in all) {
-				const res = await populatePosts(
-					all.Ok.map((o) => ({
-						assetCanId: o.asset_canister.toText(),
-						minterCanId: o.minter_canister.toText()
-					}))
-				);
-				nfts = res.filter((o) => o.id.minterCanId === 'nvot4-uqaaa-aaaap-ab54q-cai');
-			}
+			const res = await populatePosts(
+				all.map((o) => ({
+					assetCanId: o.asset_canister.toText(),
+					minterCanId: o.token_canister.toText()
+				}))
+			);
+			nfts = res;
 		} catch (error) {
 			console.error(error);
 		} finally {
@@ -107,14 +105,14 @@
 	</div>
 {:else}
 	<div class="flex py-12 items-center gap-8 justify-normal mx-auto flex-wrap">
-		{#each nfts as nft}
+		{#each nfts as nft, i}
 			<Card
-				status={Object.keys(nft.status)?.[0] || 'Live'}
+				status="Live"
 				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
 				title={nft.name}
-				desc={nft.desc}
+				desc={nft.description}
 				sample={nft.sample}
-				imgSrc={`/property/${nft.id.minterCanId}/1.webp`}
+				imgSrc={`https://source.unsplash.com/random/?home,${i}`}
 			/>
 		{/each}
 	</div>

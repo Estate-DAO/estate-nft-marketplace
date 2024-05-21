@@ -18,13 +18,10 @@
 		<button on:click={() => (show = false)} class="absolute top-4 right-4 z-[2]">
 			<PlusIcon class="h-5 w-5 rotate-45" />
 		</button>
-		<div class="text-3xl">Thank you</div>
+		<div class="text-3xl">Invest</div>
 
 		<div class="flex flex-col gap-8 items-center">
-			<div>
-				The sale has been successfully completed. The funds equivalent to 10% of property value:
-				€520,000 has been successfully stored in the escrow.
-			</div>
+			<div>The sale has not started yet</div>
 			<Button on:click={() => (show = false)}>Close</Button>
 		</div>
 	</div>

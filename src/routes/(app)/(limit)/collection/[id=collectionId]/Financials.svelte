@@ -5,66 +5,29 @@
 </script>
 
 <script lang="ts">
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
+
 	import InfoTitle from './InfoTitle.svelte';
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
 
 	export let metadata: CollectionMetadata;
 
-	$: assetPrice =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.underlying_asset_price?.[0] || '--';
-	$: platformFee =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.platform_closing_fee?.[0] || 'Waived';
-	$: maintenanceReserve =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.investment?.[0]
-			?.initial_maintenance_reserve?.[0] || '--';
-
-	$: fiveYearIRR =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.total_5_year_irr?.[0] ||
-		'--';
-	$: projectedAppreciation =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]
-			?.projected_appreciation?.[0] || '--';
-	$: average5YearROI =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]
-			?.average_5_year_roi?.[0] || '--';
-	$: capRate =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.returns?.[0]?.cap_rate?.[0] || '--';
-
-	$: vacancyRate =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.vacancy_rate?.[0] || '--';
-
-	$: monthlyUtiliiies =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.monthly_utiliiies?.[0] ||
-		'--';
-	$: projectedRent =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.projected_rent?.[0] ||
-		'--';
-
-	$: propertyManagementFee =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]
-			?.property_managment_fee?.[0] || '--';
-
-	$: llcMonthlyFranchiseTax =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]
-			?.llc_monthly_franchise_tax?.[0] || '--';
-
-	$: propertyTaxes =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.rents?.[0]?.property_taxes?.[0] ||
-		'--';
-
-	$: expenseToIncomeRatio =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.expense_to_income_ratio?.[0] || '--';
-
-	$: monthlyCashFlow =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.monthly_cash_flow?.[0] || '--';
-
-	$: propertyInsurance =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.property_insurance?.[0] || '--';
-
-	$: monthlyCosts =
-		metadata.additional_metadata[0]?.financial_details?.[0]?.total_monthly_cost?.[0] || '--';
+	$: assetPrice = metadata.underlying_asset_price || '--';
+	$: platformFee = metadata.platform_closing_fee || 'Waived';
+	$: maintenanceReserve = metadata.initial_maintenance_reserve || '--';
+	$: fiveYearIRR = metadata.total_5_year_irr || '--';
+	$: projectedAppreciation = metadata.projected_appreciation || '--';
+	$: average5YearROI = metadata.average_5_year_roi || '--';
+	$: capRate = metadata.cap_rate || '--';
+	$: vacancyRate = metadata.vacancy_rate || '--';
+	$: monthlyUtilities = metadata.monthly_utilities || '--';
+	$: projectedRent = metadata.projected_rent || '--';
+	$: propertyManagementFee = metadata.property_management_fee || '--';
+	$: llcMonthlyFranchiseTax = metadata.llc_monthly_franchise_tax || '--';
+	$: propertyTaxes = metadata.property_taxes || '--';
+	$: expenseToIncomeRatio = metadata.expense_to_income_ratio || '--';
+	$: monthlyCashFlow = metadata.monthly_cash_flow || '--';
+	$: propertyInsurance = metadata.property_insurance || '--';
+	$: monthlyCosts = metadata.total_monthly_cost || '--';
 </script>
 
 <div class="flex flex-col gap-8 py-4">
