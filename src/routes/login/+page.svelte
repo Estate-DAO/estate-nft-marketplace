@@ -7,10 +7,10 @@
 	import { initializeAuthClient } from '$lib/auth/init';
 	import { tick } from 'svelte';
 
-	const IDENTITY_PROVIDER =
-		import.meta.env.NODE_ENV === 'dev'
-			? `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:${import.meta.env.DFX_PORT}`
-			: 'https://identity.ic0.app/#authorize';
+	// const IDENTITY_PROVIDER =
+	// 	import.meta.env.NODE_ENV === 'dev'
+	// 		? `http://${process.env.INTERNET_IDENTITY_CANISTER_ID}.localhost:${import.meta.env.DFX_PORT}`
+	// 		: 'https://identity.ic0.app/#authorize';
 
 	const DERIVATION_ORIGIN =
 		import.meta.env.NODE_ENV === 'dev' ? undefined : 'https://wbdy5-yyaaa-aaaap-abysq-cai.icp0.io';
@@ -43,7 +43,7 @@
 			maxTimeToLive: BigInt(30 * 24 * 60 * 60 * 1000 * 1000 * 1000),
 			onSuccess: () => handleSuccessfulLogin(),
 			onError: (e) => handleError(e),
-			identityProvider: IDENTITY_PROVIDER,
+			identityProvider: 'https://identity.ic0.app/#authorize',
 			derivationOrigin: DERIVATION_ORIGIN
 		});
 	}

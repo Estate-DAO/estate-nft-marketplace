@@ -54,7 +54,7 @@
 						minterCanId: o.minter_canister.toText()
 					}))
 				);
-				nfts = res.filter((o) => o.id.minterCanId === 'nvot4-uqaaa-aaaap-ab54q-cai');
+				// nfts = res.filter((o) => o.id.minterCanId === 'nvot4-uqaaa-aaaap-ab54q-cai');
 			}
 		} catch (error) {
 			console.error(error);
