@@ -27,7 +27,7 @@ const agentOptions = (fetch?: any): HttpAgentOptions => {
 		fetch,
 		verifyQuerySignatures: false,
 		identity: authHelperData?.identity
-	};
+	} as HttpAgentOptions;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -40,15 +40,14 @@ export function nftMinterCanister(canisterId: string, options?: { fetch?: any })
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function provisionCanister(options?: { fetch?: any; canisterId?: string }): ProvisionActor {
 	return createProvisionActor(options?.canisterId || provisionCanisterId, {
-		agentOptions: agentOptions(options?.fetch)
+		// agent: new HttpAgent(agentOptions(options?.fetch))
 	}) as ProvisionActor;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function assetManager(canisterId: string, options?: { fetch?: any }) {
-	const agent = new HttpAgent(agentOptions(options?.fetch));
 	return new AssetManager({
 		canisterId,
-		agent
+		agent: new HttpAgent(agentOptions(options?.fetch))
 	});
 }

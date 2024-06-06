@@ -8,10 +8,10 @@ const prod = process.env.NODE_ENV === 'production';
 
 export default defineConfig({
 	define: {
-		'process.env.CANISTER_ID_ESTATE_DAO_NFT_BACKEND': JSON.stringify('bkyz2-fmaaa-aaaaa-qaaaq-cai'),
 		'process.env.CANISTER_ID_PROVISION_CANISTER_BACKEND': JSON.stringify(
-			'tu3je-fyaaa-aaaap-abymq-cai'
+			'be2us-64aaa-aaaaa-qaabq-cai'
 		),
+		'process.env.INTERNET_IDENTITY_CANISTER_ID': JSON.stringify('bw4dl-smaaa-aaaaa-qaacq-cai'),
 		'import.meta.env.NODE_ENV': JSON.stringify(prod ? 'production' : 'dev'),
 		'import.meta.env.DFX_PORT': JSON.stringify(DFX_PORT),
 		'process.env.DFX_NETWORK': JSON.stringify(prod ? 'ic' : 'local')

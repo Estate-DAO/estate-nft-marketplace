@@ -9,7 +9,6 @@ export const authHelper = writable<{
 	client?: AuthClient;
 	identity?: Identity;
 	idPrincipal?: Principal;
-	userCanisterPrincipal?: Principal;
 }>({});
 
 export const authState = persisted<{

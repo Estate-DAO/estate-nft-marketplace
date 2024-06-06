@@ -51,7 +51,6 @@ export async function initializeAuthClient() {
 		authHelper.set({
 			init: true,
 			client,
-			userCanisterPrincipal: authHelperData.userCanisterPrincipal,
 			identity,
 			idPrincipal: principal
 		});

@@ -38,7 +38,7 @@
 		try {
 			const actor = provisionCanister();
 			const res = await actor.approve_collection(Number(id), approve);
-			if (!('Ok' in res)) throw 'Error';
+			if (!('Ok' in res)) throw res.Err;
 			if (approve) {
 				if ('CanisterId' in res.Ok) {
 					canId = {
@@ -47,10 +47,11 @@
 					};
 				}
 				approved = true;
-				// actor.grant_commit_permission($authState.isLoggedIn)
 			} else {
 				history.back();
 			}
+		} catch (e) {
+			console.log('Error:', e);
 		} finally {
 			loading = false;
 		}
