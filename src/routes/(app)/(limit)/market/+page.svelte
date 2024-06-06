@@ -48,7 +48,7 @@
 			const all = await actor.get_all_canisters();
 
 			if ('Ok' in all) {
-				const res = await populatePosts(
+				nfts = await populatePosts(
 					all.Ok.map((o) => ({
 						assetCanId: o.asset_canister.toText(),
 						minterCanId: o.minter_canister.toText()
