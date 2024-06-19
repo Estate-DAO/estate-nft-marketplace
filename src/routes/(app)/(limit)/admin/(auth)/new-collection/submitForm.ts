@@ -62,18 +62,18 @@ export function getFormData(
 				],
 				property_details: [
 					{
-						affordability: optional<number>(propertyInfoData?.affordability, 'string'),
-						baths: optional<number>(propertyInfoData?.baths, 'string'),
-						beds: optional<number>(propertyInfoData?.beds, 'string'),
-						crime_score: optional<number>(propertyInfoData?.crimeScore, 'string'),
-						flood_zone: optional<boolean>(propertyInfoData?.floodZone, 'string'),
-						last_renovated: optional<number>(propertyInfoData?.lastRenovated, 'string'),
-						monthly_rent: optional<number>(propertyInfoData?.monthlyRent, 'string'),
-						occupied: optional<boolean>(propertyInfoData?.occupied, 'string'),
-						price_per_sq_foot: optional<number>(propertyInfoData?.priceSqFt, 'string'),
-						school_score: optional<number>(propertyInfoData?.schoolScore, 'string'),
-						square_footage: optional<number>(propertyInfoData?.areaSqFoot, 'string'),
-						year_built: optional<number>(propertyInfoData?.yearBuilt, 'string')
+						affordability: optional<number>(propertyInfoData?.affordability, 'number'),
+						baths: optional<number>(propertyInfoData?.baths, 'number'),
+						beds: optional<number>(propertyInfoData?.beds, 'number'),
+						crime_score: optional<number>(propertyInfoData?.crimeScore, 'number'),
+						flood_zone: optional<boolean>(propertyInfoData?.floodZone, 'boolean'),
+						last_renovated: optional<number>(propertyInfoData?.lastRenovated, 'number'),
+						monthly_rent: optional<number>(propertyInfoData?.monthlyRent, 'number'),
+						occupied: optional<boolean>(propertyInfoData?.occupied, 'boolean'),
+						price_per_sq_foot: optional<number>(propertyInfoData?.priceSqFt, 'number'),
+						school_score: optional<number>(propertyInfoData?.schoolScore, 'number'),
+						square_footage: optional<number>(propertyInfoData?.areaSqFoot, 'number'),
+						year_built: optional<number>(propertyInfoData?.yearBuilt, 'number')
 					}
 				],
 				financial_details: [
