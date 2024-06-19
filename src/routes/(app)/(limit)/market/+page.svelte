@@ -114,7 +114,7 @@
 				title={nft.name}
 				desc={nft.desc}
 				sample={nft.sample}
-				imgSrc={`/property/${nft.id.minterCanId}/1.webp`}
+				imgSrc={`https://picsum.photos/200/300`}
 			/>
 		{/each}
 	</div>

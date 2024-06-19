@@ -7,6 +7,7 @@
 	import PropertyHeader from './PropertyHeader.svelte';
 	import placeholder from '$lib/assets/placeholder.png';
 	import { getCollectionId } from './collectionId.context';
+	import InvestPopup from '$lib/components/popup/InvestPopup.svelte';
 
 	export let data: PageData;
 
@@ -16,7 +17,7 @@
 	const { minterCanId } = getCollectionId();
 
 	function getImage(i: number) {
-		return `/property/${minterCanId}/${i + 1}.webp`;
+		return `https://picsum.photos/200/300`;
 	}
 
 	$: metadata = data.metadata;
@@ -66,5 +67,5 @@
 {/if}
 
 {#if showInvestPopup}
-	<InvestComplete bind:show={showInvestPopup} />
+	<InvestPopup {minterCanId} bind:show={showInvestPopup} />
 {/if}

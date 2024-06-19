@@ -12,38 +12,6 @@
 	import { fromE8s } from '$lib/utils/icp';
 	import CopyButton from '../button/CopyButton.svelte';
 
-	const links = [
-		'https://in.sumsub.com/websdk/p/sbx_1Dds9ZQtHzpIImt0',
-		'https://in.sumsub.com/websdk/p/sbx_OwfsYqc8CAJDlQpd',
-		'https://in.sumsub.com/websdk/p/sbx_pfImiHfa8V3AUdHp',
-		'https://in.sumsub.com/websdk/p/sbx_V197zCspgncnrXXn',
-		'https://in.sumsub.com/websdk/p/sbx_CzQ44v3kSwRPmHeZ',
-		'https://in.sumsub.com/websdk/p/sbx_I1kLCxbFPqPOJkkt',
-		'https://in.sumsub.com/websdk/p/sbx_KKOlacaRI7CNOxRt',
-		'https://in.sumsub.com/websdk/p/sbx_2VYqdRdd5pXO5XsO',
-		'https://in.sumsub.com/websdk/p/sbx_Xt5D4agfkpopA8Fi',
-		'https://in.sumsub.com/websdk/p/sbx_Xoq0WwyDN69YtA0r'
-	];
-
-	const allowedIds = [
-		'xhlmj-ejtk2-rdeng-jpr7y-tsxbg-pblxc-sv7py-c4ek2-zfa2l-cpvga-tqe',
-		'7ticg-6lqof-r6ovt-2bstx-2a3nl-7od46-cmdn3-a4rbm-r5jlo-uuys6-6qe',
-		'27zvx-tsc3k-4nbka-lld3q-katj4-q2nna-klrrk-fihsy-hxhuu-fdmnn-oqe',
-		'uiw6g-yfrmb-qwv5q-jh7e4-b4eri-paqxv-etsjd-v4all-63w3g-r6zgj-kae',
-		'f7jwi-fvcwf-kux4z-kif3n-wvn4k-eemwd-b27xi-uxr3u-hurvl-ckpak-wqe',
-		'l55nb-j472y-gxser-vdj7g-ponga-dqicw-oafjo-roytc-h5wfu-laxs5-fqe',
-		'2vyn7-mjs74-dgior-2hfih-7a66u-nmoqh-2ju3x-776ed-y7yb5-c4zpa-yae',
-		'jakb2-fu6sv-lmtaz-i3o45-vu6xc-xdbxb-26gjm-q3cby-qsxyr-zt4pg-qae',
-		'iunhp-s3krq-o4rvd-3ylbf-i55mx-qzvli-yyizs-c7eh3-jpox2-6lei6-qqe',
-		'ms7ce-a36q5-3wswk-toqpu-zt474-r7b3t-qve5c-bfj43-v5dca-du23y-gae',
-		'l5u6z-rcsi6-4bran-3kfhi-zdqux-hpaul-atjes-d4dv3-lto2u-ozkp2-pqe',
-		'izveb-5bgtv-zyl37-nyaev-lzhvz-ssccu-npj76-wpz3s-mi5pc-kiifc-fqe',
-		'avubp-iv63x-tya4c-7a4rc-bl4b3-ctiza-exvcl-uvz6l-nuk5q-n6by7-3ae',
-		'j6jlw-6a36f-naf4d-bxnlq-kk5dk-4bqbk-kmt62-p4ups-sgxuo-leviy-aqe',
-		'q2arq-luyhj-7alxs-lqvam-eeluo-o2bps-qh35h-jq4ve-6hi3c-7tsqj-zqe',
-		'n5ecb-7l2f7-tcstu-27d25-l7kvb-vr37a-hx3om-4rta3-f2vbj-tqyuf-3ae'
-	];
-
 	export let show = false;
 	// export let showWarning = false;
 	export let minterCanId: string;
@@ -171,26 +139,13 @@
 				<div>You need to login before you can invest</div>
 				<Button href="/login">Click to login</Button>
 			</div>
-		{:else if !allowedIds.includes($authState.idString || '')}
-			<div class="flex flex-col gap-8 items-center">
-				<div>
-					This is a closed beta sale. You need to be invited to be participated in your sale.
-					However, we have registered your concern and will let you know once you can participate in
-					the sale!
-				</div>
-				<Button on:click={() => (show = false)}>Close</Button>
-			</div>
 		{:else if step === 1}
 			<div class="flex flex-col gap-8 items-center w-full">
 				<div>Complete KYC to continue</div>
-				<iframe
-					title="KYC"
-					class="w-full h-[28rem] rounded-xl"
-					src={links[Math.floor(Math.random() * links.length) | 0]}
-				/>
-				<div class="text-xs text-white">
-					Having issue with KYC? <button on:click={() => (step = 2)}>Click here.</button>
-				</div>
+
+				<button class="text-lg text-black">
+					<button on:click={() => (step = 2)}>Click here.</button>
+				</button>
 			</div>
 		{:else if step === 2}
 			<div>
