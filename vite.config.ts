@@ -20,7 +20,8 @@ export default defineConfig({
 		proxy: {
 			// This proxies all http requests made to /api to our running dfx instance
 			'/api': {
-				target: `http://0.0.0.0:${DFX_PORT}`
+				target: `http://0.0.0.0:${DFX_PORT}`,
+				changeOrigin: true
 			}
 		},
 		port: 5180
