@@ -109,7 +109,7 @@
 	<div class="flex py-12 items-center gap-8 justify-normal mx-auto flex-wrap">
 		{#each nfts as nft}
 			<Card
-				status={Object.keys(nft.status)?.[0] || 'Live'}
+				status={Object.keys(nft.status)?.[0]}
 				href={`/collection/${nft.id.minterCanId}@${nft.id.assetCanId}${nft.sample ? '?sample' : ''}`}
 				title={nft.name}
 				desc={nft.desc}
