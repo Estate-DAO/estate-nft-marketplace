@@ -69,7 +69,7 @@
 			</a>
 			{#if !$authState.isLoggedIn}
 				<h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-					Sign in or join
+					Sign in
 				</h2>
 
 				<Button
