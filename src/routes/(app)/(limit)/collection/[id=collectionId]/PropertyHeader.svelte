@@ -23,6 +23,8 @@
 	$: baths = metadata.additional_metadata[0]?.property_details?.[0]?.baths?.[0] || '-';
 	$: squareFootage =
 		metadata.additional_metadata[0]?.property_details?.[0]?.square_footage?.[0] || '-';
+	$: status = Object.keys(metadata.status)?.[0];
+	$: _status = status === 'Refunded' ? 'Closed' : status || 'Live';
 </script>
 
 <div class="flex flex-col grow gap-4">
@@ -32,7 +34,7 @@
 			<div
 				class="py-2 px-4 text-xs translate-y-1 bg-black rounded-full text-white font-light flex h-min items-center justify-center"
 			>
-				{Object.keys(metadata.status)?.[0] || 'Live'}
+				{_status}
 			</div>
 		</div>
 		{#if $adminStore.isLoggedIn}
