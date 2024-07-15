@@ -5,7 +5,7 @@
 			navigator
 				.share({
 					title,
-					text: 'Take a look at this property at EstateDao!',
+					text: 'Take a look at this property at EstateDAO!',
 					url: window.location.href
 				})
 				.then(() => console.log('Successful share'))

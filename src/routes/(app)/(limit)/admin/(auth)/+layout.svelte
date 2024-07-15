@@ -3,26 +3,20 @@
 	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { provisionCanister } from '$lib/backend';
 	import Button from '$lib/components/button/Button.svelte';
-	import { authState } from '$lib/stores/auth';
+	import { checkIfAdmin } from '$lib/backend/admin';
 
 	let loading = true;
 	let error = '';
 
-	$: if (!$adminStore.isLoggedIn || !$authState.isLoggedIn) {
-		gotoAuthPage();
-	}
-
-	async function checkPassword() {
+	async function checkAuthStatus() {
 		error = '';
 		try {
-			const actor = provisionCanister();
-			const res = await actor.verify_key($adminStore.key);
-			if (res) {
+			await checkIfAdmin();
+			if ($adminStore.isLoggedIn) {
 				loading = false;
 			} else {
-				gotoAuthPage();
+				goto('/admin/auth');
 			}
 		} catch (e) {
 			console.error(e);
@@ -30,21 +24,13 @@
 		}
 	}
 
-	function gotoAuthPage() {
-		$adminStore = {
-			isLoggedIn: false,
-			key: ''
-		};
-		goto('/admin/auth');
-	}
-
-	onMount(checkPassword);
+	onMount(checkAuthStatus);
 </script>
 
 {#if error}
 	<div class="flex w-full flex-col items-center justify-center pt-8">
 		<div class="text-sm font-medium">{error}</div>
-		<Button on:click={checkPassword}>Try again</Button>
+		<Button on:click={checkAuthStatus}>Try again</Button>
 	</div>
 {:else if loading}
 	<div class="flex w-full items-center justify-center pt-8">

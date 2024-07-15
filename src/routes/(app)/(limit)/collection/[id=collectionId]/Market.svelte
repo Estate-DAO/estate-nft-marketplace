@@ -1,15 +1,13 @@
 <script lang="ts">
-	import type { CollectionMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	export let metadata: CollectionMetadata;
 
-	$: location = metadata.additional_metadata[0]?.market_details?.[0]?.country?.[0] || 'Not set';
-	$: averageRent = metadata.additional_metadata[0]?.market_details?.[0]?.average_rent?.[0] || '--';
-	$: annualPopulationGrowth =
-		metadata.additional_metadata[0]?.market_details?.[0]?.annual_popullation_growth?.[0] || '--';
-	$: medianHomeSalePrice =
-		metadata.additional_metadata[0]?.market_details?.[0]?.median_home_sale_price?.[0] || '--';
-	$: description = metadata.additional_metadata[0]?.market_details?.[0]?.description?.[0] || '';
+	$: location = metadata?.country || 'Not set';
+	$: averageRent = metadata?.average_rent || '--';
+	$: annualPopulationGrowth = metadata?.annual_population_growth || '--';
+	$: medianHomeSalePrice = metadata?.median_home_sale_price || '--';
+	$: description = metadata?.market_description || '';
 </script>
 
 <div class="flex flex-col gap-4 py-4">
