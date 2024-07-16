@@ -89,7 +89,7 @@
 		</button>
 		<div class="text-3xl">{step === 3 ? 'Pay' : 'Invest'}</div>
 
-		{#if $authState.isLoggedIn}
+		{#if !$authState.isLoggedIn}
 			<div class="flex flex-col gap-8 items-center">
 				<div>You need to login before you can invest</div>
 				<Button href="/login">Click to login</Button>
