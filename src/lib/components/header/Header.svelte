@@ -7,16 +7,22 @@
 	import MenuIcon from '../icons/MenuIcon.svelte';
 	import UserIcon from '../icons/UserIcon.svelte';
 	import HeaderMenu from './HeaderMenu.svelte';
+	import { checkIfAdmin } from '$lib/backend/admin';
 
 	let menuOpen = false;
 
 	$: onCollectionPage = $page.url.pathname.includes('collection');
+	$: showControls = onCollectionPage || $page.url.pathname.includes('admin');
+
+	$: if ($authState) {
+		checkIfAdmin();
+	}
 </script>
 
 <div
-	class="w-full fixed z-50 h-20 shadow-sm flex items-center justify-between px-8 font-light transition-all bg-white/75 backdrop-blur-xl"
+	class="w-full fixed z-50 h-20 shadow-sm flex items-center justify-between px-8 font-light transition-all bg-white/90 backdrop-blur-md"
 >
-	{#if onCollectionPage}
+	{#if showControls}
 		<button on:click={() => history.back()} class="z-[1] hidden lg:block">← Go back</button>
 		<button on:click={() => history.back()} class="z-[1] lg:hidden pr-4">←</button>
 	{/if}

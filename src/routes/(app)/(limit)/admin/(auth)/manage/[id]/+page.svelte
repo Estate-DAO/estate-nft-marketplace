@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { provisionCanister } from '$lib/backend';
-	import type { FormMetadata } from '$lib/declarations/estate_dao_nft_backend/estate_dao_nft_backend.did';
-	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
 	import { page } from '$app/stores';
-	import ItemInfo from './ItemInfo.svelte';
+	import { ASSET_CANISTER_ID, assetPath, provisionCanister } from '$lib/backend';
+	import Button from '$lib/components/button/Button.svelte';
+	import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
+	import type { _SERVICE } from '$lib/declarations/provision/provision.did';
+	import { fromE8s } from '$lib/utils/icp';
+	import { onMount } from 'svelte';
 	import Attachments from './Attachments.svelte';
 	import FormHeader from './FormHeader.svelte';
 	import InfoSection from './InfoSection.svelte';
-	import Button from '$lib/components/button/Button.svelte';
-	import { fromE8s } from '$lib/utils/icp';
+	import ItemInfo from './ItemInfo.svelte';
+	import Icon from '$lib/components/icon/Icon.svelte';
+	import DocumentIcon from '$lib/components/icons/DocumentIcon.svelte';
 
-	let formData: FormMetadata;
+	let formData: Awaited<ReturnType<_SERVICE['get_request_info']>>[0];
 	let pageLoading = true;
 	let loading = false;
 	let approved = false;
@@ -21,34 +23,34 @@
 	};
 
 	$: id = $page.params.id;
+	$: invalid = !formData?.metadata[0]?.price;
 
 	async function fetchForm() {
 		pageLoading = true;
 		const actor = provisionCanister();
-		const res = await actor.get_form_metadata(Number(id));
-		if ('Ok' in res) {
-			formData = res.Ok;
+		const res = await actor.get_request_info(BigInt(Number(id)));
+		if (res[0]) {
+			formData = res[0];
 		}
 		pageLoading = false;
-		console.log(formData);
 	}
 
 	async function approve(approve: boolean) {
 		loading = true;
 		try {
 			const actor = provisionCanister();
-			const res = await actor.approve_collection(Number(id), approve);
-			if (!('Ok' in res)) throw 'Error';
 			if (approve) {
-				if ('CanisterId' in res.Ok) {
+				const res = await actor.approve_request(BigInt(id));
+				if ('Ok' in res) {
 					canId = {
-						assetCanId: res.Ok.CanisterId.asset_canister.toString(),
-						minterCanId: res.Ok.CanisterId.minter_canister.toString()
+						assetCanId: res.Ok.asset_canister.toString(),
+						minterCanId: res.Ok.token_canister.toString()
 					};
-				}
+				} else throw 'Error';
 				approved = true;
-				// actor.grant_commit_permission($authState.isLoggedIn)
 			} else {
+				const res = await actor.reject_request(BigInt(id));
+				if (!('Ok' in res)) throw 'Error';
 				history.back();
 			}
 		} finally {
@@ -56,54 +58,137 @@
 		}
 	}
 
+	function viewDoc(path: string) {
+		const url = `https://${ASSET_CANISTER_ID}.icp0.io${path}`;
+		const a = document.createElement('a');
+		a.href = url;
+		a.target = '_blank';
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+	}
+
 	onMount(fetchForm);
 </script>
 
 {#if pageLoading}
 	<div class="flex items-center justify-center py-8">
-		<PlusIcon class="w-6 h-6 animate-spin" />
+		<PlusIcon class="w-5 h-5 animate-spin" />
 	</div>
 {:else if formData}
 	<div class="flex flex-col gap-8 divide-y divide-gray-300">
 		<InfoSection>
 			<FormHeader slot="header" title="Basic details" subtitle={`Form ID: ${id}`}>
 				<div class="flex gap-2 items-center">
-					<Button disabled={loading || approved} on:click={() => approve(false)} secondary>
+					<Button
+						disabled={loading || approved || invalid}
+						on:click={() => approve(false)}
+						secondary
+					>
 						Decline
 					</Button>
-					<Button disabled={loading || approved} on:click={() => approve(true)}>Approve</Button>
+					<Button disabled={loading || approved || invalid} on:click={() => approve(true)}>
+						Approve
+					</Button>
 				</div>
 			</FormHeader>
 
 			{#if approved}
 				<div class="py-4">
-					<div>Canister has been approved</div>
+					<div>Canisters have been deployed</div>
 					<Button href={`/collection/${canId.minterCanId}@${canId.assetCanId}`}>
 						View collection
 					</Button>
 				</div>
 			{/if}
 
-			<ItemInfo title="Collection name" value={formData.name} />
-			<ItemInfo title="Description" value={formData.desc} />
+			<ItemInfo title="Collection name" value={formData.metadata?.[0]?.name} />
+			<ItemInfo title="Description" value={formData.metadata?.[0]?.description || '---'} />
 			<ItemInfo
 				title="Price"
-				value={`${fromE8s(formData.price)} ICP (${formData.price.toLocaleString()})`}
+				value={`${fromE8s(formData.metadata?.[0]?.price)} ICP (${formData.metadata?.[0]?.price || 0})`}
 			/>
-			<ItemInfo title="Supply cap" value={formData.supply_cap} />
-			<ItemInfo title="Submitted by" value={formData.owner} />
+			<ItemInfo title="Supply cap" value={formData.metadata?.[0]?.supply_cap} />
+			<ItemInfo title="Treasury Principal ID" value={formData.metadata?.[0]?.treasury.toText()} />
+			<ItemInfo title="Submitted by" value={formData.property_owner.toText()} />
+			<ItemInfo title="Symbol" value={formData.metadata?.[0]?.symbol} />
+		</InfoSection>
+		<InfoSection>
+			<FormHeader slot="header" title="Collection assets" />
+			<ItemInfo title="Logo">
+				<div
+					class="h-[14rem] w-[14rem] p-2 border rounded relative flex items-center justify-center"
+				>
+					{#if formData.metadata?.[0]?.logo}
+						<img
+							src={assetPath(ASSET_CANISTER_ID, formData.metadata[0].logo)}
+							class="h-full w-full rounded-md object-contain"
+							alt="logo"
+						/>
+					{:else}
+						<div class="flex flex-1 items-center justify-center">No logo added</div>
+					{/if}
+				</div>
+			</ItemInfo>
 			<ItemInfo title="Images">
 				<div
 					class="h-[14rem] border rounded p-2 items-center w-full overflow-hidden overflow-x-auto flex gap-2"
 				>
-					{#each formData.property_images as src, i}
-						<div class="p-1 shrink-0 border rounded-md w-52 h-52 relative">
-							<img {src} class="h-full w-full rounded-md object-contain" alt={i + ' image'} />
-						</div>
-					{:else}
-						<div class="flex flex-1 items-center justify-center">No images added</div>
-					{/each}
+					{#if formData.metadata?.[0]?.images}
+						{@const images = formData.metadata?.[0]?.images}
+						{#each images as path, i}
+							<div class="p-1 shrink-0 border rounded-md w-52 h-52 relative">
+								<img
+									src={assetPath(ASSET_CANISTER_ID, path)}
+									class="h-full w-full rounded-md object-contain"
+									alt={i + ' image'}
+								/>
+							</div>
+						{:else}
+							<div class="flex flex-1 items-center justify-center">No images added</div>
+						{/each}
+					{/if}
 				</div>
+			</ItemInfo>
+		</InfoSection>
+		<InfoSection>
+			<ItemInfo title="Documents">
+				{#if formData.metadata?.[0]?.documents?.[0]?.length}
+					<div
+						class="h-[14rem] border rounded p-2 items-center w-full overflow-hidden overflow-x-auto flex gap-2"
+					>
+						{#each formData.metadata[0].documents as [name, path], i}
+							<div class="p-1 shrink-0 border rounded-md w-64 h-52 relative transition-opacity">
+								<button
+									on:click={() => viewDoc(path)}
+									class="bg-gray-200 z-[2] rounded-full flex items-center justify-center w-6 h-6 absolute top-2 left-2"
+								>
+									<Icon name="eye" class="h-4 w-4" />
+								</button>
+								<div
+									class="h-full w-full relative flex items-center justify-center bg-gradient-to-t from-gray-100 to-white"
+								>
+									<DocumentIcon class="h-6 w-6" />
+									<div
+										class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-gray-300 to-transparent p-2"
+									>
+										<div
+											class="flex items-center justify-between bg-white border py-1 px-2 rounded w-full"
+										>
+											<p class="text-xs text-gray-900">
+												{name || path.split('\\')?.pop()?.split('/').pop() || ''}
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						{:else}
+							<div class="flex flex-1 items-center justify-center">No documents uploaded yet</div>
+						{/each}
+					</div>
+				{:else}
+					<div class="flex flex-1 items-center justify-center">No documents uploaded</div>
+				{/if}
 			</ItemInfo>
 		</InfoSection>
 
@@ -112,195 +197,185 @@
 				<FormHeader slot="header" title="Property details" />
 				<ItemInfo
 					title="Affordability"
-					value={formData.additional_metadata[0]?.property_details[0]?.affordability[0]}
+					value={formData?.metadata?.[0]?.affordability}
 				/>
 				<ItemInfo
 					title="Bathrooms"
-					value={formData.additional_metadata[0]?.property_details[0]?.baths[0]}
+					value={formData?.metadata?.[0]?.baths}
 				/>
 				<ItemInfo
 					title="Bedrooms"
-					value={formData.additional_metadata[0]?.property_details[0]?.beds[0]}
+					value={formData?.metadata?.[0]?.beds}
 				/>
 				<ItemInfo
 					title="Crime score"
-					value={formData.additional_metadata[0]?.property_details[0]?.crime_score[0]}
+					value={formData?.metadata?.[0]?.crime_score}
 				/>
 				<ItemInfo
 					title="Flood zone"
-					value={formData.additional_metadata[0]?.property_details[0]?.flood_zone[0] ? 'Yes' : 'No'}
+					value={formData?.metadata?.[0]?.flood_zone[0] ? 'Yes' : 'No'}
 				/>
 				<ItemInfo
 					title="Last renovated"
-					value={formData.additional_metadata[0]?.property_details[0]?.last_renovated[0]}
+					value={formData?.metadata?.[0]?.last_renovated}
 				/>
 				<ItemInfo
 					title="Monthly rent"
-					value={formData.additional_metadata[0]?.property_details[0]?.monthly_rent[0]}
+					value={formData?.metadata?.[0]?.monthly_rent}
 				/>
 				<ItemInfo
 					title="Occupied"
-					value={formData.additional_metadata[0]?.property_details[0]?.occupied[0] ? 'Yes' : 'No'}
+					value={formData?.metadata?.[0]?.occupied ? 'Yes' : 'No'}
 				/>
 				<ItemInfo
 					title="Price per sq foot"
-					value={formData.additional_metadata[0]?.property_details[0]?.price_per_sq_foot[0]}
+					value={formData?.metadata?.[0]?.price_per_sq_foot}
 				/>
 				<ItemInfo
 					title="School score"
-					value={formData.additional_metadata[0]?.property_details[0]?.school_score[0]}
+					value={formData?.metadata?.[0]?.school_score}
 				/>
 				<ItemInfo
 					title="Total square footage"
-					value={formData.additional_metadata[0]?.property_details[0]?.square_footage[0]}
+					value={formData?.metadata?.[0]?.square_footage}
 				/>
 				<ItemInfo
 					title="Year built"
-					value={formData.additional_metadata[0]?.property_details[0]?.year_built[0]}
+					value={formData?.metadata?.[0]?.year_built}
 				/>
 			</InfoSection>
 			<InfoSection>
 				<FormHeader slot="header" title="Market details" />
 				<ItemInfo
 					title="Annual population growth"
-					value={formData.additional_metadata[0]?.market_details[0]?.annual_popullation_growth[0]}
+					value={formData?.metadata?.[0]?.annual_population_growth}
 				/>
 				<ItemInfo
 					title="Average rent"
-					value={formData.additional_metadata[0]?.market_details[0]?.average_rent[0]}
+					value={formData?.metadata?.[0]?.average_rent}
 				/>
 				<ItemInfo
 					title="Median home sale price"
-					value={formData.additional_metadata[0]?.market_details[0]?.median_home_sale_price[0]}
+					value={formData?.metadata?.[0]?.median_home_sale_price}
 				/>
 				<ItemInfo
 					title="City"
-					value={formData.additional_metadata[0]?.market_details[0]?.city[0]}
+					value={formData?.metadata?.[0]?.city}
 				/>
 				<ItemInfo
 					title="State"
-					value={formData.additional_metadata[0]?.market_details[0]?.state[0]}
+					value={formData?.metadata?.[0]?.state}
 				/>
 				<ItemInfo
 					title="Country"
-					value={formData.additional_metadata[0]?.market_details[0]?.country[0]}
+					value={formData?.metadata?.[0]?.country}
 				/>
 				<ItemInfo
 					title="Coordinates"
-					value={formData.additional_metadata[0]?.market_details[0]?.coordinates[0]}
+					value={formData?.metadata?.[0]?.coordinates}
 				/>
 				<ItemInfo
 					title="Market description"
-					value={formData.additional_metadata[0]?.market_details[0]?.description[0]}
+					value={formData?.metadata?.[0]?.description}
 				/>
 			</InfoSection>
 			<InfoSection>
 				<FormHeader slot="header" title="Financial details" subtitle="Overall" />
 				<ItemInfo
 					title="Expense to income ratio"
-					value={formData.additional_metadata[0]?.financial_details[0]?.expense_to_income_ratio[0]}
+					value={formData?.metadata?.[0]?.expense_to_income_ratio}
 				/>
 				<ItemInfo
 					title="Monthly cash flow"
-					value={formData.additional_metadata[0]?.financial_details[0]?.monthly_cash_flow[0]}
+					value={formData?.metadata?.[0]?.monthly_cash_flow}
 				/>
 				<ItemInfo
 					title="Total monthly cost"
-					value={formData.additional_metadata[0]?.financial_details[0]?.total_monthly_cost[0]}
+					value={formData?.metadata?.[0]?.total_monthly_cost}
 				/>
 				<ItemInfo
 					title="Property insurance"
-					value={formData.additional_metadata[0]?.financial_details[0]?.property_insurance[0]}
+					value={formData?.metadata?.[0]?.property_insurance}
 				/>
 			</InfoSection>
 			<InfoSection>
 				<FormHeader slot="header" title="Financial details" subtitle="Rent" />
 				<ItemInfo
 					title="LLC monthly franchise tax"
-					value={formData.additional_metadata[0]?.financial_details[0]?.rents[0]
-						?.llc_monthly_franchise_tax[0]}
+					value={formData?.metadata?.[0]?.llc_monthly_franchise_tax}
 				/>
 
 				<ItemInfo
 					title="Monthly utilities"
-					value={formData.additional_metadata[0]?.financial_details[0]?.rents[0]
-						?.monthly_utiliiies[0]}
+					value={formData?.metadata?.[0]?.monthly_utilities}
 				/>
 
 				<ItemInfo
 					title="Projected rent"
-					value={formData.additional_metadata[0]?.financial_details[0]?.rents[0]?.projected_rent[0]}
+					value={formData?.metadata?.[0]?.projected_rent}
 				/>
 
 				<ItemInfo
 					title="Property managment fee"
-					value={formData.additional_metadata[0]?.financial_details[0]?.rents[0]
-						?.property_managment_fee[0]}
+					value={formData?.metadata?.[0]?.property_management_fee}
 				/>
 
 				<ItemInfo
 					title="Property taxes"
-					value={formData.additional_metadata[0]?.financial_details[0]?.rents[0]?.property_taxes[0]}
+					value={formData?.metadata?.[0]?.property_taxes}
 				/>
 
 				<ItemInfo
 					title="Vacancy rate"
-					value={formData.additional_metadata[0]?.financial_details[0]?.rents[0]?.vacancy_rate[0]}
+					value={formData?.metadata?.[0]?.vacancy_rate}
 				/>
 			</InfoSection>
 			<InfoSection>
 				<FormHeader slot="header" title="Financial details" subtitle="Returns" />
 				<ItemInfo
 					title="Average 5 year ROI"
-					value={formData.additional_metadata[0]?.financial_details[0]?.returns[0]
-						?.average_5_year_roi[0]}
+					value={formData?.metadata?.[0]?.average_5_year_roi}
 				/>
 				<ItemInfo
 					title="Cap rate"
-					value={formData.additional_metadata[0]?.financial_details[0]?.returns[0]?.cap_rate[0]}
+					value={formData?.metadata?.[0]?.cap_rate}
 				/>
 				<ItemInfo
 					title="Projected appreciation"
-					value={formData.additional_metadata[0]?.financial_details[0]?.returns[0]
-						?.projected_appreciation[0]}
+					value={formData?.metadata?.[0]?.projected_appreciation}
 				/>
 				<ItemInfo
 					title="Total 5 year IRR"
-					value={formData.additional_metadata[0]?.financial_details[0]?.returns[0]
-						?.total_5_year_irr[0]}
+					value={formData?.metadata?.[0]?.total_5_year_irr}
 				/>
 				<ItemInfo
 					title="Yields"
-					value={formData.additional_metadata[0]?.financial_details[0]?.returns[0]?.yields[0]}
+					value={formData?.metadata?.[0]?.yields}
 				/>
 			</InfoSection>
 			<InfoSection>
 				<FormHeader slot="header" title="Financial details" subtitle="Investment" />
 				<ItemInfo
 					title="Initial maintenance reserve"
-					value={formData.additional_metadata[0]?.financial_details[0]?.investment[0]
-						?.initial_maintenance_reserve[0]}
+					value={formData?.metadata?.[0]?.initial_maintenance_reserve}
 				/>
 				<ItemInfo
 					title="Minimum investment"
-					value={formData.additional_metadata[0]?.financial_details[0]?.investment[0]
-						?.min_investment[0]}
+					value={formData?.metadata?.[0]?.min_investment}
 				/>
 				<ItemInfo
 					title="Platform closing fee"
-					value={formData.additional_metadata[0]?.financial_details[0]?.investment[0]
-						?.platform_closing_fee[0]}
+					value={formData?.metadata?.[0]?.platform_closing_fee}
 				/>
 				<ItemInfo
 					title="Underlying asset price"
-					value={formData.additional_metadata[0]?.financial_details[0]?.investment[0]
-						?.underlying_asset_price[0]}
+					value={formData?.metadata?.[0]?.underlying_asset_price}
 				/>
 			</InfoSection>
 			<InfoSection>
 				<FormHeader slot="header" title="Documents" />
-				{#if formData.additional_metadata?.[0]?.documents?.[0]?.length}
-					<Attachments docs={formData.additional_metadata[0].documents[0]} />
+				{#if formData?.metadata?.[0]?.documents?.[0]?.length}
+					<Attachments docs={formData?.metadata?.[0]?.documents} />
 				{:else}
 					<ItemInfo title="Attachments" value="No documents uploaded" />
 				{/if}

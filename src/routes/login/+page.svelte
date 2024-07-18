@@ -1,11 +1,11 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
 	import DfinityIcon from '$lib/components/icons/DfinityIcon.svelte';
-	import EstateDaoLogo from '$lib/components/icons/EstateDaoLogo.svelte';
-	import LandingBg from '$lib/components/landing-bg/LandingBg.svelte';
 	import { authState, authHelper } from '$lib/stores/auth';
 	import { initializeAuthClient } from '$lib/auth/init';
 	import { tick } from 'svelte';
+	import logo from '$lib/assets/logo.svg';
+	import { adminStore } from '$lib/stores/admin';
 
 	const IDENTITY_PROVIDER =
 		import.meta.env.NODE_ENV === 'dev'
@@ -13,7 +13,9 @@
 			: 'https://identity.ic0.app/#authorize';
 
 	const DERIVATION_ORIGIN =
-		import.meta.env.NODE_ENV === 'dev' ? undefined : 'https://wbdy5-yyaaa-aaaap-abysq-cai.icp0.io';
+		import.meta.env.NODE_ENV === 'dev'
+			? undefined
+			: `https://${process.env.CANISTER_ID_WEBCLIENT}.icp0.io`;
 
 	let error = '';
 
@@ -51,25 +53,28 @@
 	async function logout() {
 		$authHelper.init = false;
 		await $authHelper?.client?.logout();
+		adminStore.set({ isLoggedIn: false, key: '' });
 		initializeAuthClient();
 	}
 </script>
 
+<svelte:head>
+	<title>EstateDAO | Login</title>
+</svelte:head>
+
 <div
 	class="flex flex-col overflow-hidden h-screen w-full items-center justify-center pb-20 gap-4 relative"
 >
-	<LandingBg />
-
 	<div class="flex z-[3] min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
 		<div
 			class="bg-white/75 backdrop-blur-xl flex flex-col items-center gap-8 px-6 py-12 shadow sm:rounded-lg sm:px-12"
 		>
-			<a href="/">
-				<EstateDaoLogo class="h-10 mx-auto" />
+			<a href="/" class="h-full">
+				<img src={logo} alt="EstateDAO" class="h-full w-full" />
 			</a>
 			{#if !$authState.isLoggedIn}
 				<h2 class="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-					Sign in
+					Sign in or join
 				</h2>
 
 				<Button
@@ -101,7 +106,7 @@
 					</div>
 				</div>
 
-				<Button href="/market" class="w-min">Go to the marketplace</Button>
+				<Button href="/market" class="w-min">View all collections</Button>
 				<Button on:click={logout} loading={!$authHelper?.init} secondary class="w-min">
 					Logout
 				</Button>

@@ -1,40 +1,60 @@
 <script lang="ts">
 	import Button from '$lib/components/button/Button.svelte';
-	import FormHeader, { type SelectedTab } from './FormHeader.svelte';
-	import BasicInfo, { type BasicInfoData } from './BasicInfo.svelte';
-	import PropertyInfo, { type PropertyInfoData } from './PropertyInfo.svelte';
-	import MarketInfo, { type MarketInfoData } from './MarketInfo.svelte';
-	import FinancialInfo, { type FinancialInfoData } from './FinancialInfo.svelte';
-	import { provisionCanister } from '$lib/backend';
+	import FormHeader, { type SelectedTab } from '$lib/components/data-forms/FormHeader.svelte';
+	import BasicInfo, {
+		initBasicInfo,
+		type BasicInfoData
+	} from '$lib/components/data-forms/BasicInfo.svelte';
+	import { ASSET_CANISTER_ID, ASSET_PROXY_CANISTER_ID, provisionCanister } from '$lib/backend';
 	import { slide } from 'svelte/transition';
-	import { authState } from '$lib/stores/auth';
 	import { replacer } from '$lib/utils/json';
-	import ImagesInfo from './ImagesInfo.svelte';
-	import { getFormData } from './submitForm';
+	import ImagesInfo, {
+		initImagesInfo,
+		type ImagesInfoData
+	} from '$lib/components/data-forms/ImagesInfo.svelte';
+	import { getNewCollectionFormData } from '$lib/components/data-forms/form.utils';
+	import type { PropertyInfoData } from '$lib/components/data-forms/PropertyInfo.svelte';
+	import PropertyInfo, {
+		initPropertyInfo
+	} from '$lib/components/data-forms/PropertyInfo.svelte';
+	import type { FinancialInfoData } from '$lib/components/data-forms/FinancialInfo.svelte';
+	import FinancialInfo, {
+		initFinancialInfo
+	} from '$lib/components/data-forms/FinancialInfo.svelte';
+	import type { MarketInfoData } from '$lib/components/data-forms/MarketInfo.svelte';
+	import MarketInfo, {
+		initMarketInfo
+	} from '$lib/components/data-forms/MarketInfo.svelte';
+	import DocumentsInfo from '$lib/components/data-forms/DocumentsInfo.svelte';
+	import type { CollectionMetadata } from '$lib/types/nftCanister';
 
 	let selectedTab: SelectedTab = 'basic';
 	let loading = false;
 	let res: any;
 
-	let basicInfoData: BasicInfoData;
-	let propertyInfoData: PropertyInfoData;
-	let financialInfoData: FinancialInfoData;
-	let marketInfoData: MarketInfoData;
-	let propertyImages: string[] = [];
+	let basicInfoData: BasicInfoData = initBasicInfo();
+	let propertyInfoData: PropertyInfoData = initPropertyInfo();
+	let financialInfoData: FinancialInfoData = initFinancialInfo();
+	let marketInfoData: MarketInfoData = initMarketInfo();
+	let imagesInfoData: ImagesInfoData = initImagesInfo();
+	let documents: CollectionMetadata['documents'] = [];
+
+	let assetCanisterId = ASSET_CANISTER_ID!;
+	let proxyCanisterId = ASSET_PROXY_CANISTER_ID!;
 
 	async function submitForm() {
 		if (loading) return;
 		try {
 			loading = true;
 			const actor = provisionCanister();
-			res = await actor.init_form_metadata(
-				getFormData(
+			res = await actor.add_property_request(
+				getNewCollectionFormData(
 					basicInfoData,
 					propertyInfoData,
 					financialInfoData,
 					marketInfoData,
-					propertyImages,
-					$authState.idString
+					imagesInfoData,
+					documents
 				)
 			);
 		} finally {
@@ -54,11 +74,18 @@
 		<Button href="/admin/manage/list">Approve/Deny on admin panel</Button>
 	{:else}
 		<FormHeader
+			title="New Collection"
 			bind:selected={selectedTab}
 			on:cancel={() => history.back()}
 			on:save={() => submitForm()}
 			{loading}
 		>
+			<svelte:fragment slot="subtitle">
+				<div class="text-sm text-gray-500">Submit data to create a new collection.</div>
+				<div class="text-sm text-gray-400">
+					Submitted form will be approved by an admin for listing.
+				</div>
+			</svelte:fragment>
 			<svelte:fragment>
 				{#if selectedTab === 'basic'}
 					<BasicInfo {loading} bind:data={basicInfoData} />
@@ -67,9 +94,21 @@
 				{:else if selectedTab === 'financial'}
 					<FinancialInfo {loading} bind:data={financialInfoData} />
 				{:else if selectedTab === 'market'}
-					<MarketInfo bind:data={marketInfoData} {loading} />
+					<MarketInfo {loading} bind:data={marketInfoData} />
 				{:else if selectedTab === 'images'}
-					<ImagesInfo bind:images={propertyImages} />
+					<ImagesInfo
+						{loading}
+						assetCanisterId={ASSET_CANISTER_ID}
+						uploadCanisterId={ASSET_PROXY_CANISTER_ID}
+						bind:data={imagesInfoData}
+					/>
+				{:else if selectedTab === 'documents'}
+					<DocumentsInfo
+						{loading}
+						assetCanisterId={assetCanisterId}
+						uploadCanisterId={proxyCanisterId}
+						bind:documents
+					/>
 				{/if}
 			</svelte:fragment>
 		</FormHeader>
